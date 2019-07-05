@@ -1,0 +1,12 @@
+{
+    "navTab": [
+		{
+            "name": "买入",
+            "condition":"mairu"
+        },
+        {
+            "name": "卖出",
+            "condition":"maichu"
+        }
+    ]
+}

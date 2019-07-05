@@ -22,6 +22,26 @@ const router = new Router({
           path: '/home',
           name: 'home',
           component: () => import('./views/Home.vue')    //此为按需引入的方式
+        },
+        {
+          path: '/hanq',
+          name: 'hanq',
+          component: () => import('./views/hanq.vue')
+        },
+        {
+          path: '/jiaoyi',
+          name: 'jiaoyi',
+          component: () => import('./views/jiaoyi.vue')
+        },
+        {
+          path: '/otc',
+          name: 'otc',
+          component: () => import('./views/otc.vue')
+        },
+        {
+          path: '/me',
+          name: 'me',
+          component: () => import('./views/me.vue')
         }
       ]
     }

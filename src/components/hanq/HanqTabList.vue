@@ -1,5 +1,5 @@
 <template>
-  <div class="HomeList">
+  <div class="HanqTabList">
     <div v-for="(item,index) in zorjdata.allData" :key="index" class="itemzord">
         <div>{{item.zhangOne}}</div>
         <div class="centeritem">
@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "HomeList",
+  name: "HanqTabList",
   props: {
     zorjdata: Object
   },
