@@ -1,0 +1,22 @@
+{
+    "mydata": [
+		{
+			"title": "BHB/USDT",
+            "one": "0.02",
+            "two": "3.49%",
+            "three": "~0.18CNF"
+        },
+        {
+			"title": "LTC/USDT",
+            "one": "122.65",
+            "two": "2.25%",
+            "three": "~0845.05CNF"
+        },
+        {
+			"title": "BTC/USDT",
+            "one": "11635088",
+            "two": "1.89%",
+            "three": "~80171.27CNF"
+        }
+    ]
+}

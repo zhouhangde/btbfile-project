@@ -1,0 +1,12 @@
+{
+    "navTab": [
+		{
+            "name": "涨幅榜",
+            "condition":"zf"
+        },
+        {
+            "name": "跌幅榜",
+            "condition":"df"
+        }
+    ]
+}
