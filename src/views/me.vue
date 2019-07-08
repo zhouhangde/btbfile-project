@@ -1,6 +1,86 @@
 <template>
   <div class="me">
-    me
+    <div class="headInfo">
+      <div class="head-img"></div>
+      <div class="head-profile">
+        <p class="user-id">Q7E2n2NX</p>
+        <p class="user-phone">
+          <span>UID:</span>1218969
+        </p>
+      </div>
+    </div>
+    <div>
+      <div class="address-cell"  @click="$router.push({name:'smrz'})">
+        <i class="fa fa-map-marker"></i>
+        <div class="address-index">
+          <span>实名认证</span>
+          <i class="fa fa-angle-right"></i>
+        </div>
+      </div>
+      <div class="address-cell">
+        <i class="fa fa-map-marker"></i>
+        <div class="address-index">
+          <span>提币地址</span>
+          <i class="fa fa-angle-right"></i>
+        </div>
+      </div>
+      <div class="address-cell">
+        <i class="fa fa-map-marker"></i>
+        <div class="address-index">
+          <span>收款方式</span>
+          <i class="fa fa-angle-right"></i>
+        </div>
+      </div>
+      <div class="address-cell">
+        <i class="fa fa-map-marker"></i>
+        <div class="address-index">
+          <span>安全中心</span>
+          <i class="fa fa-angle-right"></i>
+        </div>
+      </div>
+      <div class="address-cell">
+        <i class="fa fa-map-marker"></i>
+        <div class="address-index">
+          <span>我的推荐</span>
+          <i class="fa fa-angle-right"></i>
+        </div>
+      </div>
+      <div class="address-cell" style="margin-top: 2.666667vw; border-top: 1px solid #ddd;">
+        <i class="fa fa-map-marker"></i>
+        <div class="address-index">
+          <span>OTC交易平台</span>
+          <i class="fa fa-angle-right"></i>
+        </div>
+      </div>
+      <div class="address-cell">
+        <i class="fa fa-map-marker"></i>
+        <div class="address-index">
+          <span>我的资产</span>
+          <i class="fa fa-angle-right"></i>
+        </div>
+      </div>
+      <div class="address-cell">
+        <i class="fa fa-map-marker"></i>
+        <div class="address-index">
+          <span>转账明细</span>
+          <i class="fa fa-angle-right"></i>
+        </div>
+      </div>
+      <div class="address-cell" style="margin-top: 2.666667vw; border-top: 1px solid #ddd;">
+        <i class="fa fa-map-marker"></i>
+        <div class="address-index">
+          <span>设置</span>
+          <i class="fa fa-angle-right"></i>
+        </div>
+      </div>
+      <div class="address-cell">
+        <i class="fa fa-map-marker"></i>
+        <div class="address-index">
+          <span>关于我们</span>
+          <i class="fa fa-angle-right"></i>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -9,13 +89,16 @@ export default {
   name: "me",
   data() {
     return {
-      
+      userInfo: ""
     };
   },
   beforeRouteEnter(to, from, next) {
     next(vm => vm.getData());
   },
   methods: {
+    handleLogin() {
+      this.$router.push("/login");
+    },
     // 获取用户信息
     getData() {
       
@@ -25,5 +108,80 @@ export default {
 </script>
 
 <style scoped>
+.me {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+}
+.headInfo {
+  display: flex;
+  background-image: linear-gradient(90deg, #0af, #0085ff);
+  padding: 6.666667vw 4vw;
+  color: #fff;
+  align-items: center;
+}
+.head-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-position: 0px 0px;
+  background-size: 60px;
+  background-image: url(https://shadow.elemecdn.com/faas/h5/static/sprite.3ffb5d8.png);
+}
+.head-profile {
+  overflow: hidden;
+  margin-left: 4.8vw;
+  flex-grow: 1;
+}
+.head-profile .user-id {
+  max-width: 40vw;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 1.3rem;
+  margin-bottom: 2.133333vw;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+.head-profile .user-phone {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+}
+.user-phone > i {
+  margin-right: 0.666667vw;
+  font-size: 1rem;
+}
+.headInfo > i {
+  font-size: 1.2rem;
+}
 
+.address-cell {
+  border-bottom: 1px solid #ddd;
+  font-size: 1rem;
+  line-height: 4.533333vw;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  padding-left: 6.666667vw;
+  color: #333;
+}
+.address-cell > i {
+  font-size: 1.3rem;
+  color: rgb(74, 165, 240);
+  margin-right: 2.666667vw;
+}
+.address-index {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 3.733333vw 2.666667vw 3.733333vw 0;
+  align-content: center;
+}
+.address-index > i {
+  font-size: 1.3rem;
+  color: #ccc;
+}
 </style>

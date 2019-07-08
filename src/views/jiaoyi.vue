@@ -28,7 +28,8 @@
           <button style="width:100%;padding:5px 0px;text-align:center;border: 1px solid #e0e0e6;">0</button>
         </div>
         <div style="margin-top:5px">
-          <button style="width:100%;padding:5px 0px;text-align:center;" :class="{'inputru':inputru,'output':output}">买入</button>
+           <button style="width:100%;padding:5px 0px;text-align:center;" :class="{'inputru':inputru}" v-if="inputru">买入</button>
+          <button style="width:100%;padding:5px 0px;text-align:center;" :class="{'output':output}" v-else>卖出</button>
         </div>
       </div>
       <div class="center-contain-right">
@@ -94,7 +95,7 @@
               <em v-if="inputru">828.7273USDT</em>
               <em v-else>0CSCCT</em>
             </span>
-            <button class="toinput">充值</button>
+            <button class="toinput" @click="toinput">充值</button>
         </div>
       </div>
     </div>
@@ -178,6 +179,10 @@ export default {
       // console.log(condation);
       this.data = condation;
       this.loadData();
+    },
+    // 充值
+    toinput(){
+      this.$router.push({name:'chongz'});
     }
   },
   components: {

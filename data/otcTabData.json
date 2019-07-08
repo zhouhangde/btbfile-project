@@ -1,0 +1,12 @@
+{
+    "navTab": [
+		{
+            "name": "我要买",
+            "condition":"itomi"
+        },
+        {
+            "name": "我要卖",
+            "condition":"itomo"
+        }
+    ]
+}

@@ -1,5 +1,8 @@
 <template>
   <div class="Header">
+    <span style="position: absolute;left: 12px;" v-if="isLeft">
+      <i class="fa fa-chevron-left" @click="$router.go(-1)"></i>
+    </span>
     <span>
       {{title}}
       <i class="fa fa-address-book" v-if="xial"></i>
@@ -20,6 +23,10 @@
 export default {
   name: "Header",
   props: {
+    isLeft: {
+      type: Boolean,
+      default: false
+    },
     title: String,
     xial: Boolean,  //显示下拉图标
     xin:Boolean,  //显示收藏图标

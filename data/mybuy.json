@@ -1,0 +1,80 @@
+[{
+	"myData": {
+    "allData": [
+			{
+				"imgage": "",
+				"name": "包秀敏",
+				"money": "20.00-4000.00",
+				"price": "7.02",
+				"chengjiao":"0.0000",
+				"chengjiaolv":"0.00%",
+				"item":"我要买",
+				"iconArray":[
+					{
+						"icon":""
+					},
+					{
+						"icon":""
+					},
+					{
+						"icon":""
+					}
+				]
+			},
+			{
+				"imgage": "",
+				"name": "张实现",
+				"money": "50.00-1000.00",
+				"price": "7.05",
+				"chengjiao":"0.0000",
+				"chengjiaolv":"0.00%",
+				"item":"我要买",
+				"iconArray":[
+					{
+						"icon":""
+					},
+					{
+						"icon":""
+					}
+				]
+			},
+			{
+				"imgage": "",
+				"name": "纳宏林",
+				"money": "20.00-1950.00",
+				"price": "7.02",
+				"chengjiao":"20.0000",
+				"chengjiaolv":"100.00%",
+				"item":"我要买",
+				"iconArray":[
+					{
+						"icon":""
+					},
+					{
+						"icon":""
+					},
+					{
+						"icon":""
+					}
+				]
+			},
+			{
+				"imgage": "",
+				"name": "李文平",
+				"money": "20.00-1500.00",
+				"price": "7.05",
+				"chengjiao":"20.0000",
+				"chengjiaolv":"100.00%",
+				"item":"我要买",
+				"iconArray":[
+					{
+						"icon":""
+					},
+					{
+						"icon":""
+					}
+				]
+			}
+    ]
+	}
+}]

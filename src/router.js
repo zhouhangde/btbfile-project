@@ -44,6 +44,24 @@ const router = new Router({
           component: () => import('./views/me.vue')
         }
       ]
+    },
+    // 进入充值页面
+    {
+      path: '/chongz',
+      name: 'chongz',
+      component: () => import('./views/jiaoyi/chongz.vue')
+    },
+    // 进入下单页面
+    {
+      path: '/showOrder',
+      name: 'showOrder',
+      component: () => import('./views/otc/showOrder.vue')
+    },
+    // 进入实名认证
+    {
+      path: '/smrz',
+      name: 'smrz',
+      component: () => import('./views/me/smrz.vue')
     }
   ]
 });
