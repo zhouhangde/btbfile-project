@@ -82,6 +82,46 @@
       </div>
     </div>
   </div>
+
+  <!-- <table border="0" cellspacing="0" cellpadding="0" class="thetable">
+              <thead>
+                <tr>
+                  <th>项目名称</th>
+                  <th>收益方式</th>
+                  <th>年收益率</th>
+                  <th>存币周期（天）</th>
+                  <th>存币数量</th>
+                  <th>到期收益</th>
+                  <th>计息时间/解锁时间</th>
+                  <th>操作时间</th>
+                  <th>状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>项目名称</td>
+                  <td>收益方式</td>
+                  <th>100%</th>
+                  <th>5</th>
+                  <th>99</th>
+                  <th>到期收益</th>
+                  <th>11/11</th>
+                  <th>99</th>
+                  <th>状态</th>
+                </tr>
+                <tr>
+                  <td>项目名称</td>
+                  <td>收益方式</td>
+                  <th>100%</th>
+                  <th>5</th>
+                  <th>99</th>
+                  <th>到期收益</th>
+                  <th>11/11</th>
+                  <th>99</th>
+                  <th>状态</th>
+                </tr>
+              </tbody>
+            </table> -->
 </template>
 
 <script>
@@ -105,6 +145,14 @@ export default {
     }
   }
 };
+
+// http.post('', {}, function(res) {
+//           var thehtml = ''
+//           res.data && $.each(res.data, function(index, r) {
+              
+//           });
+//           $(".zh_parent").append(thehtml)
+//   })
 </script>
 
 <style scoped>
