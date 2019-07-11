@@ -8,13 +8,13 @@ module.exports = {
   devServer: {
     open: true,
     host: 'localhost',
-    port: 8081,
+    port: 8082,
     https: false,
     hotOnly: false,
     proxy: {    
       // 配置跨域（代理）
       '/api': {
-        target: 'http//localhost:8081/api/',    //目标地址
+        target: 'http//localhost:8082/api/',    //目标地址
         ws: true,   //是否允许跨域
         changOrigin: true,   //是否改变原域
         pathRewrite: {   //路径重写

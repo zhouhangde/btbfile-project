@@ -141,6 +141,12 @@ const router = new Router({
       name: 'otcJi',
       component: () => import('./views/me/otcJiPage/otcJi.vue')
     },
+    // 进入OTC交易平台中的订单
+    {
+      path: '/orderDetail',
+      name: 'orderDetail',
+      component: () => import('./views/me/otcJiPage/orderDetail.vue')
+    },
     // 进入我的资产
     {
       path: '/myzc',

@@ -1,14 +1,28 @@
 <template>
   <div class="mytj">
-    mytj
+    <Header :isLeft="true" :title="title"/>
+    <div style="height: 98%;background-color: #7373bd;">
+      <div class="mytj_content">  
+        <div style="text-align:center">
+           <img style="width:25vw;height:25vw;"/>
+        </div>
+        <p style="padding: 17px;text-align:center">邀请码:<span>H444Du</span></p>
+        <div style="display: flex;justify-content: space-between;">
+           <button class="theButton">复制链接</button>
+           <button class="theButton">我的推荐</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import Header from "../../../components/Header";
 export default {
   name: "mytj",
   data() {
     return {
+      title:'我的推荐'
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -21,7 +35,7 @@ export default {
     }
   },
   components: {
-     
+     Header
   }
 };
 </script>
@@ -32,5 +46,19 @@ export default {
   height: 100%;
   overflow: auto;
   box-sizing: border-box;
+}
+.mytj_content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* margin-top: 30vh; */
+  padding-top: 23vh;
+        width: 50%;
+    margin: 0 auto;
+}
+.theButton{
+  padding: 5px 10px;
+  background-color: #afeadf;
+      border-radius: 5px;
 }
 </style>

@@ -20,9 +20,12 @@
                 <i class="fa fa-address-book" style="font-size: 17px;"></i>
             </div>
         </div>
-        <p style="text-align:right;width: 91%;margin: 0 auto;" >
-            <span style="color: #d0b35b;" @click="$router.push({name:'googleYz'})">忘记密码?</span>
-        </p>
+        <div class="item-input">
+            <div class="item-right">
+                <input type="text"  placeholder="请再次输入密码"/>
+                <i class="fa fa-address-book" style="font-size: 17px;"></i>
+            </div>
+        </div>
         <div class="complate">
             完成
         </div>

@@ -15,7 +15,7 @@ Vue.prototype.$axios = axios;
 
 Vue.use(MintUI);
 
-axios.defaults.baseURL = 'http://localhost:8081/';
+axios.defaults.baseURL = 'http://localhost:8082/';
 
 // 请求拦截
 axios.interceptors.request.use(

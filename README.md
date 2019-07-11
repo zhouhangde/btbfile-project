@@ -17,9 +17,21 @@ https://www.webpackjs.com/concepts/
 vue
 https://cn.vuejs.org/v2/guide/
 
+mint-ui
+http://mint-ui.github.io/docs/#/en2/navbar
 
-  # OR
-  yarn global add @vue/cli 
+font-sawone图标
+https://www.thinkcmf.com/font/search/index.html
+
+使用可滑动的导航切换-比navbar更好
+https://github.com/ScoutYin/ly-tab
+<!-- 以局部组件的方式引入 -->
+https://blog.csdn.net/weixin_34375251/article/details/88677626
+
+
+项目注意端口
+devServer中的port: 8082应该与main.js中的axios.defaults.baseURL 一直
+否则控制台会一直宝请求错误snode此类的错误
 
 ## 安装依赖
 ```
