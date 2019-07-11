@@ -1,25 +1,20 @@
 <template>
-  <div class="smrz">
+  <div class="sjrzDetail">
     <Header :isLeft="true" :title="title"/>
-    <div>
-      <div class="address-cell"  @click="$router.push({name:'smrz'})">
-        <i class="fa fa-map-marker"></i>
-        <div class="address-index">
-          <span>个人认证</span>
-          <i class="fa fa-angle-right"></i>
-        </div>
-      </div>
+    <div style="text-align: center;margin-top: 60px;">
+      <img  style="width:20vw;height:20vw" />
     </div>
+    <p style="text-align: center;margin-top: 20px;">审核已通过</p>
   </div>
 </template>
 
 <script>
-import Header from "../../components/Header";
+import Header from "../../../components/Header";
 export default {
-  name: "smrz",
+  name: "sjrzDetail",
   data() {
     return {
-        title:'实名认证'
+       title:'商家认证'
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -32,13 +27,13 @@ export default {
     }
   },
   components: {
-     Header
+      Header
   }
 };
 </script>
 
 <style scoped>
-.smrz {
+.sjrzDetail {
   width: 100%;
   height: 100%;
   overflow: auto;

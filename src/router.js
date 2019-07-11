@@ -61,7 +61,109 @@ const router = new Router({
     {
       path: '/smrz',
       name: 'smrz',
-      component: () => import('./views/me/smrz.vue')
+      component: () => import('./views/me/smrzPage/smrz.vue')
+    },
+    // 进入个人认证详情
+    {
+      path: '/grrzDetail',
+      name: 'grrzDetail',
+      component: () => import('./views/me/smrzPage/grrzDetail.vue')
+    },
+    // 进入商家认证详情
+    {
+      path: '/sjrzDetail',
+      name: 'sjrzDetail',
+      component: () => import('./views/me/smrzPage/sjrzDetail.vue')
+    },
+    // 进入提币地址
+    {
+      path: '/tbdz',
+      name: 'tbdz',
+      component: () => import('./views/me/tbdzPage/tbdz.vue')
+    },
+    // 进入新增提币地址
+    {
+      path: '/addTbdz',
+      name: 'addTbdz',
+      component: () => import('./views/me/tbdzPage/addTbdz.vue')
+    },
+    // 进入收款方式
+    {
+      path: '/skfs',
+      name: 'skfs',
+      component: () => import('./views/me/skfsPage/skfs.vue')
+    },
+    // 进入支付宝方式
+    {
+      path: '/zfbMethod',
+      name: 'zfbMethod',
+      component: () => import('./views/me/skfsPage/zfbMethod.vue')
+    },
+    // 进入微信方式
+    {
+      path: '/wxMethod',
+      name: 'wxMethod',
+      component: () => import('./views/me/skfsPage/wxMethod.vue')
+    },
+    // 进入安全中心
+    {
+      path: '/aqzx',
+      name: 'aqzx',
+      component: () => import('./views/me/aqzxPage/aqzx.vue')
+    },
+    // 进入修改密码
+    {
+      path: '/updatePw',
+      name: 'updatePw',
+      component: () => import('./views/me/aqzxPage/updatePw.vue')
+    },
+    // 进入忘记修改密码
+    {
+      path: '/forgetPw',
+      name: 'forgetPw',
+      component: () => import('./views/me/aqzxPage/forgetPw.vue')
+    },
+    // 进入谷歌验证
+    {
+      path: '/googleYz',
+      name: 'googleYz',
+      component: () => import('./views/me/aqzxPage/googleYz.vue')
+    },
+    // 进入我的推荐
+    {
+      path: '/mytj',
+      name: 'mytj',
+      component: () => import('./views/me/mytjPage/mytj.vue')
+    },
+    // 进入OTC交易平台
+    {
+      path: '/otcJi',
+      name: 'otcJi',
+      component: () => import('./views/me/otcJiPage/otcJi.vue')
+    },
+    // 进入我的资产
+    {
+      path: '/myzc',
+      name: 'myzc',
+      component: () => import('./views/me/myzcPage/myzc.vue')
+    },
+    // 进入转账明细
+    {
+      path: '/zzmx',
+      name: 'zzmx',
+      component: () => import('./views/me/zzmxPage/zzmx.vue')
+    },
+    // 进入设置
+    {
+      path: '/setting',
+      name: 'setting',
+      component: () => import('./views/me/settingPage/setting.vue')
+    },
+    // 进入关于我们
+    {
+      path: '/aboutMe',
+      name: 'aboutMe',
+      component: () => import('./views/me/aboutMePage/aboutMe.vue')
     }
   ]
 });

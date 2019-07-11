@@ -16,6 +16,9 @@
      <span v-if="aside" class="myicon">
        <i class="fa fa-address-book"></i>
      </span>
+     <span v-if="newIcon" class="myicon">
+       <i class="fa fa-address-book"></i>
+     </span>
   </div>
 </template>
 
@@ -32,6 +35,7 @@ export default {
     xin:Boolean,  //显示收藏图标
     biao:Boolean,  //显示统计图标
     aside:Boolean,  //显示右侧的三个点图标
+    newIcon:Boolean //新增图标
 
   },
   created(){
