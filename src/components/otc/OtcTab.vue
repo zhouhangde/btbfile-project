@@ -45,13 +45,15 @@ export default {
 
 <style scoped>
   button{
-    padding: 5px 6vw;
+    padding: 8px 6vw;
     width: 50%;
   }
   .activetabOne{
-    background-color: #8ba98b;
+    color:#fff;
+    background-color:rgb(90,189,161);
   }
   .activetabTwo{
+    color:#fff;
     background-color: #e27373;
   }
 </style>

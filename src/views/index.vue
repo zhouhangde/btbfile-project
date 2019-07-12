@@ -13,11 +13,11 @@ export default {
   data() {
     return {
       tabbarData: [
-        { title: "首页", icon: "home", path: "/home" },
-        { title: "行情", icon: "file-text-o", path: "/hanq" },
-        { title: "交易", icon: "user", path: "/jiaoyi" },
-        { title: "OTC", icon: "home", path: "/otc" },
-        { title: "我的", icon: "home", path: "/me" }
+        { title: "首页", icon: "gg", path: "/home" },
+        { title: "行情", icon: "credit-card", path: "/hanq" },
+        { title: "交易", icon: "bandcamp", path: "/jiaoyi" },
+        { title: "OTC", icon: "yen (alias)", path: "/otc" },
+        { title: "我的", icon: "user", path: "/me" }
       ]
     };
   },

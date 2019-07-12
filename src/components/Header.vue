@@ -5,19 +5,19 @@
     </span>
     <span>
       {{title}}
-      <i class="fa fa-address-book" v-if="xial"></i>
+      <i class="fa fa-angle-down" v-if="xial"></i>
      </span>
      <span v-if="xin" class="myicon">
-       <i class="fa fa-address-book"></i>
+       <i class="fa fa-ellipsis-v"></i>
      </span>
      <span v-if="biao" class="myicon">
-       <i class="fa fa-address-book"></i>
+       <i class="fa fa-bar-chart"></i>
      </span>
      <span v-if="aside" class="myicon">
-       <i class="fa fa-address-book"></i>
+       <i class="fa fa-star-o"></i>
      </span>
      <span v-if="newIcon" class="myicon">
-       <i class="fa fa-address-book"></i>
+       <i class="fa reorder (alias)"></i>
      </span>
   </div>
 </template>

@@ -7,7 +7,7 @@
              <div>
                <p>{{item.name}}</p>
                <p>
-                <span>限额:<i class="fa fa-address-book"></i></span>
+                <span>限额:<i class="fa fa-usd" id=mit></i></span>
                 <span>{{item.money}}</span>
                </p>
                <p>
@@ -95,9 +95,18 @@ export default {
      color: wheat;
    }
    .activetabOne{
-     background-color: green;
+     color:#fff;
+     background-color: rgb(77,170,144);
    }
    .activetabTwo{
-     background-color: red;
+     background-color: #e45c5c;
    }
+   #mit{
+  width:15px;
+  height:15px;
+  color:#fff;
+  text-align: center;
+  border-radius: 50%;
+  background-color:rgb(64,143,120);
+}
 </style>

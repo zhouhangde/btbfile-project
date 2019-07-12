@@ -60,7 +60,8 @@ export default {
     font-size: 1rem;
   }
   .filter-bold {
-    font-weight: 600;
-    color: red;
+    /* font-weight: 600; */
+    color: #009eef;
+    font-size: 16px;
   }
 </style>

@@ -3,10 +3,11 @@
     <div v-for="(item,index) in zorjdata.allData" :key="index" class="itemzord">
         <div>{{item.zhangOne}}</div>
         <div class="centeritem">
-          <span>{{item.zhangTwo}}</span>
-          <span style="margin-top:10px;">{{item.zhangThree}}</span>
+          <span style="margin-left:30px;">{{item.zhangTwo}}</span>
+          <span style="margin-top:10px;margin-left:30px;">{{item.zhangThree}}</span>
         </div>
-        <div :style="{backgroundColor:item.color,padding:'10px 11px',color:'white'}">{{item.zhangThor}}</div>
+        <div :style="{backgroundColor:item.color,padding:'8px 18px',color:'white'}">{{item.zhangThor}}</div>
+        
     </div>
   </div>
 </template>
