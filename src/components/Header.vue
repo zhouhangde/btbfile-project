@@ -19,6 +19,9 @@
      <span v-if="newIcon" class="myicon">
        <i class="fa reorder (alias)"></i>
      </span>
+     <span v-if="historytitle" class="myicon">
+       历史
+     </span>
   </div>
 </template>
 

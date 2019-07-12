@@ -1,8 +1,19 @@
 <template>
-  <div class="zzmx">
-      <Header :title="title" :isLeft="true"/>
-      <!-- 导航 -->
-       <MxTab :hqfilterData="hanqTabData"  @update="update"/>
+  <div class="homeKxEarchat">
+    <Header :isLeft="true" :title="title"/>
+    <div>
+      <p class="theItem">
+        <span>0.3325<small style="margin-left: 7px;font-size: 10px;color: #fff;">¥2.29</small></span>
+        <span>24h最高<small style="margin-left: 7px;">0.3334</small></span>
+      </p>
+      <p class="theItem">
+        <span>0.3325<small style="margin-left: 7px;font-size: 10px;color: #fff;">¥2.29</small></span>
+        <span>24h最高<small style="margin-left: 7px;">0.3334</small></span>
+      </p>
+    </div>
+
+    <!-- 导航 -->
+    <MxTab :hqfilterData="hanqTabData"  @update="update"/>
 
      <!-- 涨幅跌幅信息 ，bottom-all-loaded上拉加载是否完成-->
      <!-- auto-fill若为真，loadmore 会自动检测并撑满其容器 -->
@@ -19,17 +30,17 @@
 </template>
 
 <script>
-const myzixuDataOne = require('../../../../data/czDataOne.json');
-const myusdtDataOne = require('../../../../data/txDataOne.json');
-const myhanqTabData = require('../../../../data/mxTabData.json');
-import Header from "../../../components/Header";
-import MxTab from "../../../components/me/MxTab";
-import MxTabList from "../../../components/me/MxTabList";
+const myzixuDataOne = require('../../../data/czDataOne.json');
+const myusdtDataOne = require('../../../data/txDataOne.json');
+const myhanqTabData = require('../../../data/mxTabData.json');
+import Header from "../../components/Header";
+import MxTab from "../../components/me/MxTab";
+import MxTabList from "../../components/me/MxTabList";
 export default {
-  name: "zzmx",
+  name: "homeKxEarchat",
   data() {
     return {
-       title:'明细',
+      title:'XRP/USDT',
        hanqTabData:{},  //tab切换的title
        zxorusData:[],   //tab下的切换的列表数据
        page: 1,   //当前页数
@@ -37,7 +48,6 @@ export default {
        allLoaded: false,   //是否已经加载完毕，无加载数据的开关
        bottomPullText: "上拉加载更多",   //底部的加载显示字样
        data: null,  //tab切换条件
-       
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -84,13 +94,27 @@ export default {
     }
   },
   components: {
-      Header,
-      MxTab,
-      MxTabList
+    Header,
+    MxTab,
+    MxTabList
   }
 };
 </script>
 
 <style scoped>
-
+.homeKxEarchat {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  background-color: #151111;
+  color: #fff;
+}
+.theItem{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 6px 15px;
+}
+    
 </style>

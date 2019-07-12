@@ -45,6 +45,12 @@ const router = new Router({
         }
       ]
     },
+    // 首页点击列表进入k线图展示页面
+    {
+      path: '/homeKxEarchat',
+      name: 'homeKxEarchat',
+      component: () => import('./views/indexPage/homeKxEarchat.vue')
+    },
     // 进入充值页面
     {
       path: '/chongz',
@@ -189,11 +195,41 @@ const router = new Router({
       name: 'setting',
       component: () => import('./views/me/settingPage/setting.vue')
     },
+    // 进入设置的多页面选择
+    {
+      path: '/moreLanuge',
+      name: 'moreLanuge',
+      component: () => import('./views/me/settingPage/moreLanuge.vue')
+    },
     // 进入关于我们
     {
       path: '/aboutMe',
       name: 'aboutMe',
       component: () => import('./views/me/aboutMePage/aboutMe.vue')
+    },
+    // 进入关于我们-公司简介
+    {
+      path: '/gsjjDetail',
+      name: 'gsjjDetail',
+      component: () => import('./views/me/aboutMePage/gsjjDetail.vue')
+    },
+    // 进入关于我们-用户协议
+    {
+      path: '/yhxyDetail',
+      name: 'yhxyDetail',
+      component: () => import('./views/me/aboutMePage/yhxyDetail.vue')
+    },
+    // 进入关于我们-隐私政策
+    {
+      path: '/yszcDetail',
+      name: 'yszcDetail',
+      component: () => import('./views/me/aboutMePage/yszcDetail.vue')
+    },
+    // 进入关于我们-服务热线
+    {
+      path: '/fwrxDetail',
+      name: 'fwrxDetail',
+      component: () => import('./views/me/aboutMePage/fwrxDetail.vue')
     }
   ]
 });

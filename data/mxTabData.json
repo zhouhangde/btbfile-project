@@ -1,0 +1,12 @@
+{
+    "navTab": [
+		{
+            "name": "充值",
+            "condition":"zixu"
+        },
+        {
+            "name": "提现",
+            "condition":"usdt"
+        }
+    ]
+}

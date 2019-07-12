@@ -1,40 +1,10 @@
 <template>
-  <div class="aboutMe">
+  <div class="moreLanuge">
     <Header :title="title" :isLeft="true"/>
     <div>
-      <div>
-        <div style="text-align: center;margin-top: 26px;">
-          <img  style="width:20vw;height:20vw" />
-        </div>
-        <p style="text-align: center;margin: 20px 0;">版本号:1.1.5</p>
-      </div>
-      <div class="address-cell"  @click="$router.push({name:'gsjjDetail'})">
+      <div class="address-cell"  @click="$router.push({name:'moreLanuge'})">
         <div class="address-index">
-          <span>公司简介</span>
-          <span>
-             <i class="fa fa-angle-right" style="margin-left: 2.1vw"></i>
-          </span>
-        </div>
-      </div>
-      <div class="address-cell"  @click="$router.push({name:'yhxyDetail'})">
-        <div class="address-index">
-          <span>用户协议</span>
-          <span>
-             <i class="fa fa-angle-right" style="margin-left: 2.1vw"></i>
-          </span>
-        </div>
-      </div>
-      <div class="address-cell" @click="$router.push({name:'yszcDetail'})">
-        <div class="address-index">
-          <span>隐私政策</span>
-          <span>
-             <i class="fa fa-angle-right" style="margin-left: 2.1vw"></i>
-          </span>
-        </div>
-      </div>
-      <div class="address-cell" @click="$router.push({name:'fwrxDetail'})">
-        <div class="address-index">
-          <span>服务热线</span>
+          <span>中文</span>
           <span>
              <i class="fa fa-angle-right" style="margin-left: 2.1vw"></i>
           </span>
@@ -42,9 +12,8 @@
       </div>
       <div class="address-cell">
         <div class="address-index">
-          <span>最新版本</span>
+          <span>English</span>
           <span>
-             1.1.5
              <i class="fa fa-angle-right" style="margin-left: 2.1vw"></i>
           </span>
         </div>
@@ -56,10 +25,10 @@
 <script>
 import Header from "../../../components/Header";
 export default {
-  name: "aboutMe",
+  name: "moreLanuge",
   data() {
     return {
-      title:'关于我们'
+      title:'多语言'
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -78,7 +47,7 @@ export default {
 </script>
 
 <style scoped>
-.aboutMe {
+.moreLanuge {
   width: 100%;
   height: 100%;
   overflow: auto;

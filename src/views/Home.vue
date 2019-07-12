@@ -201,14 +201,14 @@ mt-loadmore{
 }
 /* 轮播样式 */
 .swiper {
-  height: 100px;
+  height: 150px;
   width: 90%;
   margin: 0 auto;
   border-radius: 5px;
 }
 .swiper img {
   width: 100%;
-  height: 100px;
+  height: 150px;
 }
 .zh_gonggao{
   padding: 10px 0;
