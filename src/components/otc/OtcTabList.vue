@@ -3,7 +3,9 @@
     <ul class="parent">
         <li class="pareant-item"  v-for="(item,index) in zorjdata.allData" :key="index" @click="showDetail(item)">
           <div class="pareant-item-header">
-             <img src="" style="width:40px;height:40px"/>
+             <!-- <img :src="item.imgage" style="width:40px;height:40px"/> -->
+             <!-- <img src="../../../public/image/mytitle.png"/> -->
+             <img src="../../assets/image/mytitle.png"/>
              <div>
                <p>{{item.name}}</p>
                <p>
@@ -15,7 +17,8 @@
                </p>
              </div>
              <div> 
-                 <img style="width:5px;height:5px;margin-left:5px"  v-for="(itemChild,indexitem) in item.iconArray" :key="indexitem"/>
+                 <i :class="itemChild.icon" style="width:16px;height:5px;margin-left:10px" v-for="(itemChild,indexitem) in item.iconArray" :key="indexitem"></i>
+                 <!-- <img style="width:5px;height:5px;margin-left:5px" v-for="(itemChild,indexitem) in item.iconArray" :key="indexitem"/> -->
              </div>
           </div>
           <div class="line"></div>
