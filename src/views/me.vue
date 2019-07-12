@@ -218,7 +218,7 @@ export default {
 }
 .address-cell > i {
   font-size: 1.3rem;
-  color: rgb(74, 165, 240);
+  color: rgb(141, 141, 141);
   margin-right: 2.666667vw;
 }
 .address-index {

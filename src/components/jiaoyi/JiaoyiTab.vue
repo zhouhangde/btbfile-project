@@ -47,9 +47,12 @@ export default {
   button{
     padding: 8px 6vw;
     width: 50%;
+    color:#999;
+    background-color:#cccccc75;
   }
   .activetabOne{
     background-color:rgb(77,170,144);
+    color:#fff;
   }
   .activetabTwo{
     color:#fff;

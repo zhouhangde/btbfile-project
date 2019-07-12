@@ -72,6 +72,6 @@ a {
 }
 /* 用在当前活动的路由上，下即为动态添加的样式 */
 .is-selected {
-  color: #009eef;
+  color: rgb(2,136,207);
 }
 </style>

@@ -11,13 +11,13 @@
 				"item":"我要卖",
 				"iconArray":[
 					{
-						"icon":"fa fa-gg"
+						"icon":"fa fa-wechat (alias)"
 					},
 					{
 						"icon":"fa fa-credit-card"
 					},
 					{
-						"icon":"fa fa-bandcamp"
+						"icon":"fa fa-cny (alias)"
 					}
 				]
 			},
@@ -31,10 +31,13 @@
 				"item":"我要卖",
 				"iconArray":[
 					{
-						"icon":"fa fa-gg"
+						"icon":"fa fa-wechat (alias)"
 					},
 					{
 						"icon":"fa fa-credit-card"
+					},
+					{
+						"icon":"fa fa-cny (alias)"
 					}
 				]
 			},
@@ -48,13 +51,13 @@
 				"item":"我要卖",
 				"iconArray":[
 					{
-						"icon":"fa fa-gg"
+						"icon":"fa fa-wechat (alias)"
 					},
 					{
 						"icon":"fa fa-credit-card"
 					},
 					{
-						"icon":"fa fa-bandcamp"
+						"icon":"fa fa-cny (alias)"
 					}
 				]
 			},
@@ -68,10 +71,13 @@
 				"item":"我要卖",
 				"iconArray":[
 					{
-						"icon":"fa fa-gg"
+						"icon":"fa fa-wechat (alias)"
 					},
 					{
 						"icon":"fa fa-credit-card"
+					},
+					{
+						"icon":"fa fa-cny (alias)"
 					}
 				]
 			}
