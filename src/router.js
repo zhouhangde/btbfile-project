@@ -147,11 +147,35 @@ const router = new Router({
       name: 'orderDetail',
       component: () => import('./views/me/otcJiPage/orderDetail.vue')
     },
+    // 进入OTC交易平台中的申诉页面
+    {
+      path: '/shensu',
+      name: 'shensu',
+      component: () => import('./views/me/otcJiPage/shensu.vue')
+    },
     // 进入我的资产
     {
       path: '/myzc',
       name: 'myzc',
       component: () => import('./views/me/myzcPage/myzc.vue')
+    },
+    // 进入我的资产详情
+    {
+      path: '/myzcDetail',
+      name: 'myzcDetail',
+      component: () => import('./views/me/myzcPage/myzcDetail.vue')
+    },
+      // 进入我的资产提现
+    {
+      path: '/myzctx',
+      name: 'myzctx',
+      component: () => import('./views/me/myzcPage/myzctx.vue')
+    },
+      // 进入我的资产充值
+    {
+      path: '/myzccz',
+      name: 'myzccz',
+      component: () => import('./views/me/myzcPage/myzccz.vue')
     },
     // 进入转账明细
     {
