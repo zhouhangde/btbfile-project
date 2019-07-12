@@ -5,19 +5,22 @@
     </span>
     <span>
       {{title}}
-      <i class="fa fa-address-book" v-if="xial"></i>
+      <i class="fa fa-angle-down" v-if="xial"></i>
      </span>
      <span v-if="xin" class="myicon">
-       <i class="fa fa-address-book"></i>
+       <i class="fa fa-ellipsis-v"></i>
      </span>
-     <span v-if="biao" class="myicon">
-       <i class="fa fa-address-book"></i>
+     <span v-if="biao" class="myicon" @click="$router.push({name:'homeKxEarchat'})">
+       <i class="fa fa-bar-chart"></i>
      </span>
      <span v-if="aside" class="myicon">
-       <i class="fa fa-address-book"></i>
+       <i class="fa fa-star-o"></i>
      </span>
      <span v-if="newIcon" class="myicon">
-       <i class="fa fa-address-book"></i>
+       <i class="fa reorder (alias)"></i>
+     </span>
+     <span v-if="historytitle" class="myicon">
+       历史
      </span>
   </div>
 </template>
@@ -35,7 +38,8 @@ export default {
     xin:Boolean,  //显示收藏图标
     biao:Boolean,  //显示统计图标
     aside:Boolean,  //显示右侧的三个点图标
-    newIcon:Boolean //新增图标
+    newIcon:Boolean, //新增图标
+    historytitle:Boolean //显示历史
 
   },
   created(){

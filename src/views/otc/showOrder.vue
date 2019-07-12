@@ -9,7 +9,7 @@
             <span style="font-size:16px">{{orderDetail.price}}</span>
         </p>
         <p style="margin-top:15px">
-           <span>限额<i class="fa fa-address-book"></i></span>
+           <span>限额<i class="fa fa-usd" id="mit"></i></span>
            <span style="margin-left:10px">{{orderDetail.money}}</span>
         </p>
     </div>
@@ -108,5 +108,13 @@ export default {
 }
 .payMethord p {
     padding: 10px
+}
+#mit{
+  width:15px;
+  height:15px;
+  border-radius: 50%;
+  text-align: center;
+  color:#fff;
+  background-color:rgb(64,143,120);
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="HomeOne">
+  <div class="HomeOne" @click="$router.push({name:'homeKxEarchat'})">
      <!-- <table>
          <tr v-for="(item,index) in data" :key="index">
              <td>{{item.title}}</td>

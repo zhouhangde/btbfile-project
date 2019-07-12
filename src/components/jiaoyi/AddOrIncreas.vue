@@ -71,16 +71,18 @@ export default {
   vertical-align: middle;
 }
 .cartbutton i {
-  color: rgb(35, 149, 255);
+  color:#ccc;
   vertical-align: middle;
   font-size: 1.5rem;
 }
 .button-minus {
   width: 4.866667vw;
   height: 4.866667vw;
-  border: 1px solid rgb(35, 149, 255);
+  border: 1px solid #ccc;
   border-radius: 50%;
   text-align: center;
+  margin-top:2px;
+  margin-left:5px;
 }
 .button-minus i {
   font-size: 1rem;

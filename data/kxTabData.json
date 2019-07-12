@@ -1,0 +1,12 @@
+{
+    "navTab": [
+		{
+            "name": "盘口",
+            "condition":"zixu"
+        },
+        {
+            "name": "最新成交",
+            "condition":"usdt"
+        }
+    ]
+}

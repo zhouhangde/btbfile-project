@@ -1,5 +1,5 @@
 <template>
-  <div class="HanqTab">
+  <div class="MxTab">
     <aside>
       <div class="filter_wrap" v-for="(item,index) in hqfilterData.navTab" :key="index" 
          :class="{'filter-bold':currentFilter==index}"
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "HanqTab",
+  name: "MxTab",
   data() {
     return {
       currentFilter: 0,    //默认当前点击的是综合排序，不是距离最近等
@@ -47,10 +47,10 @@ export default {
 </script>
 
 <style scoped>
-  .HanqTab{
+  .MxTab{
       width: 100%;
   }
-  .HanqTab aside{
+  .MxTab aside{
      display: flex;
       flex: 1;
       justify-content: space-around;

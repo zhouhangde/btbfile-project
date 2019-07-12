@@ -59,6 +59,7 @@ export default {
 }
 .tab-item-icon i {
   font-size: 16px;
+  line-height: 25px;
 }
 .tab-item-label {
   /* inherit 关键字指定一个属性应从父元素继承它的值 */
@@ -72,6 +73,6 @@ a {
 }
 /* 用在当前活动的路由上，下即为动态添加的样式 */
 .is-selected {
-  color: #009eef;
+  color: rgb(2,136,207);
 }
 </style>

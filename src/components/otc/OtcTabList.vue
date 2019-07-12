@@ -3,19 +3,22 @@
     <ul class="parent">
         <li class="pareant-item"  v-for="(item,index) in zorjdata.allData" :key="index" @click="showDetail(item)">
           <div class="pareant-item-header">
-             <img src="" style="width:40px;height:40px"/>
+             <!-- <img :src="item.imgage" style="width:40px;height:40px"/> -->
+             <!-- <img src="../../../public/image/mytitle.png"/> -->
+             <img style="width:60px;height:60px;border-radius:50%;" src="../../assets/image/mytitle.png"/>
              <div>
                <p>{{item.name}}</p>
                <p>
-                <span>限额:<i class="fa fa-address-book"></i></span>
-                <span>{{item.money}}</span>
+                <span style="color:#999;">限额:<i class="fa fa-usd" id=mit></i></span>
+                <span style="color:#999;">{{item.money}}</span>
                </p>
-               <p>
-                 <span>单价</span>{{item.price}}
+               <p style="padding-left:46px;">
+                 <span>单价 <span style="font-size:18px;color:#000;font-weight:900;">{{item.price}}</span></span>
                </p>
              </div>
-             <div> 
-                 <img style="width:5px;height:5px;margin-left:5px"  v-for="(itemChild,indexitem) in item.iconArray" :key="indexitem"/>
+             <div id="we"> 
+                 <i :class="itemChild.icon" style="width:19px;height:19px;margin-left:10px" v-for="(itemChild,indexitem) in item.iconArray" :key="indexitem"></i>
+                 <!-- <img style="width:5px;height:5px;margin-left:5px" v-for="(itemChild,indexitem) in item.iconArray" :key="indexitem"/> -->
              </div>
           </div>
           <div class="line"></div>
@@ -75,7 +78,7 @@ export default {
      justify-content: space-between;
    }
    .pareant-item-header p{
-     padding: 3px;
+     padding: 7px;
    }
    .line{
      height: 1px;
@@ -95,9 +98,47 @@ export default {
      color: wheat;
    }
    .activetabOne{
-     background-color: green;
+     color:#fff;
+     background-color: rgb(77,170,144);
    }
    .activetabTwo{
-     background-color: red;
+     background-color: #e45c5c;
    }
+   #mit{
+  width:15px;
+  height:15px;
+  color:#fff;
+  text-align: center;
+  border-radius: 50%;
+  background-color:rgb(64,143,120);
+}
+#we i:nth-child(1){
+  width:20px;
+  height:20px;
+  background:rgb(29,273,3);
+  text-align: center;
+  color:#fff;
+  line-height: 20px;
+}
+
+#we i:nth-child(2){
+  width:20px;
+  height:20px;
+  color:rgb(255,180,18);
+  text-align: center;
+  line-height: 20px;
+}
+
+#we i:nth-child(3){
+  width:20px;
+  height:20px;
+  color:#fff;
+  background-color: rgb(79,172,252);
+  text-align: center;
+  line-height: 20px;
+}
+.pareant-item-footer span{
+  color:#999;
+  font-size: 14px;
+}
 </style>

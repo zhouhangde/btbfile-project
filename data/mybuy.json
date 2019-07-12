@@ -2,7 +2,7 @@
 	"myData": {
     "allData": [
 			{
-				"imgage": "",
+				"imgage": "../../../public/image/mytitle.png",
 				"name": "包秀敏",
 				"money": "20.00-4000.00",
 				"price": "7.02",
@@ -11,18 +11,18 @@
 				"item":"我要买",
 				"iconArray":[
 					{
-						"icon":""
+						"icon":"fa fa-wechat (alias)"
 					},
 					{
-						"icon":""
+						"icon":"fa fa-credit-card-alt"
 					},
 					{
-						"icon":""
+						"icon":"fa fa-cny (alias)"
 					}
 				]
 			},
 			{
-				"imgage": "",
+				"imgage": "../../assets/image/mytitle.png",
 				"name": "张实现",
 				"money": "50.00-1000.00",
 				"price": "7.05",
@@ -31,15 +31,18 @@
 				"item":"我要买",
 				"iconArray":[
 					{
-						"icon":""
+						"icon":"fa fa-wechat (alias)"
 					},
 					{
-						"icon":""
+						"icon":"fa fa-credit-card-alt"
+					},
+					{
+						"icon":"fa fa-cny (alias)"
 					}
 				]
 			},
 			{
-				"imgage": "",
+				"imgage": "../../assets/image/mytitle.png",
 				"name": "纳宏林",
 				"money": "20.00-1950.00",
 				"price": "7.02",
@@ -48,18 +51,18 @@
 				"item":"我要买",
 				"iconArray":[
 					{
-						"icon":""
+						"icon":"fa fa-wechat (alias)"
 					},
 					{
-						"icon":""
+						"icon":"fa fa-credit-card-alt"
 					},
 					{
-						"icon":""
+						"icon":"fa fa-cny (alias)"
 					}
 				]
 			},
 			{
-				"imgage": "",
+				"imgage": "../../assets/image/mytitle.png",
 				"name": "李文平",
 				"money": "20.00-1500.00",
 				"price": "7.05",
@@ -68,10 +71,13 @@
 				"item":"我要买",
 				"iconArray":[
 					{
-						"icon":""
+						"icon":"fa fa-wechat (alias)"
 					},
 					{
-						"icon":""
+						"icon":"fa fa-credit-card-alt"
+					},
+					{
+						"icon":"fa fa-cny (alias)"
 					}
 				]
 			}

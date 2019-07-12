@@ -18,7 +18,7 @@
     <HomeOne :data="homeOneData"/>
     <div class="zh_gonggao">
       <div class="gonggao">
-        <i class="fa fa-address-book" style="font-size: 17px;"></i>
+        <i class="fa fa-volume-up" style="font-size: 17px;"></i>
         <span style="margin-left: 7px;">
           <em style="color:#989292">公告:</em>
           <em style="margin-left: 5px;">交易所BTBFire即将开盘交易</em></span>
@@ -201,14 +201,14 @@ mt-loadmore{
 }
 /* 轮播样式 */
 .swiper {
-  height: 100px;
+  height: 150px;
   width: 90%;
   margin: 0 auto;
   border-radius: 5px;
 }
 .swiper img {
   width: 100%;
-  height: 100px;
+  height: 150px;
 }
 .zh_gonggao{
   padding: 10px 0;

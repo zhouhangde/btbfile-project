@@ -9,9 +9,11 @@ import axios from 'axios';
 import qs from 'qs';
 // 引入加载动画插件
 import { Indicator } from 'mint-ui';
+import echarts from 'echarts';
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
+Vue.prototype.$echarts = echarts;
 
 Vue.use(MintUI);
 

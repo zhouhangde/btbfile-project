@@ -11,7 +11,7 @@
     </div>
     <div>
       <div class="address-cell"  @click="$router.push({name:'smrz'})">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-user-circle"></i>
         <div class="address-index">
           <span>实名认证</span>
           <i class="fa fa-angle-right"></i>
@@ -25,56 +25,56 @@
         </div>
       </div>
       <div class="address-cell" @click="$router.push({name:'skfs'})">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-jpy"></i>
         <div class="address-index">
           <span>收款方式</span>
           <i class="fa fa-angle-right"></i>
         </div>
       </div>
       <div class="address-cell" @click="$router.push({name:'aqzx'})">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-shield"></i>
         <div class="address-index">
           <span>安全中心</span>
           <i class="fa fa-angle-right"></i>
         </div>
       </div>
       <div class="address-cell" @click="$router.push({name:'mytj'})">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-bookmark-o"></i>
         <div class="address-index">
           <span>我的推荐</span>
           <i class="fa fa-angle-right"></i>
         </div>
       </div>
       <div class="address-cell" style="margin-top: 2.666667vw; border-top: 1px solid #ddd;" @click="$router.push({name:'otcJi'})">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-yen (alias)"></i>
         <div class="address-index">
           <span>OTC交易平台</span>
           <i class="fa fa-angle-right"></i>
         </div>
       </div>
       <div class="address-cell"  @click="$router.push({name:'myzc'})">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-dollar (alias)"></i>
         <div class="address-index">
           <span>我的资产</span>
           <i class="fa fa-angle-right"></i>
         </div>
       </div>
       <div class="address-cell" @click="$router.push({name:'zzmx'})">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-file"></i>
         <div class="address-index">
           <span>转账明细</span>
           <i class="fa fa-angle-right"></i>
         </div>
       </div>
       <div class="address-cell" style="margin-top: 2.666667vw; border-top: 1px solid #ddd;" @click="$router.push({name:'setting'})">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-cog"></i>
         <div class="address-index">
           <span>设置</span>
           <i class="fa fa-angle-right"></i>
         </div>
       </div>
       <div class="address-cell" @click="$router.push({name:'aboutMe'})">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-heart-o"></i>
         <div class="address-index">
           <span>关于我们</span>
           <i class="fa fa-angle-right"></i>
@@ -218,7 +218,7 @@ export default {
 }
 .address-cell > i {
   font-size: 1.3rem;
-  color: rgb(74, 165, 240);
+  color: rgb(141, 141, 141);
   margin-right: 2.666667vw;
 }
 .address-index {
@@ -231,5 +231,9 @@ export default {
 .address-index > i {
   font-size: 1.3rem;
   color: #ccc;
+}
+.address-index span{
+  font-size: 14px;
+  color:#000;
 }
 </style>

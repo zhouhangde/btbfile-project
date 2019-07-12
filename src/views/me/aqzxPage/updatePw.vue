@@ -64,9 +64,10 @@ export default {
     display: flex;
     height: 6vh;
     margin: 12px 0;
+    border-bottom: 1px solid #ccc;
 }
 .item-right{
-    border-bottom: 1px solid #d6c2c2;
+    /* border-bottom: 1px solid #d6c2c2; */
     width: 91%;
     display: -webkit-box;
     display: -ms-flexbox;

@@ -9,35 +9,35 @@
             <button>卖出</button>
         </div> -->
         <JiaoyiTab :filterData="jiaoyiTabData" @update="update"/>
-        <div style="text-align:left;padding:10px 0;color:#d4d3d3">限单价></div>
+        <div style="text-align:left;padding:10px 0;color:#999">限单价></div>
         <AddOrIncreas :dataNumberr="theDj" class="jishukone"/>
         <!-- <div class="jishukone">
           <span style="padding: 0 3px;" @click="increace">-</span>
           <span>{{x}}</span>
           <span style="padding: 0 3px;" @click="add">+</span>
         </div> -->
-        <div style="text-align:left;padding:10px 0;color:#d4d3d3">估值:
-          <span><i class="fa fa-address-book" style="margin-right:5px"></i>0</span>
+        <div style="text-align:left;padding:10px 0;color:#999">估值 :
+          <span><i class="fa fa-yen (alias)" style="margin-right:5px"></i>0</span>
         </div>
         <div class="jishuktwo">
           <span style="padding: 0 3px;">-</span>
-          <span>0</span>
+          <span>数量</span>
           <span style="padding: 0 3px;">+</span>
         </div>
         <div style="margin-top:10px">
           <button style="width:100%;padding:5px 0px;text-align:center;border: 1px solid #e0e0e6;">0</button>
         </div>
         <div style="margin-top:5px">
-           <button style="width:100%;padding:5px 0px;text-align:center;" :class="{'inputru':inputru}" v-if="inputru">买入</button>
-          <button style="width:100%;padding:5px 0px;text-align:center;" :class="{'output':output}" v-else>卖出</button>
+           <button style="width:100%;padding:5px 0px;text-align:center;color:#fff;" :class="{'inputru':inputru}" v-if="inputru">买入</button>
+          <button style="width:100%;padding:5px 0px;text-align:center;color:#fff;" :class="{'output':output}" v-else>卖出</button>
         </div>
       </div>
       <div class="center-contain-right">
          <ul>
-           <li>
+           <li id="sun">
              <div class="itemShop itemShopzf">
-               <span>价格</span>
-               <span>数量</span>
+               <span style="color:#999;">价格</span>
+               <span style="color:#999;">数量</span>
              </div>
              <div class="itemShop itemShopzf">
                <span>3.995</span>
@@ -63,7 +63,7 @@
          </ul>
          <div class="pjprice">3.3855</div>
          <ul style="padding-top:10px">
-           <li>
+           <li id="num">
              <div class="itemShop itemShopdf">
                <span>3.995</span>
                <span>45.2463</span>
@@ -102,11 +102,16 @@
     <div class="myfoot">
       <div style="padding:5px">24h最高</div>
     </div>
+    <mt-actionsheet
+      :actions="actions"
+      v-model="sheetVisible">
+    </mt-actionsheet>
   </div>
 </template>
 
 <script>
 const myjiaoyiTabData = require('../../data/jiaoyiTabData.json');
+import { Actionsheet } from 'mint-ui';
 import Header from "../components/Header";
 import JiaoyiTab from "../components/jiaoyi/JiaoyiTab";
 import AddOrIncreas from "../components/jiaoyi/AddOrIncreas";
@@ -134,7 +139,14 @@ export default {
       },
       theBsz:{
         m:0  //倍数总值
-      }
+      },
+      // 底部的弹出
+      actions:[{
+        // icon: 'icon-article', // 引入iconfont的类名作为展示的icon
+        name: '成交记录', // 引入文字作为标题
+        method : this.cj
+      }],
+      sheetVisible:true
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -183,6 +195,14 @@ export default {
     // 充值
     toinput(){
       this.$router.push({name:'chongz'});
+    },
+    cj(){
+
+
+    },
+    showactionSheet: function(){
+    	// 打开action sheet
+      this.sheetVisible = true;
     }
   },
   components: {
@@ -230,7 +250,7 @@ export default {
     flex-direction: row;
     justify-content: space-between;
     padding: 5px 0;
-    border: 1px solid #e0e0e6;
+    border: 1px solid #ccc;
   }
    .jishuktwo{
     display: flex;
@@ -240,6 +260,9 @@ export default {
     border: 1px solid #e0e0e6;
 
   }
+  .jishuktwo span{
+    color:#999;
+  }
   .center-contain-right ul{
     padding-bottom: 10px;
   }
@@ -248,6 +271,8 @@ export default {
     border-top: 1px solid rgb(222, 214, 214);
     border-bottom: 1px solid rgb(222, 214, 214);
     text-align: center;
+    color:#000;
+    font-weight:500;
   }
   .itemShopzf span:first-child{
     color: red
@@ -269,14 +294,22 @@ export default {
     align-items: center;
   }
   .toinput{
-    padding: 2px;
-    border: 1px solid #efe8e8;
+    padding: 3px;
+    border:1px solid #ccc;
+    color:#999;
     border-radius: 3px;
   }
   .inputru{
-   background-color:#8ba98b
+   background-color:rgb(70,170,144);
+   color:#fff;
   }
   .output{
    background-color:#e27373
+  }
+  #num span:nth-child(2){
+    color:#999;
+  }
+  #sun span:nth-child(2){
+    color:#999;
   }
 </style>

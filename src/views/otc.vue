@@ -3,8 +3,8 @@
     <Header :title="title" :xial="xial"/>
     <OtcTab :filterData="otcTabData" @update="update" style="padding:10px"/>
     <div style="padding: 10px;">
-       <span>您的余额:</span>
-       <span style="color:blue">{{yuMoney}}</span>
+       <span style="color:rgb(71,71,71);">您的余额:</span>
+       <span style="color:rgb(18,169,237);">{{yuMoney}}</span>
     </div>
     <OtcTabList  :key="index" v-for="(item,index) in otcDataList" :zorjdata="item.myData" @showtheDetail="showtheDetail"/>
     <!-- <div>

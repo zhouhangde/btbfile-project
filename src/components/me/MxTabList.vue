@@ -1,6 +1,6 @@
 <template>
-  <div class="HanqTabList">
-    <div v-for="(item,index) in zorjdata.allData" :key="index" class="itemzord"  @click="$router.push({name:'homeKxEarchat'})">
+  <div class="MxTabList">
+    <div v-for="(item,index) in zorjdata.allData" :key="index" class="itemzord">
         <div>{{item.zhangOne}}</div>
         <div class="centeritem">
           <span style="margin-left:30px;">{{item.zhangTwo}}</span>
@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: "HanqTabList",
+  name: "MxTabList",
   props: {
     zorjdata: Object
   },

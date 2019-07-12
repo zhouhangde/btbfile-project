@@ -29,6 +29,12 @@
         </li>
       </ul>
     </div>
+    <div v-if="noJl">
+      <div style="text-align: center;margin-top: 60px;">
+        <img  style="width:35vw;height:25vw" />
+      </div>
+      <p style="text-align: center;margin-top: 25px;">您还没有记录</p>
+    </div>
   </div>
 </template>
 
@@ -46,7 +52,9 @@ export default {
   name: "otcJi",
   data() {
     return {
+      noJl:false,
       title:'成交记录',
+      // 以下为滑动导航
       selectedId: 0,   //设置导航默认为第几个
       // 导航标题数组
       items: [
@@ -61,6 +69,7 @@ export default {
       options: {
         activeColor: '#1d98bd'
       },
+      // 滑动导航结束
       octJiData:[]
     };
   },
@@ -74,11 +83,13 @@ export default {
     },
     // 点击导航切换
     handleChange (item, index) {
+      this.noJl = false   //还没有记录的开关
       this.octJiData = []
       if(index == '0'){
         this.octJiData = mynoFkDataOneData[0].myData.allData
       }else if(index == '1'){
-        this.octJiData = myyFkDataOneData[0].myData.allData
+        // this.octJiData = myyFkDataOneData[0].myData.allData
+        this.noJl = true
       }else if(index == '2'){
         this.octJiData = mysszDataOneData[0].myData.allData
       }else if(index == '3'){
@@ -95,6 +106,9 @@ export default {
        var theText = dom.currentTarget.innerText
        if(theText == '已取消' || theText == '已完成'){
           this.$router.push({name:"orderDetail"});
+       }else if(theText == '申诉'){
+          this.$router.push({name:"shensu"});
+
        }
     }
   },
