@@ -54,6 +54,7 @@ export default {
     return {
       noJl:false,
       title:'成交记录',
+      // 以下为滑动导航
       selectedId: 0,   //设置导航默认为第几个
       // 导航标题数组
       items: [
@@ -68,6 +69,7 @@ export default {
       options: {
         activeColor: '#1d98bd'
       },
+      // 滑动导航结束
       octJiData:[]
     };
   },

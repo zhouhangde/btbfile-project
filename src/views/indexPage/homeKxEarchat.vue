@@ -12,8 +12,14 @@
       </p>
     </div>
 
-    <!-- 导航 -->
-    <MxTab :hqfilterData="hanqTabData"  @update="update"/>
+    <ly-tab
+      v-model="selectedId"
+      :items="items"
+      :options="options"
+      @change="handleChange">
+    </ly-tab>
+    <div id="myearchart" style="width:100%;height:300px;background-color: #fff;"></div>
+    <kxImgTab :hqfilterData="hanqTabData"  @update="update"/>
 
      <!-- 涨幅跌幅信息 ，bottom-all-loaded上拉加载是否完成-->
      <!-- auto-fill若为真，loadmore 会自动检测并撑满其容器 -->
@@ -23,19 +29,25 @@
         ref="loadmore"
         >
         <div class="Datalist">
-            <MxTabList v-for="(item,index) in zxorusData" :key="index" :zorjdata="item.myData"/>
+            <kxImgTabList v-for="(item,index) in zxorusData" :key="index" :zorjdata="item.myData"/>
         </div>
     </mt-loadmore>
+    <div class="foot-buttS">
+       <button class="buy-in">买入</button>
+       <button class="seller-out">卖出</button>
+    </div>
   </div>
 </template>
 
 <script>
-const myzixuDataOne = require('../../../data/czDataOne.json');
-const myusdtDataOne = require('../../../data/txDataOne.json');
-const myhanqTabData = require('../../../data/mxTabData.json');
+const myzixuDataOne = require('../../../data/newCjDataOne.json');
+const myusdtDataOne = require('../../../data/pkDataOne.json');
+const myhanqTabData = require('../../../data/kxTabData.json');
+import LyTab from '../../components/ly-tab/src/index.vue'
 import Header from "../../components/Header";
-import MxTab from "../../components/me/MxTab";
-import MxTabList from "../../components/me/MxTabList";
+import kxImgTab from "../../components/indexPage/kxImgTab";
+import kxImgTabList from "../../components/indexPage/kxImgTabList";
+
 export default {
   name: "homeKxEarchat",
   data() {
@@ -48,6 +60,66 @@ export default {
        allLoaded: false,   //是否已经加载完毕，无加载数据的开关
        bottomPullText: "上拉加载更多",   //底部的加载显示字样
        data: null,  //tab切换条件
+       // 以下为滑动导航
+        selectedId: 0,   //设置导航默认为第几个
+        // 导航标题数组
+        items: [
+          {label: '1分'},
+          {label: '5分'},
+          {label: '15分'},
+          {label: '30分'},
+          {label: '1小时'},
+          {label: '日线'},
+          {label: '周线'},
+          {label: '一月'}
+        ],
+        // 导航激活状态的颜色
+        options: {
+          activeColor: '#1d98bd'
+        },
+        // 滑动导航结束
+        // 图表
+        myChart: null,
+        linkoption :{
+          title: { 
+						text: ''
+						// subtext: 'k线'
+					},
+					tooltip: {
+						trigger: 'axis',
+						formatter: function (params) {
+							return '12341234'
+						},
+						axisPointer: {
+							animation: false
+						}
+					},
+					xAxis: [{
+						// type: 'category',
+						type: 'category',   //time需要传时间戳
+						boundaryGap: false,
+						"axisLabel":{   //控制横坐标显示
+							interval: 0,
+							rotate:0  
+						},
+						data: ['1','2','3','4','5','6']  //横坐标的值
+					}],
+					yAxis: [{
+						type: 'value',
+						axisLabel: {
+							formatter: '{value}'
+						},
+						splitLine: {
+							show: false   //分割线
+						}
+					}],
+					series: [{
+							name: '价格',
+							type: 'line',
+							data: [11, 11, 15, 13, 12, 13, 10]   //纵坐标的值
+						}
+					]
+        }
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -59,6 +131,13 @@ export default {
        this.hanqTabData = myhanqTabData
        console.log('导航的title',this.hanqTabData)
        this.loadData()
+    },
+    // 点击导航切换
+    handleChange (item, index) {
+      if(index == '0'){
+        console.log("123412412")
+      }else if(index == '1'){
+      }
     },
      //初始加载数据
     loadData() {
@@ -91,12 +170,26 @@ export default {
       // console.log(condation);
       this.data = condation;
       this.loadData();
+    },
+    draw() {
+      console.log("12341234awerw");
+      this.myChart = this.$echarts.init(document.getElementById('myearchart'));
+      console.log(this.linkoption)
+      this.myChart.setOption(this.linkoption);
     }
+  },
+  // 调用
+  mounted() {
+    this.draw();
+    window.addEventListener('resize', () => {
+      this.myChart.resize()
+    })
   },
   components: {
     Header,
-    MxTab,
-    MxTabList
+    LyTab,
+    kxImgTab,
+    kxImgTabList
   }
 };
 </script>
@@ -116,5 +209,25 @@ export default {
   justify-content: space-between;
   padding: 6px 15px;
 }
-    
+.foot-buttS{
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    position: absolute;
+    bottom: 10px; 
+}
+.buy-in{
+    width: 40%;
+    padding: 7px;
+    background-color: green;
+    color: #fff;
+    margin-right: 10px;
+}
+.seller-out{
+    width: 40%;
+    padding: 7px;
+    background-color: #da75ae;
+    color: #fff;
+    margin-right: 10px;
+}
 </style>
