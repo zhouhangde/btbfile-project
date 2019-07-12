@@ -35,7 +35,8 @@ export default {
     xin:Boolean,  //显示收藏图标
     biao:Boolean,  //显示统计图标
     aside:Boolean,  //显示右侧的三个点图标
-    newIcon:Boolean //新增图标
+    newIcon:Boolean, //新增图标
+    historytitle:Boolean //显示历史
 
   },
   created(){
