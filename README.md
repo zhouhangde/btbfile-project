@@ -33,6 +33,15 @@ https://blog.csdn.net/weixin_34375251/article/details/88677626
 devServer中的port: 8082应该与main.js中的axios.defaults.baseURL 一直
 否则控制台会一直宝请求错误snode此类的错误
 
+引用font-awsome的三种方式（以下两种方式都不需要配置webpack）
+1是 （css包全打到app.js里，此会增加app。js的体积）
+ 先按装  npm install font-awesome
+ 然后在main。js 中添加  import 'font-awesome/css/font-awesome.css'
+2是 (更好)
+ 下载font-awesome  然后把它整个包 下载下来 ，然后把它放在static 静态目录下，然后在index.html 通过link方式引入
+3 在public的index。html直接引入网络的css，但此方法需要配置webpack
+ 
+
 ## 安装依赖
 ```
 npm install
