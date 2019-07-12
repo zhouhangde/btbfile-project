@@ -102,11 +102,16 @@
     <div class="myfoot">
       <div style="padding:5px">24h最高</div>
     </div>
+    <mt-actionsheet
+      :actions="actions"
+      v-model="sheetVisible">
+    </mt-actionsheet>
   </div>
 </template>
 
 <script>
 const myjiaoyiTabData = require('../../data/jiaoyiTabData.json');
+import { Actionsheet } from 'mint-ui';
 import Header from "../components/Header";
 import JiaoyiTab from "../components/jiaoyi/JiaoyiTab";
 import AddOrIncreas from "../components/jiaoyi/AddOrIncreas";
@@ -134,7 +139,14 @@ export default {
       },
       theBsz:{
         m:0  //倍数总值
-      }
+      },
+      // 底部的弹出
+      actions:[{
+        // icon: 'icon-article', // 引入iconfont的类名作为展示的icon
+        name: '成交记录', // 引入文字作为标题
+        method : this.cj
+      }],
+      sheetVisible:true
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -183,6 +195,14 @@ export default {
     // 充值
     toinput(){
       this.$router.push({name:'chongz'});
+    },
+    cj(){
+
+
+    },
+    showactionSheet: function(){
+    	// 打开action sheet
+      this.sheetVisible = true;
     }
   },
   components: {

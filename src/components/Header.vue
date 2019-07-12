@@ -10,7 +10,7 @@
      <span v-if="xin" class="myicon">
        <i class="fa fa-ellipsis-v"></i>
      </span>
-     <span v-if="biao" class="myicon">
+     <span v-if="biao" class="myicon" @click="$router.push({name:'homeKxEarchat'})">
        <i class="fa fa-bar-chart"></i>
      </span>
      <span v-if="aside" class="myicon">
