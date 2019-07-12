@@ -6,14 +6,14 @@
 				"zhangTwo": "0.396499",
 				"zhangThree": "2.73",
 				"zhangThor": "+0.85",
-				"color":"#93cac1"
+				"color":"rgb(77,169,144)"
 			},
 			{
 					"zhangOne": "ESO",
 					"zhangTwo": "5.9058",
 					"zhangThree": "40.69",
 					"zhangThor": "+0.65",
-					"color":"#93cac1"
+					"color":"rgb(77,169,144)"
 			},
 			{
 					"zhangOne": "ETH",

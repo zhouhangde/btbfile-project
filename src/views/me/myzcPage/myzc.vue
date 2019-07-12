@@ -1,6 +1,6 @@
 <template>
   <div class="myzc">
-    <Header :isLeft="true" :title="title" style="background-color: #5895c7;"/>
+    <Header :isLeft="true" :title="title" style="background-color: #5895c7;color:#fff;"/>
     <div style="background-color: #5895c7;">
       <p style=" padding: 12px;">
         <span>总账户资产折合~<small style="color:rgb(224, 217, 217)">$1040.94</small></span>

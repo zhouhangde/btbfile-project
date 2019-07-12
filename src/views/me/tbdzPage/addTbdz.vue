@@ -79,10 +79,11 @@ export default {
     display: flex;
     height: 6vh;
     margin: 10px;
+    border-bottom: 1px solid #ccc;
 }
 .item-right{
     padding: 2vw 0;
-    border-bottom: 1px solid #d6c2c2;
+    /* border-bottom: 1px solid #d6c2c2; */
     width:83%;
     display: flex;
     align-items: flex-start;

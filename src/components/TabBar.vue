@@ -59,6 +59,7 @@ export default {
 }
 .tab-item-icon i {
   font-size: 16px;
+  line-height: 25px;
 }
 .tab-item-label {
   /* inherit 关键字指定一个属性应从父元素继承它的值 */

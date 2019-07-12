@@ -2,14 +2,14 @@
   <div class="skfs">
     <Header :isLeft="true" :title="title" :newIcon="newIcon"/>
     <div class="item-input" @click="$router.push({name:'zfbMethod'})">
-        <i class="fa fa-address-book theIcon"></i>
+        <i class="fa fa-cny (alias)"></i>
         <div class="item-right">
             <span>支付宝(28838823839)</span>
             <i class="fa fa-angle-right" style="font-size: 17px;"></i>
         </div>
     </div>
       <div class="item-input" @click="$router.push({name:'wxMethod'})">
-        <i class="fa fa-address-book theIcon"></i>
+        <i class="fa fa-wechat (alias)"></i>
         <div class="item-right">
             <span>微信(18828383)</span>
             <i class="fa fa-angle-right" style="font-size: 17px;"></i>
@@ -54,10 +54,15 @@ export default {
     display: flex;
     height: 6vh;
     margin: 10px;
+    border-bottom:1px solid #ccc;
+}
+.item-input i{
+  line-height: 30px;
+  padding:2px;
 }
 .item-right{
     padding: 2vw 0;
-    border-bottom: 1px solid #d6c2c2;
+    /* border-bottom: 1px solid #d6c2c2; */
     width:83%;
     display: flex;
     align-items: flex-start;

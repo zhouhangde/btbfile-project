@@ -46,14 +46,14 @@
         </div>
       </div>
       <div class="address-cell" style="margin-top: 2.666667vw; border-top: 1px solid #ddd;" @click="$router.push({name:'otcJi'})">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-yen (alias)"></i>
         <div class="address-index">
           <span>OTC交易平台</span>
           <i class="fa fa-angle-right"></i>
         </div>
       </div>
       <div class="address-cell"  @click="$router.push({name:'myzc'})">
-        <i class="fa fa-map-marker"></i>
+        <i class="fa fa-dollar (alias)"></i>
         <div class="address-index">
           <span>我的资产</span>
           <i class="fa fa-angle-right"></i>
