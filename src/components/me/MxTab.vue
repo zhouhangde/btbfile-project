@@ -51,7 +51,7 @@ export default {
       width: 100%;
   }
   .MxTab aside{
-     display: flex;
+      display: flex;
       flex: 1;
       justify-content: space-around;
       padding: 10px 0;
