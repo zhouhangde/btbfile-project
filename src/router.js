@@ -57,6 +57,12 @@ const router = new Router({
       name: 'chongz',
       component: () => import('./views/jiaoyi/chongz.vue')
     },
+     // 进入市场页面
+     {
+      path: '/shichan',
+      name: 'shichan',
+      component: () => import('./views/jiaoyi/shichan.vue')
+    },
     // 进入下单页面
     {
       path: '/showOrder',

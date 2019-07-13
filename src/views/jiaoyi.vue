@@ -110,12 +110,13 @@
       :actions="actions"
       v-model="sheetVisible">
     </mt-actionsheet>
+    
   </div>
 </template>
 
 <script>
 const myjiaoyiTabData = require('../../data/jiaoyiTabData.json');
-import { Actionsheet } from 'mint-ui';
+import { Actionsheet,Popup } from 'mint-ui';
 import Header from "../components/Header";
 import JiaoyiTab from "../components/jiaoyi/JiaoyiTab";
 import AddOrIncreas from "../components/jiaoyi/AddOrIncreas";
@@ -151,7 +152,8 @@ export default {
         method : this.cj
       }],
       sheetVisible:false, //上拉的sheet显示开关
-      changScState:false  //收藏状态开关
+      changScState:false,  //收藏状态开关
+      popupVisible:true   //显示顶部的提示
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -211,9 +213,7 @@ export default {
     },
     condit(condit){
       if(condit.conditon == 'CSCCT/USDT'){
-        console.log("12412432")
-      }else if(condit.conditon == 'USDT'){
-        console.log("88888")
+        this.$router.push({name:'shichan'});
       }
     }
   },
@@ -324,4 +324,5 @@ export default {
   #sun span:nth-child(2){
     color:#999;
   }
+  
 </style>

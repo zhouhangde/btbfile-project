@@ -9,7 +9,7 @@
         <div class="the-header">
           <i  class="fa fa-chevron-left" @click="$router.push({name:'myzcDetail'})"></i>
           <span>USDT钱包地址</span>
-          <span>历史</span>
+          <span @click="$router.push({name:'zzmx'})">历史</span>
         </div>
       </div>
       <div class="shop_image">

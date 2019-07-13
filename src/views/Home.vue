@@ -5,6 +5,9 @@
         <i class="fa fa-address-book" style="color:#7272e0"></i>
         <span class="header_title">BTB File</span>
       </div>
+      <div @click="loginOrRigist">
+        <span style="color: rgb(114, 114, 224);">登陆/注册</span>
+      </div>
     </div>
      <div id="container">
       <!-- 轮播 -->
@@ -167,6 +170,9 @@ export default {
       // console.log(condation);
       this.data = condation;
       this.loadData();
+    },
+    loginOrRigist(){
+      
     }
   },
   components: {
@@ -198,6 +204,8 @@ mt-loadmore{
   width: 90%;
   margin: 0 auto;
   padding: 12px 0px;
+    display: flex;
+  justify-content: space-between;
 }
 /* 轮播样式 */
 .swiper {

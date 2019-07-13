@@ -1,6 +1,6 @@
 <template>
   <div class="myzcDetail">
-    <Header :isLeft="true" :title="title"/>
+    <Header :isLeftgoZc="true" :title="title"/>
     <div style="padding: 30px 0;background-color: #fff;">
         <div style="text-align:center">
            <img style="width:10vw;height:10vw;"/>

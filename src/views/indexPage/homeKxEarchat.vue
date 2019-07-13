@@ -52,7 +52,7 @@ export default {
   name: "homeKxEarchat",
   data() {
     return {
-      title:'XRP/USDT',
+       title:'XRP/USDT',
        hanqTabData:{},  //tab切换的title
        zxorusData:[],   //tab下的切换的列表数据
        page: 1,   //当前页数

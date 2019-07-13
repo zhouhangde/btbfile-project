@@ -2,6 +2,7 @@
   <div class="otc">
     <Header :title="title" :xial="xial" 
     :aside="true"
+    @condit="condit"
     @showAction="showactionSheet"
     />
     <OtcTab :filterData="otcTabData" @update="update" style="padding:10px"/>
@@ -82,6 +83,21 @@
       :actions="actions"
       v-model="sheetVisible">
     </mt-actionsheet>
+    <mt-popup
+      v-model="popupVisible"
+      pop-transition="popup-fade"
+      :modal="true"
+      position="top" style="height: 30px;width: 100%;line-height: 30px;">
+      <div class="the-content">
+        <p>
+          <i class="fa fa-chevron-left" style="font-size: 17px;"></i>
+          <span style="margin-left: 15px;">USDT</span>
+        </p>
+        <p>
+          <i class="fa fa-chevron-left"></i>
+        </p>
+      </div>
+    </mt-popup>
   </div>
 </template>
 
@@ -89,6 +105,7 @@
 const mymybuy = require('../../data/mybuy.json');
 const mymyseller = require('../../data/myseller.json');
 const myotcTabData = require('../../data/otcTabData.json');
+import { Actionsheet,Popup } from 'mint-ui';
 import Header from "../components/Header";
 import OtcTab from "../components/otc/OtcTab";
 import OtcTabList from "../components/otc/OtcTabList";
@@ -114,6 +131,7 @@ export default {
          }
        ],
        sheetVisible:false, //上拉的sheet显示开关
+       popupVisible:false,   //显示顶部的提示
        yuMoney:9978243.8214654
     };
   },
@@ -172,6 +190,11 @@ export default {
     },
     dd(){
       
+    },
+    condit(condit){
+      if(condit.conditon == 'USDT'){
+        this.popupVisible = true
+      }
     }
   },
   components: {
@@ -188,5 +211,10 @@ export default {
     height: 100%;
     overflow: auto;
     box-sizing: border-box;
+  }
+  .the-content{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5px;
   }
 </style>

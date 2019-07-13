@@ -3,6 +3,12 @@
     <span style="position: absolute;left: 12px;" v-if="isLeft">
       <i class="fa fa-chevron-left" @click="$router.go(-1)"></i>
     </span>
+    <span style="position: absolute;left: 12px;" v-if="isLeftgoZc">
+      <i class="fa fa-chevron-left" @click="$router.push({name:'myzc'})"></i>
+    </span>
+    <span style="position: absolute;left: 12px;" v-if="isLeftgoMe">
+      <i class="fa fa-chevron-left" @click="$router.push({name:'me'})"></i>
+    </span>
     <span @click="showCondition(title)">
       {{title}}
       <i class="fa fa-angle-down" v-if="xial"></i>
@@ -20,7 +26,7 @@
      <span v-if="newIcon" class="myicon">
        <i class="fa reorder (alias)"></i>
      </span>
-     <span v-if="historytitle" class="myicon">
+     <span v-if="historytitle" class="myicon" @click="$router.push({name:'zzmx'})">
        历史
      </span>
   </div>
@@ -36,6 +42,14 @@ export default {
   },
   props: {
     isLeft: {
+      type: Boolean,
+      default: false
+    },
+    isLeftgoZc:{
+      type: Boolean,
+      default: false
+    },
+    isLeftgoMe:{
       type: Boolean,
       default: false
     },
