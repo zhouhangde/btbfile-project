@@ -71,6 +71,12 @@ const router = new Router({
     },
     // 进入实名认证
     {
+      path: '/myMessage',
+      name: 'myMessage',
+      component: () => import('./views/me/myMessage.vue')
+    },
+    // 进入实名认证
+    {
       path: '/smrz',
       name: 'smrz',
       component: () => import('./views/me/smrzPage/smrz.vue')
@@ -237,19 +243,42 @@ const router = new Router({
       name: 'fwrxDetail',
       component: () => import('./views/me/aboutMePage/fwrxDetail.vue')
     },
-    // 进入登陆
+    // 进入手机注册
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('./views/indexPage/login.vue')
+      path: '/phoneRigst',
+      name: 'phoneRigst',
+      component: () => import('./views/indexPage/phoneRigst.vue')
     },
-    // 进入注册
+    // 进入邮箱注册
     {
-      path: '/Rigist',
-      name: 'Rigist',
-      component: () => import('./views/indexPage/Rigist.vue')
+      path: '/emailRigst',
+      name: 'emailRigst',
+      component: () => import('./views/indexPage/emailRigst.vue')
+    },
+    // 进入手机登陆
+    {
+      path: '/phoneLogin',
+      name: 'phoneLogin',
+      component: () => import('./views/indexPage/phoneLogin.vue')
+    },
+    // 进入手机登陆
+    {
+      path: '/emailLogin',
+      name: 'emailLogin',
+      component: () => import('./views/indexPage/emailLogin.vue')
+    },
+    // 进入手机忘记密码
+    {
+      path: '/phoneForget',
+      name: 'phoneForget',
+      component: () => import('./views/indexPage/phoneForget.vue')
+    },
+    // 进入邮箱忘记密码
+    {
+      path: '/emailForget',
+      name: 'emailForget',
+      component: () => import('./views/indexPage/emailForget.vue')
     }
-    
   ]
 });
 // 路由守卫（注意当有此方法时会默认进入此方法，不会进入下一步，不用时应该注释）

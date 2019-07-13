@@ -1,7 +1,7 @@
 <template>
   <div class="me">
     <p class="showIcon">
-      <span><i class="fa fa-bell-o" style="font-size: 23px;"></i></span>
+      <span @click="$router.push({name:'myMessage'})"><i class="fa fa-bell-o" style="font-size: 23px;"></i></span>
     </p>
     <div class="headInfo">
       <div class="head-img"></div>

@@ -1,0 +1,21 @@
+[{
+	"myData": {
+    "allData": [
+		{
+			"monthAndday": "07/04",
+			"dateAll": "2019/07/01 21:48:40",
+			"content": "通知"
+		},
+		{
+			"monthAndday": "06/29",
+			"dateAll": "2019/06/29 21:48:40",
+			"content": "我的通知"
+		},
+		{
+			"monthAndday": "05/01",
+			"dateAll": "2019/05/01 19:48:40",
+			"content": "币火交易所BTBFire即将开盘交易"
+		}
+    ]
+	}
+}]

@@ -1,0 +1,12 @@
+{
+    "navTab": [
+		{
+            "name": "公告",
+            "condition":"zixu"
+        },
+        {
+            "name": "通知",
+            "condition":"usdt"
+        }
+    ]
+}

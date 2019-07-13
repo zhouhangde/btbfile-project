@@ -1,8 +1,8 @@
 <template>
-  <div class="hanq">
-      <Header :title="title"/>
-      <!-- 导航 -->
-      <HanqTab :hqfilterData="hanqTabData"  @update="update"/>
+  <div class="myMessage">
+     <Header :isLeft="true" :title="title"/>
+     <!-- 导航 -->
+     <HanqTab :hqfilterData="hanqTabData"  @update="update"/>
 
      <!-- 涨幅跌幅信息 ，bottom-all-loaded上拉加载是否完成-->
      <!-- auto-fill若为真，loadmore 会自动检测并撑满其容器 -->
@@ -19,17 +19,17 @@
 </template>
 
 <script>
-const myzixuDataOne = require('../../data/zixuDataOne.json');
-const myusdtDataOne = require('../../data/usdtDataOne.json');
-const myhanqTabData = require('../../data/hanqTabData.json');
-import Header from "../components/Header";
-import HanqTab from "../components/hanq/HanqTab";
-import HanqTabList from "../components/hanq/HanqTabList";
+const myzixuDataOne = require('../../../data/gongGaoDataOne.json');
+const myusdtDataOne = require('../../../data/tongzhiDataOne.json');
+const myhanqTabData = require('../../../data/myMessageTabData.json');
+import Header from "../../components/Header";
+import HanqTab from "../../components/me/myMessgTab";
+import HanqTabList from "../../components/me/myMessgTabList";
 export default {
-  name: "hanq",
+  name: "myMessage",
   data() {
     return {
-       title:'行情',
+        title:'消息',
        hanqTabData:{},  //tab切换的title
        zxorusData:[],   //tab下的切换的列表数据
        page: 1,   //当前页数
@@ -37,7 +37,6 @@ export default {
        allLoaded: false,   //是否已经加载完毕，无加载数据的开关
        bottomPullText: "上拉加载更多",   //底部的加载显示字样
        data: null,  //tab切换条件
-       
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -46,7 +45,7 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
-       this.hanqTabData = myhanqTabData
+      this.hanqTabData = myhanqTabData
        console.log('导航的title',this.hanqTabData)
        this.loadData()
     },
@@ -84,13 +83,18 @@ export default {
     }
   },
   components: {
-      Header,
-      HanqTab,
-      HanqTabList
+     Header,
+     HanqTab,
+     HanqTabList
   }
 };
 </script>
 
 <style scoped>
-
+.myMessage {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+}
 </style>

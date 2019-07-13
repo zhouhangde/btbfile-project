@@ -1,6 +1,6 @@
 <template>
   <div class="skfs">
-    <Header :isLeft="true" :title="title" :newIcon="newIcon"/>
+    <Header :isLeft="true" :title="title" :newIcon="newIcon" @shownewItem="shownewItem"/>
     <div class="item-input" @click="$router.push({name:'zfbMethod'})">
         <i class="fa fa-cny (alias)"></i>
         <div class="item-right">
@@ -35,6 +35,11 @@ export default {
     // 获取用户信息
     getData() {
       
+    },
+    shownewItem(conditon){
+      if(conditon.showBottom){
+         
+      }
     }
   },
   components: {
@@ -55,6 +60,7 @@ export default {
     height: 6vh;
     margin: 10px;
     border-bottom:1px solid #ccc;
+    justify-content: space-between;
 }
 .item-input i{
   line-height: 30px;

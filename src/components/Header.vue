@@ -9,6 +9,9 @@
     <span style="position: absolute;left: 12px;" v-if="isLeftgoMe">
       <i class="fa fa-chevron-left" @click="$router.push({name:'me'})"></i>
     </span>
+    <span style="position: absolute;left: 12px;" v-if="isleftHome">
+      <i class="fa fa-chevron-left" @click="$router.push({name:'home'})"></i>
+    </span>
     <span @click="showCondition(title)">
       {{title}}
       <i class="fa fa-angle-down" v-if="xial"></i>
@@ -23,8 +26,8 @@
        <i class="fa fa-star-o" style="color:#b62727" v-if="shoucanState"></i>
        <i class="fa fa-star-o" v-else></i>
      </span>
-     <span v-if="newIcon" class="myicon">
-       <i class="fa reorder (alias)"></i>
+     <span v-if="newIcon" class="myicon" @click="newItem">
+       <i class="fa fa-plus"></i>
      </span>
      <span v-if="historytitle" class="myicon" @click="$router.push({name:'zzmx'})">
        历史
@@ -53,6 +56,10 @@ export default {
       type: Boolean,
       default: false
     },
+    isleftHome:{
+      type: Boolean,
+      default: false
+    },
     title: String,
     xial: Boolean,  //显示下拉图标
     xin:Boolean,  //显示收藏图标
@@ -78,6 +85,11 @@ export default {
       this.$emit("condit", {
             conditon:conditon    //获取条件距离最近distance，作为条件
       });
+    },
+    newItem(){
+      this.$emit("shownewItem", {
+            showBottom:true    //获取条件距离最近distance，作为条件
+      });
     }
   }
 };
@@ -91,7 +103,7 @@ export default {
       line-height: 40px;
   }
   .myicon{
-    float: right;
+     float: right;
     /* margin-right: 10px; */
         padding: 0px 10px;
   }
