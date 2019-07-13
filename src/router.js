@@ -236,7 +236,20 @@ const router = new Router({
       path: '/fwrxDetail',
       name: 'fwrxDetail',
       component: () => import('./views/me/aboutMePage/fwrxDetail.vue')
+    },
+    // 进入登陆
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('./views/indexPage/login.vue')
+    },
+    // 进入注册
+    {
+      path: '/Rigist',
+      name: 'Rigist',
+      component: () => import('./views/indexPage/Rigist.vue')
     }
+    
   ]
 });
 // 路由守卫（注意当有此方法时会默认进入此方法，不会进入下一步，不用时应该注释）
