@@ -1,6 +1,10 @@
 <template>
   <div class="jiaoyi">
-    <Header :title="title" :xial="xial" :xin="xin" :biao="biao" :aside="aside"/>
+    <Header :title="title" 
+    :xial="xial" :xin="xin" 
+    :biao="biao" :aside="aside" 
+    @condit="condit"
+    @showAction="showactionSheet"/>
     <div class="center-contain">
       <div class="center-contain-left">
         <!-- 导航买入卖出 -->
@@ -146,7 +150,8 @@ export default {
         name: '成交记录', // 引入文字作为标题
         method : this.cj
       }],
-      sheetVisible:true
+      sheetVisible:false, //上拉的sheet显示开关
+      changScState:false  //收藏状态开关
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -200,9 +205,16 @@ export default {
 
 
     },
-    showactionSheet: function(){
+    showactionSheet(){
     	// 打开action sheet
       this.sheetVisible = true;
+    },
+    condit(condit){
+      if(condit.conditon == 'CSCCT/USDT'){
+        console.log("12412432")
+      }else if(condit.conditon == 'USDT'){
+        console.log("88888")
+      }
     }
   },
   components: {

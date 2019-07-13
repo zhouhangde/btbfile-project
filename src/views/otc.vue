@@ -1,6 +1,9 @@
 <template>
   <div class="otc">
-    <Header :title="title" :xial="xial"/>
+    <Header :title="title" :xial="xial" 
+    :aside="true"
+    @showAction="showactionSheet"
+    />
     <OtcTab :filterData="otcTabData" @update="update" style="padding:10px"/>
     <div style="padding: 10px;">
        <span style="color:rgb(71,71,71);">您的余额:</span>
@@ -75,6 +78,10 @@
         </li>
       </ul>
     </div> -->
+    <mt-actionsheet
+      :actions="actions"
+      v-model="sheetVisible">
+    </mt-actionsheet>
   </div>
 </template>
 
@@ -93,6 +100,20 @@ export default {
        xial:true, 
        otcTabData:{},   //tab数据
        otcDataList:[],   //tab下的切换的列表数据
+       // 底部的弹出
+       actions:[
+         {
+          // icon: 'icon-article', // 引入iconfont的类名作为展示的icon
+          name: '我的发布', // 引入文字作为标题
+          method : this.fb
+         },
+         {
+          // icon: 'icon-article', // 引入iconfont的类名作为展示的icon
+          name: '历史订单', // 引入文字作为标题
+          method : this.dd
+         }
+       ],
+       sheetVisible:false, //上拉的sheet显示开关
        yuMoney:9978243.8214654
     };
   },
@@ -141,6 +162,16 @@ export default {
          name:'showOrder',
          params: { orderData:param }
        })
+    },
+    showactionSheet(){
+    	// 打开action sheet
+      this.sheetVisible = true;
+    },
+    fb(){
+
+    },
+    dd(){
+      
     }
   },
   components: {

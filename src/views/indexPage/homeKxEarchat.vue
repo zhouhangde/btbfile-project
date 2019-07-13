@@ -172,7 +172,6 @@ export default {
       this.loadData();
     },
     draw() {
-      console.log("12341234awerw");
       this.myChart = this.$echarts.init(document.getElementById('myearchart'));
       console.log(this.linkoption)
       this.myChart.setOption(this.linkoption);
@@ -202,6 +201,7 @@ export default {
   box-sizing: border-box;
   background-color: #151111;
   color: #fff;
+  padding-bottom: 52px;
 }
 .theItem{
   display: flex;

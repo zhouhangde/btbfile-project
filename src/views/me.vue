@@ -1,5 +1,8 @@
 <template>
   <div class="me">
+    <p class="showIcon">
+      <span><i class="fa fa-bell-o" style="font-size: 23px;"></i></span>
+    </p>
     <div class="headInfo">
       <div class="head-img"></div>
       <div class="head-profile">
@@ -236,4 +239,11 @@ export default {
   font-size: 14px;
   color:#000;
 }
+.showIcon{
+  padding: 11px 8px;
+  text-align: right;
+    /* background-color: #4f9afe; */
+  background-image: -webkit-gradient(linear, left top, right top, from(#0af), to(#0085ff));
+}
+
 </style>
