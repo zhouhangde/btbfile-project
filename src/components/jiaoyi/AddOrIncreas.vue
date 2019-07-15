@@ -1,11 +1,13 @@
 <template>
   <div class="AddOrIncreas">
-    <span @click.stop="decreaseCount" class="cartbutton button-minus">
-      <i class="fa fa-minus"></i>
+    <span @click.stop="decreaseCount" class="cartbutton button-minus" style="color:#999;font-size:30px;line-height:12px;">
+      <!-- <i class="fa fa-minus"></i> -->
+      -
     </span>
     <span class="cartcount">{{dataNumberr.x}}</span>
-    <span @click.stop="increaseCount" class="cartbutton">
-      <i class="fa fa-plus-circle"></i>
+    <span @click.stop="increaseCount" class="cartbutton" style="color:#999;font-size:22px;line-height:14px;padding-right:5px;">
+      <!-- <i class="fa fa-plus-circle"></i> -->
+      +
     </span>
   </div>
 </template>
@@ -78,7 +80,7 @@ export default {
 .button-minus {
   width: 4.866667vw;
   height: 4.866667vw;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 50%;
   text-align: center;
   margin-top:2px;

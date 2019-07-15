@@ -7,25 +7,25 @@
       </div>
       <div class="theItem">
         <p>
-          <i class="fa fa-wechat (alias)"></i>
+          <i class="fa fa-user"></i>
           <input type="text" placeholder="请输入手机号" class="theinput"/>  
         </p>
       </div>
       <div class="theItem">
         <p>
-          <i class="fa fa-wechat (alias)"></i>
+          <i class="fa fa-lock"></i>
           <input type="text" placeholder="请输入密码" class="theinput"/>  
         </p>
-        <i class="fa fa-wechat (alias)"></i>
+        <i class="fa fa-eye-slash"></i>
       </div>
       <div class="thelogin">
         登录
       </div>
       <div class="the-butts">
-        <span style="color:blue" @click="$router.push({name:'phoneRigst'})">注册账号</span>
-        <span style="color:blue" @click="$router.push({name:'phoneForget'})">忘记密码?</span>
+        <span style="color:#5b92b7;" @click="$router.push({name:'phoneRigst'})">注册账号</span>
+        <span style="color:#5b92b7;" @click="$router.push({name:'phoneForget'})">忘记密码?</span>
       </div>
-      <div style="text-align: center;margin-top:40px" @click="$router.push({name:'emailLogin'})"> 
+      <div style="text-align: center;margin-top:40px;color:#999;" @click="$router.push({name:'emailLogin'})"> 
         邮箱登录
       </div>
     </div>

@@ -294,7 +294,7 @@ export default {
   }
   .inputPrice-foot{
     padding: 6px 0;
-    background-color: #d6d2da;
+    background-color: #d6d2da6b;
   }
   .inputPrice-center{
     background-color: #fff;

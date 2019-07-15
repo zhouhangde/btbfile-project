@@ -115,7 +115,7 @@ export default {
 #we i:nth-child(1){
   width:20px;
   height:20px;
-  background:rgb(29,273,3);
+  background:#24b213;
   text-align: center;
   color:#fff;
   line-height: 20px;

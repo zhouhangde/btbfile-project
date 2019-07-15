@@ -33,16 +33,17 @@
              </p>
              <div style="color:#001" class="the-index">
                <p>
-                  <span>可用</span>
+                  <span style="color:#999;">可用</span>
                   <span>895.28</span>
                </p>
                <p>
-                  <span>冻结</span>
+                  <span style="color:#999;">冻结</span>
                   <span>936.0</span>
                </p>
                <p>
-                  <span>折合(CNY)</span>
-                  <span>6168.47920000</span>
+                  <span style="color:#ccc;">折合(CNY)
+                  </span>
+                  <span> 6168.47920000</span>
                </p>
              </div>
            </div>
@@ -55,15 +56,17 @@
              </p>
              <div style="color:#001" class="the-index">
                <p>
-                  <span>可用</span>
+                  <span style="color:#999;">可用</span>
                   <span>895.28</span>
                </p>
                <p>
-                  <span>冻结</span>
+                  <span style="color:#999;">冻结</span>
                   <span>936.0</span>
                </p>
                <p>
-                  <span>折合(CNY)</span>
+                  <span style="color:#999;">折合(CNY)
+
+                  </span>
                   <span>6168.47920000</span>
                </p>
              </div>

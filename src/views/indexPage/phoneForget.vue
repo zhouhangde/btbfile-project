@@ -12,19 +12,19 @@
         <p>
           <input type="text" placeholder="请输入验证码"  class="theinput"/>
         </p>
-        <i class="fa fa-wechat (alias)"></i>
+        <!-- <i class="fa fa-wechat (alias)"></i> -->
       </div>
       <div class="theItem"> 
         <p>
           <input type="text" placeholder="请输入新的密码"  class="theinput"/>
         </p>
-        <i class="fa fa-wechat (alias)"></i>
+        <i class="fa fa-eye-slash"></i>
       </div>
       <div class="theItem"> 
         <p>
           <input type="text" placeholder="请再次输入密码"  class="theinput"/>
         </p>
-        <i class="fa fa-wechat (alias)"></i>
+        <i class="fa fa-eye-slash"></i>
       </div>
       <div style="text-align: center;margin-top:40px" class="theComplate"> 
         完成

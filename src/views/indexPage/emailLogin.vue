@@ -7,25 +7,25 @@
       </div>
       <div class="theItem">
         <p>
-          <i class="fa fa-wechat (alias)"></i>
+          <i class="fa fa-user"></i>
           <input type="text" placeholder="请输入邮箱" class="theinput"/>  
         </p>
       </div>
       <div class="theItem">
         <p>
-          <i class="fa fa-wechat (alias)"></i>
+          <i class="fa fa-lock"></i>
           <input type="text" placeholder="请输入密码" class="theinput"/>  
         </p>
-        <i class="fa fa-wechat (alias)"></i>
+        <i class="fa fa-eye-slash"></i>
       </div>
       <div class="thelogin">
         登录
       </div>
       <div class="the-butts">
-        <span style="color:blue"  @click="$router.push({name:'emailRigst'})">注册账号</span>
-        <span style="color:blue"  @click="$router.push({name:'emailForget'})">忘记密码?</span>
+        <span style="color:#5b92b7;"  @click="$router.push({name:'emailRigst'})">注册账号</span>
+        <span style="color:#5b92b7;"  @click="$router.push({name:'emailForget'})">忘记密码?</span>
       </div>
-      <div style="text-align: center;margin-top:40px" @click="$router.push({name:'phoneLogin'})"> 
+      <div style="text-align: center;margin-top:40px;color:#999;" @click="$router.push({name:'phoneLogin'})"> 
         手机号登录
       </div>
     </div>
@@ -67,6 +67,9 @@ export default {
   justify-content: space-between;
   padding: 15px 0;
   border-bottom: 1px solid #dadada;
+}
+.theItem i{
+  color:#999;
 }
 .theinput{
   margin-left: 10px

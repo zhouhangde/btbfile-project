@@ -4,9 +4,12 @@
         <div>{{item.zhangOne}}</div>
         <div class="centeritem">
           <span style="margin-left:30px;">{{item.zhangTwo}}</span>
-          <span style="margin-top:10px;margin-left:30px;">{{item.zhangThree}}</span>
+          <span style="margin-top:10px;margin-left:30px;">
+            <i class="fa fa-cny (alias)"></i>
+            {{item.zhangThree}}
+          </span>
         </div>
-        <div :style="{backgroundColor:item.color,padding:'8px 18px',color:'white'}">{{item.zhangThor}}</div>
+        <div :style="{backgroundColor:item.color,padding:'8px 18px',color:'white'}">{{item.zhangThor}}%</div>
         
     </div>
   </div>

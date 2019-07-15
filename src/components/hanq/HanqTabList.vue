@@ -4,9 +4,9 @@
         <div>{{item.zhangOne}}</div>
         <div class="centeritem">
           <span style="margin-left:30px;">{{item.zhangTwo}}</span>
-          <span style="margin-top:10px;margin-left:30px;">{{item.zhangThree}}</span>
+          <span style="margin-top:10px;margin-left:30px;color:#999;"><i data-v-7689158b="" class="fa fa-jpy"></i>{{item.zhangThree}}</span>
         </div>
-        <div :style="{backgroundColor:item.color,padding:'8px 18px',color:'white'}">{{item.zhangThor}}</div>
+        <div :style="{backgroundColor:item.color,padding:'8px 18px',color:'white'}">{{item.zhangThor}}%</div>
         
     </div>
   </div>
@@ -35,6 +35,9 @@ export default {
   .centeritem{
     display: flex;
     flex-direction: column;
-
+     -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
   }
 </style>

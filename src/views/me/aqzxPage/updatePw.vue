@@ -10,13 +10,13 @@
         <div class="item-input">
             <div class="item-right">
                 <input type="text"  placeholder="请输入您的新密码"/>
-                <i class="fa fa-address-book" style="font-size: 17px;"></i>
+                <i class="fa fa-eye-slash" style="font-size: 17px;"></i>
             </div>
         </div>
         <div class="item-input">
             <div class="item-right">
                 <input type="text"  placeholder="请确认您的新密码"/>
-                <i class="fa fa-address-book" style="font-size: 17px;"></i>
+                <i class="fa fa-eye-slash" style="font-size: 17px;"></i>
             </div>
         </div>
         <p style="text-align:right;width: 91%;margin: 0 auto;" >
@@ -80,8 +80,9 @@ export default {
     justify-content: space-between;
     margin: 0 auto;
     height: 26px;
-
-
+}
+.item-right i{
+  color:#999;
 }
 .theIcon{
   width:5%;

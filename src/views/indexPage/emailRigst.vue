@@ -7,34 +7,34 @@
       </div>
       <div class="theItem">
         <p>
-          <i class="fa fa-wechat (alias)"></i>
+          <i class="fa fa-user"></i>
           <input type="text" placeholder="请输入邮箱" class="theinput"/>  
         </p>
       </div>
       <div class="theItem">
         <p>
-          <i class="fa fa-wechat (alias)"></i>
+          <i class="fa fa-lock"></i>
           <input type="text" placeholder="请输入密码"  class="theinput"/>
         </p>
-        <i class="fa fa-wechat (alias)"></i>
+        <i class="fa fa-eye-slash" style="color:#999;"></i>
       </div>
       <div class="theItem"> 
         <p>
-          <i class="fa fa-wechat (alias)"></i>
+          <i class="fa fa-lock"></i>
           <input type="text" placeholder="请再次输入密码"  class="theinput"/>
         </p>
-        <i class="fa fa-wechat (alias)"></i>
+        <i class="fa fa-eye-slash" style="color:#999;"></i>
       </div>
       <div class="theItem">
         <p>
-          <i class="fa fa-wechat (alias)"></i>
+          <i class="fa fa-get-pocket"></i>
           <input type="text" placeholder="请输入验证码"  class="theinput"/>
         </p>
-        <i class="fa fa-wechat (alias)"></i>
+        <i class="fa fa-eye-slash" style="color:#999;"></i>
       </div>
       <div class="theItem">
         <p>
-          <i class="fa fa-wechat (alias)"></i>
+          <i class="fa fa-edit (alias)"></i>
           <input type="text" placeholder="请输入邀请码"  class="theinput"/>
         </p>
       </div>
@@ -44,7 +44,7 @@
       <div style="text-align: center;"> 
         注册即表示同意<span style="color:blue">BTBFile用户协议</span>
       </div>
-      <div style="text-align: center;margin-top:40px" @click="$router.push({name:'phoneRigst'})"> 
+      <div style="text-align: center;margin-top:40px;color:#999;" @click="$router.push({name:'phoneRigst'})"> 
         手机号注册
       </div>
     </div>
@@ -87,6 +87,9 @@ export default {
   justify-content: space-between;
   padding: 15px 0;
   border-bottom: 1px solid #dadada;
+}
+.theItem p{
+  color:#999;
 }
 .theinput{
   margin-left: 10px

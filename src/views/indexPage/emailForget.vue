@@ -12,19 +12,19 @@
         <p>
           <input type="text" placeholder="请输入验证码"  class="theinput"/>
         </p>
-        <i class="fa fa-wechat (alias)"></i>
+        <!-- <i class="fa fa-wechat (alias)"></i> -->
       </div>
       <div class="theItem"> 
         <p>
           <input type="text" placeholder="请输入新的密码"  class="theinput"/>
         </p>
-        <i class="fa fa-wechat (alias)"></i>
+        <i class="fa fa-eye-slash"></i>
       </div>
       <div class="theItem"> 
         <p>
           <input type="text" placeholder="请再次输入密码"  class="theinput"/>
         </p>
-        <i class="fa fa-wechat (alias)"></i>
+        <i class="fa fa-eye-slash"></i>
       </div>
       <div class="theItemMsg"> 
         <p style="color: #b9b0b0;">
@@ -74,6 +74,9 @@ export default {
   justify-content: space-between;
   padding: 15px 0;
   border-bottom: 1px solid #dadada;
+}
+.theItem i{
+  color:#999;
 }
 .theItemMsg{
   display: flex;

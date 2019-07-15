@@ -19,7 +19,7 @@
                        <span>BTC/USDT</span>
                        <span style="margin-left: 25px;color: #a29494;">11657.57</span>
                     </p>
-                    <span><i class="fa fa-yen (alias)" style="margin-right:5px"></i></span>
+                    <span><i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;"></i></span>
                 </div>
                 <div style="padding: 15px 0;display: flex;justify-content: space-between;border-bottom: 1px solid rgb(212, 205, 205);">
                     <p class="item-left">
