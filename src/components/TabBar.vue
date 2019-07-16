@@ -58,7 +58,7 @@ export default {
   margin: 0 auto 5px;
 }
 .tab-item-icon i {
-  font-size: 16px;
+  font-size: 19px;
   line-height: 25px;
 }
 .tab-item-label {
