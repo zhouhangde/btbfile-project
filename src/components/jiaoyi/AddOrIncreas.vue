@@ -26,6 +26,8 @@ export default {
     //   return  {count:0}
     // }
   },
+  created(){
+  },
   // data(){
   //     return {
   //         template: {count:0}
@@ -97,5 +99,6 @@ export default {
   font-size: 0.8rem;
   width: 6.933333vw;
   overflow: hidden;
+  line-height: 18px;
 }
 </style>

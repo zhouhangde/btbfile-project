@@ -68,7 +68,7 @@ export default {
      display: flex;
      flex-direction: column;
      padding: 10px;
-     border: 1px solid #b9aaaa;
+     border: 1px solid #bdbcbc;
      margin: 5px 0;
    }
    .pareant-item-header{

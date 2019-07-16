@@ -3,9 +3,9 @@
     <div class="header">
       <div>
         <i class="fa fa-address-book" style="color:#7272e0"></i>
-        <span class="header_title">BTB File</span>
+        <span class="header_title">bilongwang</span>
       </div>
-      <div>
+      <div v-if="hasLogin">
         <span style="color: rgb(114, 114, 224);" @click="$router.push({name:'phoneRigst'})">注册</span>
         <span style="color: rgb(114, 114, 224);margin-left:15px" @click="$router.push({name:'phoneLogin'})">登陆</span>
       </div>
@@ -25,7 +25,7 @@
         <i class="fa fa-volume-up" style="font-size: 17px;"></i>
         <span style="margin-left: 7px;">
           <em style="color:#989292">公告:</em>
-          <em style="margin-left: 5px;">交易所BTBFire即将开盘交易</em></span>
+          <em style="margin-left: 5px;">交易所bilongwang即将开盘交易</em></span>
       </div>
     </div>
      <!-- 导航 -->
@@ -73,16 +73,30 @@ export default {
       size: 5,   //分页数
       allLoaded: false,   //是否已经加载完毕，无加载数据的开关
       bottomPullText: "上拉加载更多",   //底部的加载显示字样
-      data: null  //tab切换条件
+      data: null,  //tab切换条件
+      // hasLogin:true   //是否登陆（默认为未登录）
     };
   },
   computed: {
     address() {
       // return this.$store.getters.address;
+    },
+    hasLogin(){
+      let access_token = localStorage.getItem('access_token')
+      let vux_access_token = this.$store.getters.access_token   //必须有？？？
+      if(access_token!=null && access_token !='' && access_token!=undefined){
+          return false
+      }else{
+          return true
+      }
     }
   },
   created() {
     this.getData();
+    // this.checkLogin();   //检查是否登陆
+  },
+  mounted(){
+     
   },
   methods: {
     getData() {
@@ -91,6 +105,17 @@ export default {
       this.homeOneData = myHomeOneData.mydata;   //轮播下面的列表数据
       this.homeTwoData = myHomeTwoData;   //导航标题
       this.loadData();
+    },
+    checkLogin(){
+      let access_token = localStorage.getItem('access_token')
+      let vux_access_token = this.$store.getters.access_token
+      console.log('access_token',access_token)
+      console.log('vux',vux_access_token)
+      if(access_token!=null && access_token !='' && access_token!=undefined){
+          this.hasLogin = false
+      }else{
+          this.hasLogin = true
+      }
     },
      //初始加载数据
     loadData() {

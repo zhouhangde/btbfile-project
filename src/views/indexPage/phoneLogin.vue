@@ -8,17 +8,17 @@
       <div class="theItem">
         <p>
           <i class="fa fa-user"></i>
-          <input type="text" placeholder="请输入手机号" class="theinput"/>  
+          <input type="text" placeholder="请输入手机号" class="theinput" v-model="phone"/>  
         </p>
       </div>
       <div class="theItem">
         <p>
           <i class="fa fa-lock"></i>
-          <input type="text" placeholder="请输入密码" class="theinput"/>  
+          <input type="text" placeholder="请输入密码" class="theinput" v-model="password"/>  
         </p>
         <i class="fa fa-eye-slash"></i>
       </div>
-      <div class="thelogin">
+      <div class="thelogin" @click="goLogin">
         登录
       </div>
       <div class="the-butts">
@@ -34,10 +34,13 @@
 
 <script>
 import Header from "../../components/Header";
+import { Toast } from "mint-ui";
 export default {
   name: "phoneLogin",
   data() {
     return {
+      phone:'',
+      password:''
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -47,6 +50,38 @@ export default {
     // 获取用户信息
     getData() {
       
+    },
+    goLogin(){
+      var me = this
+       this.$axios
+        .post("/api/register/sign", {
+          mobile_phone: this.phone,
+          password: this.password,
+          os:'web'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+              localStorage.setItem("access_token", res.data.data.access_token);
+              me.$store.dispatch("setAccessToken", res.data.data.access_token);  //必须有？？？
+              me.$router.push('/home');
+          }else{
+             Toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            Toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        });
     }
   },
   components: {

@@ -17,7 +17,9 @@ Vue.prototype.$echarts = echarts;
 
 Vue.use(MintUI);
 
-axios.defaults.baseURL = 'http://localhost:8083/';
+// axios.defaults.baseURL = 'http://localhost:8083/';
+axios.defaults.baseURL = 'http://bilongwang.com/';
+
 
 // 请求拦截
 axios.interceptors.request.use(

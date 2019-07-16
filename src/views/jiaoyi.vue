@@ -43,8 +43,8 @@
                <span style="color:#999;">价格</span>
                <span style="color:#999;">数量</span>
              </div>
-             <div class="itemShop itemShopzf">
-               <span>3.995</span>
+             <div class="itemShop itemShopzf" @click="sendPrice($event)">
+               <span class="itemprice">3.995</span>
                <span>45.2463</span>
              </div>
              <div class="itemShop itemShopzf">
@@ -215,6 +215,11 @@ export default {
       if(condit.conditon == 'CSCCT/USDT'){
         this.$router.push({name:'shichan'});
       }
+    },
+    sendPrice(dom){
+      //  console.log(dom)
+      //  console.log(dom.target.firstChild.innerText)
+      //  this.theDj.x = dom.target.firstChild.innerText
     }
   },
   components: {

@@ -282,8 +282,16 @@ const router = new Router({
   ]
 });
 // 路由守卫（注意当有此方法时会默认进入此方法，不会进入下一步，不用时应该注释）
-// router.beforeEach((to, from, next) => {
-
-// });
+router.beforeEach((to, from, next) => {
+   // 判断当前是否登录
+  const isLogin = localStorage.access_token ? true : false;
+  next();
+  // if (to.path == '/phoneLogin') {
+  //   next();
+  // }else {
+  //   // 是否在登录状态下
+  //   isLogin ? next() : next('/phoneLogin');
+  // }
+});
 
 export default router;

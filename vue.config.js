@@ -14,7 +14,8 @@ module.exports = {
     proxy: {    
       // 配置跨域（代理）
       '/api': {
-        target: 'http//localhost:8083/api/',    //目标地址
+        // target: 'http//localhost:8083/api/',    //目标地址
+        target: 'http://bilongwang.com/api',    //目标地址
         ws: true,   //是否允许跨域
         changOrigin: true,   //是否改变原域
         pathRewrite: {   //路径重写

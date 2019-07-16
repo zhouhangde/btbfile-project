@@ -19,7 +19,7 @@
           </span>
         </div>
       </div>
-      <div class="address-cell">
+      <div class="address-cell" @click="loginOut">
         <div class="address-index">
           <span>退出登陆</span>
           <span>
@@ -47,6 +47,11 @@ export default {
     // 获取用户信息
     getData() {
       
+    },
+    loginOut(){
+      localStorage.removeItem('access_token');
+      this.$store.dispatch("setAccessToken", null);
+      this.$router.push({name:"phoneLogin"});
     }
   },
   components: {
