@@ -12,7 +12,7 @@
     </div>
      <div id="container">
       <!-- 轮播 -->
-      <mt-swipe :auto="4000" class="swiper">
+      <mt-swipe :auto="4000" class="swiper" :show-indicators="false">
         <mt-swipe-item v-for="(img,index) in swipeImgs" :key="index">
           <img :src="img" alt>
         </mt-swipe-item>
