@@ -19,7 +19,6 @@
 </template>
 
 <script>
-const myzixuDataOne = require('../../data/zixuDataOne.json');
 const myusdtDataOne = require('../../data/usdtDataOne.json');
 const myhanqTabData = require('../../data/hanqTabData.json');
 import Header from "../components/Header";
@@ -53,14 +52,10 @@ export default {
      //初始加载数据
     loadData() {
       // 拉取商家信息，默认是综合排序的第一页的数据
-      this.zxorusData = myzixuDataOne;
+      this.zxorusData = myusdtDataOne;
       // 判断是否有点击tab，初始状态this.data为null
       if(this.data){
-        if(this.data.condition== "zixu"){
-          // 加载自选数据
-          console.log("加载涨幅数据");
-          this.zxorusData = myzixuDataOne;
-        }else{
+        if(this.data.condition== "cny"){
           // 加载usdt的数据
           console.log("加载跌幅的数据");
           this.zxorusData = myusdtDataOne;

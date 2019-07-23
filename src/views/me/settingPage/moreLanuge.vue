@@ -10,14 +10,14 @@
           </span>
         </div>
       </div>
-      <div class="address-cell">
+      <!-- <div class="address-cell">
         <div class="address-index">
           <span>English</span>
           <span>
              <i class="fa fa-angle-right" style="margin-left: 2.1vw"></i>
           </span>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

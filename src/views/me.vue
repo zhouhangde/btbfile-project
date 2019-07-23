@@ -20,13 +20,13 @@
           <i class="fa fa-angle-right"></i>
         </div>
       </div>
-      <div class="address-cell" @click="$router.push({name:'tbdz'})">
+      <!-- <div class="address-cell" @click="$router.push({name:'tbdz'})">
         <i class="fa fa-map-marker"></i>
         <div class="address-index">
           <span>提币地址</span>
           <i class="fa fa-angle-right"></i>
         </div>
-      </div>
+      </div> -->
       <div class="address-cell" @click="$router.push({name:'skfs'})">
         <i class="fa fa-jpy"></i>
         <div class="address-index">
@@ -62,13 +62,13 @@
           <i class="fa fa-angle-right"></i>
         </div>
       </div>
-      <div class="address-cell" @click="$router.push({name:'zzmx'})">
+      <!-- <div class="address-cell" @click="$router.push({name:'zzmx'})">
         <i class="fa fa-file"></i>
         <div class="address-index">
           <span>转账明细</span>
           <i class="fa fa-angle-right"></i>
         </div>
-      </div>
+      </div> -->
       <div class="address-cell" style="margin-top: 2.666667vw; border-top: 1px solid #ddd;" @click="$router.push({name:'setting'})">
         <i class="fa fa-cog"></i>
         <div class="address-index">

@@ -45,11 +45,17 @@ const router = new Router({
         }
       ]
     },
-    // 首页点击列表进入k线图展示页面
+    // 首页点击列表进入k线图展示页面，之前的
     {
       path: '/homeKxEarchat',
       name: 'homeKxEarchat',
       component: () => import('./views/indexPage/homeKxEarchat.vue')
+    },
+    // 首页点击列表进入k线图展示页面,带websocket
+    {
+      path: '/homeKxEarchatNew',
+      name: 'homeKxEarchatNew',
+      component: () => import('./views/indexPage/homeKxEarchatNew.vue')
     },
     // 进入充值页面
     {
@@ -278,6 +284,12 @@ const router = new Router({
       path: '/emailForget',
       name: 'emailForget',
       component: () => import('./views/indexPage/emailForget.vue')
+    },
+    // 进入socket
+    {
+      path: '/websocket',
+      name: 'websocket',
+      component: () => import('./views/websocket.vue')
     }
   ]
 });

@@ -6,6 +6,7 @@
         <span class="header_title">bilongwang</span>
       </div>
       <div v-if="hasLogin">
+        <span style="color: rgb(114, 114, 224);margin-right:15px" @click="$router.push({name:'homeKxEarchatNew'})">socket</span>
         <span style="color: rgb(114, 114, 224);" @click="$router.push({name:'phoneRigst'})">注册</span>
         <span style="color: rgb(114, 114, 224);margin-left:15px" @click="$router.push({name:'phoneLogin'})">登陆</span>
       </div>
@@ -19,7 +20,8 @@
       </mt-swipe>
     </div>
      <!-- 列表 -->
-    <HomeOne :data="homeOneData"/>
+    <!-- <HomeOne :data="homeOneData"/> -->
+    <HomeOne :data="homeOneDataNew.slice('0','3')"/>
     <div class="zh_gonggao">
       <div class="gonggao">
         <i class="fa fa-volume-up" style="font-size: 17px;"></i>
@@ -61,12 +63,17 @@ import HomeOne from "../components/home/HomeOne";
 import HomeTwo from "../components/home/HomeTwo";
 import HomeList from "../components/home/HomeList";
 // import FilterView from "../components/FilterView";
+import {
+    findhomeOneData   //分页查询
+} from '../../src/api/home/home'
+
 export default {
   name: "home",
   data() {
     return {
       swipeImgs: [],   //轮播条件
       homeOneData:[],  //轮播下的列表数据
+      homeOneDataNew:[],  //轮播下的列表websocket数据
       homeTwoData:[],  //公共下的导航数据
       zorjDataJson:[],  //tab切换下的列表数据
       page: 1,   //当前页数
@@ -94,15 +101,32 @@ export default {
   created() {
     this.getData();
     // this.checkLogin();   //检查是否登陆
+    
   },
   mounted(){
-     
   },
   methods: {
     getData() {
       // 获取轮播信息
       this.swipeImgs = shoppingData.swipeImgs;   //轮播图片
       this.homeOneData = myHomeOneData.mydata;   //轮播下面的列表数据
+      var $this = this
+      window.revieceData2 = function(res) {
+        // let theData = localStorage.getItem('theData');
+        // console.log(theData);
+        // if(theData != 'null'){
+        //     localStorage.setItem('theData',JSON.stringify(res))
+        // }
+        // res.result.last - res.result.open) / res.result.open   ---此为跌还是涨的利率
+        // console.log('首页轮播下的数据',JSON.stringify(res))
+        return $this.storeData(res)
+      }
+      // this.homeOneDataNew.forEach(function(currentValue, index, arr){
+      //   console.log('currentValue',currentValue)
+      // })
+
+      
+      console.log('23141234123',this.homeOneDataNew);
       this.homeTwoData = myHomeTwoData;   //导航标题
       this.loadData();
     },
@@ -136,7 +160,6 @@ export default {
     },
     // 下拉刷新，top-method
     loadTop() {
-      console.log("422")
       this.page = 1;
       // resurantsOneData为什么数据也会变？？？
       this.allLoaded = false;  //开启上拉加载，未加载完数据
@@ -199,7 +222,13 @@ export default {
     },
     loginOrRigist(){
       
+    },
+    storeData(data){
+      this.homeOneDataNew.push(data)
     }
+  },
+  mounted(){
+     
   },
   components: {
     HomeOne,

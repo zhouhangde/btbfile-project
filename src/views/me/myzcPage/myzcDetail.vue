@@ -30,10 +30,10 @@
                 <p style="font-weight: 600;">936USDT</p>
             </div>
         </div>
-        <div class="the-footer">
+        <!-- <div class="the-footer">
             <div class="footer-item" style="background-color: #79a2ca;" @click="$router.push({name:'myzctx'})">提现</div>
             <div class="footer-item" style="background-color: #1ea8da;" @click="$router.push({name:'myzccz'})">充值</div>
-        </div>
+        </div> -->
     </div>
   </div>
 </template>

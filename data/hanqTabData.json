@@ -1,12 +1,8 @@
 {
     "navTab": [
-		{
-            "name": "自选",
-            "condition":"zixu"
-        },
         {
-            "name": "USDT",
-            "condition":"usdt"
+            "name": "CNY",
+            "condition":"cny"
         }
     ]
 }
