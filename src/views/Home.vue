@@ -44,7 +44,8 @@
       ref="loadmore"
     >
       <div class="Datalist">
-        <HomeList v-for="(item,index) in zorjDataJson" :key="index" :zorjdata="item.myData"/>
+        <!-- <HomeList v-for="(item,index) in zorjDataJson" :key="index" :zorjdata="item.myData"/> -->
+        <HomeList :zorjdata="zorjDataJsonNew"/>
       </div>
     </mt-loadmore>
   </div>
@@ -74,14 +75,17 @@ export default {
       swipeImgs: [],   //轮播条件
       homeOneData:[],  //轮播下的列表数据
       homeOneDataNew:[],  //轮播下的列表websocket数据
-      homeTwoData:[],  //公共下的导航数据
+      homeTwoData:{},  //公共下的导航数据
       zorjDataJson:[],  //tab切换下的列表数据
+      zorjDataJsonNew:[],  //tab切换下的列表websocket数据
       page: 1,   //当前页数
       size: 5,   //分页数
       allLoaded: false,   //是否已经加载完毕，无加载数据的开关
       bottomPullText: "上拉加载更多",   //底部的加载显示字样
       data: null,  //tab切换条件
       // hasLogin:true   //是否登陆（默认为未登录）
+      zfData:[],   //存储websocket涨幅数据
+      dfData:[]    //存储websocket跌幅数据
     };
   },
   computed: {
@@ -98,43 +102,50 @@ export default {
       }
     }
   },
+  // beforeRouteEnter(to, from, next) {
+  //   next(vm => vm.getData());
+  // },
   created() {
     this.getData();
+    this.initsetInterval();  //定时刷新页面
     // this.checkLogin();   //检查是否登陆
-    
   },
-  mounted(){
+  watch: {
+      homeOneDataNew(val) {
+        this.homeOneDataNew = val;
+        // this.$set(this.homeOneDataNew,this.theIndex, val);
+        if(this.homeOneDataNew.length == 7){
+            var $this = this
+            this.homeOneDataNew.filter(function(item, index, arr){
+               if(item.result.last>item.result.open){
+                    // 涨幅的数据
+                    item.color = "rgb(77,169,144)"
+                    $this.zfData.push(item)
+               }else{  
+                    //跌幅的数据
+                    item.color = "#e27373"
+                    $this.dfData.push(item)
+               }
+
+            })
+        }
+      }
   },
   methods: {
     getData() {
       // 获取轮播信息
+      var $this = this
       this.swipeImgs = shoppingData.swipeImgs;   //轮播图片
       this.homeOneData = myHomeOneData.mydata;   //轮播下面的列表数据
-      var $this = this
       window.revieceData2 = function(res) {
-        // let theData = localStorage.getItem('theData');
-        // console.log(theData);
-        // if(theData != 'null'){
-        //     localStorage.setItem('theData',JSON.stringify(res))
-        // }
-        // res.result.last - res.result.open) / res.result.open   ---此为跌还是涨的利率
-        // console.log('首页轮播下的数据',JSON.stringify(res))
-        return $this.storeData(res)
-      }
-      // this.homeOneDataNew.forEach(function(currentValue, index, arr){
-      //   console.log('currentValue',currentValue)
-      // })
-
-      
-      console.log('23141234123',this.homeOneDataNew);
+         return $this.storeData(res)
+       }
       this.homeTwoData = myHomeTwoData;   //导航标题
       this.loadData();
     },
     checkLogin(){
       let access_token = localStorage.getItem('access_token')
       let vux_access_token = this.$store.getters.access_token
-      console.log('access_token',access_token)
-      console.log('vux',vux_access_token)
       if(access_token!=null && access_token !='' && access_token!=undefined){
           this.hasLogin = false
       }else{
@@ -143,20 +154,24 @@ export default {
     },
      //初始加载数据
     loadData() {
-      // 拉取商家信息，默认是综合排序的第一页的数据
-      this.zorjDataJson = myzfDataOne;
+      // 拉取商家信息，默认是综合排序的第一页涨幅的数据
+      // this.zorjDataJson = myzfDataOne;
+      this.zorjDataJsonNew = this.zfData;
       // 判断是否有点击tab，初始状态this.data为null
       if(this.data){
         if(this.data.condition== "zf"){
           // 加载涨幅数据
-          console.log("加载涨幅数据");
-          this.zorjDataJson = myzfDataOne;
+          // console.log("加载涨幅数据");
+          // this.zorjDataJson = myzfDataOne;
+          this.zorjDataJsonNew = this.zfData;
         }else{
           // 加载降幅的数据
-          console.log("加载跌幅的数据");
-          this.zorjDataJson = mydfDataOne;
+          // console.log("加载跌幅的数据");
+          // this.zorjDataJson = mydfDataOne;
+          this.zorjDataJsonNew = this.dfData;
         }
       }
+      
     },
     // 下拉刷新，top-method
     loadTop() {
@@ -225,10 +240,13 @@ export default {
     },
     storeData(data){
       this.homeOneDataNew.push(data)
+    },
+    initsetInterval(){
+      var $this = this
+      setInterval(function(){
+        location.reload();
+     },60000)   
     }
-  },
-  mounted(){
-     
   },
   components: {
     HomeOne,
@@ -236,6 +254,7 @@ export default {
     HomeList
   }
 };
+
 </script>
 
 <style scoped>

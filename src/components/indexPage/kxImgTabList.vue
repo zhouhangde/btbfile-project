@@ -35,7 +35,7 @@ export default {
     zorjdata: Object
   },
   created(){
-    console.log(this.zorjdata)
+    // console.log(this.zorjdata)
   }
 };
 </script>

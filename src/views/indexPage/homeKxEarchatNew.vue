@@ -2,13 +2,25 @@
   <div class="homeKxEarchatNew">
     <Header :isLeft="true" :title="title"/>
     <div>
-      <p class="theItem">
+      <!-- <p class="theItem">
         <span>0.3325<small style="margin-left: 7px;font-size: 10px;color: #fff;">¥2.29</small></span>
         <span>24h最高<small style="margin-left: 7px;">0.3334</small></span>
       </p>
       <p class="theItem">
         <span>0.3325<small style="margin-left: 7px;font-size: 10px;color: #fff;">¥2.29</small></span>
         <span>24h最高<small style="margin-left: 7px;">0.3334</small></span>
+      </p> -->
+      <p class="theItem">
+        <!-- 显示今日值 -->
+        <span><small style="margin-left: 7px;font-size: 10px;color: #fff;">{{myrevieceGaoOrLow.last}}</small></span>
+        <span>24h最高<small style="margin-left: 7px;">{{myrevieceGaoOrLow.high}}</small></span>
+      </p>
+      <p class="theItem">
+        <!-- 涨跌比率 -->
+        <span><small style="margin-left: 7px;font-size: 10px;color: #fff;" v-if="myrevieceGaoOrLow.last.length>0"
+        >{{((myrevieceGaoOrLow.last - myrevieceGaoOrLow.open) / myrevieceGaoOrLow.open).toFixed(2)}}</small>
+        </span>
+        <span>24h最低<small style="margin-left: 7px;">{{myrevieceGaoOrLow.low}}</small></span>
       </p>
     </div>
 
@@ -20,7 +32,7 @@
     
     <kxImgTab :hqfilterData="hanqTabData"  @update="update"/>
 
-     <!-- 涨幅跌幅信息 ，bottom-all-loaded上拉加载是否完成-->
+     <!-- 涨幅盘口或最新成交信息 ，bottom-all-loaded上拉加载是否完成-->
      <!-- auto-fill若为真，loadmore 会自动检测并撑满其容器 -->
     <mt-loadmore
         :top-method="loadTop"
@@ -28,6 +40,7 @@
         ref="loadmore"
         >
         <div class="Datalist">
+            <!-- <kxImgTabList v-for="(item,index) in zxorusData" :key="index" :zorjdata="item.myData"/> -->
             <kxImgTabList v-for="(item,index) in zxorusData" :key="index" :zorjdata="item.myData"/>
         </div>
     </mt-loadmore>
@@ -53,21 +66,53 @@ export default {
        title:'XRP/USDT',
        hanqTabData:{},  //tab切换的title
        zxorusData:[],   //tab下的切换的列表数据
+       zxorusDataNew:{
+           asks:[],
+           bids:[]
+       },  //盘口的websocket数据
        page: 1,   //当前页数
        size: 5,   //分页数
        allLoaded: false,   //是否已经加载完毕，无加载数据的开关
        bottomPullText: "上拉加载更多",   //底部的加载显示字样
        data: null,  //tab切换条件
+        //最高最低数据
+       myrevieceGaoOrLow:{
+         deal: "",
+         high: "",
+         last: "",
+         low: "",
+         open: "",
+         volume: ""
+       }
     }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => vm.getData());
   },
+  watch: {
+      zxorusDataNew(val) {
+        // this.zxorusDataNew = val;
+        console.log('val',val)
+        this.zxorusDataNew = val[1]
+      }
+  },
   methods: {
     // 获取用户信息
     getData() {
+       var $this = this
        this.hanqTabData = myhanqTabData
-       console.log('导航的title',this.hanqTabData)
+      //  console.log('导航的title',this.hanqTabData)
+       window.revieceData1 = function(res) {
+        //  console.log('usdt最高最低数据',res)
+         return $this.storeData(res)
+       }
+       window.revieceData17 = function(res) {
+            // 只需要交易挂单返回成功的数据（目前将其作为盘口的数据）
+            if(res.params[0]){
+                console.log('盘口数据',res)
+                return $this.storePkData(res)
+            }
+       }
        this.loadData()
     },
     // 点击导航切换
@@ -107,6 +152,12 @@ export default {
       // console.log(condation);
       this.data = condation;
       this.loadData();
+    },
+    storeData(data){
+      this.myrevieceGaoOrLow = data.result
+    },
+    storePkData(data){
+      this.zxorusDataNew = data.params
     }
   },
   // 调用

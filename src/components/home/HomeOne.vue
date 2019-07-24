@@ -1,5 +1,5 @@
 <template>
-  <div class="HomeOne" @click="$router.push({name:'homeKxEarchat'})">
+  <div class="HomeOne" @click="$router.push({name:'homeKxEarchat'})" v-if="hackReset">
      <!-- <table>
          <tr v-for="(item,index) in data" :key="index">
              <td>{{item.title}}</td>
@@ -14,13 +14,13 @@
          <span style="color:#65b974; margin-top: 10px;">{{item.one}}</span>
          <span style="font-size: 8px;">{{item.two}}</span>
          <span style="font-size: 11px;color: #8a8383;">{{item.three}}</span> -->
-         <span style="font-size: 12px;" v-if="index == '0'">CSCCT/USDT</span>
-         <span style="font-size: 12px;" v-else-if="index == '1'">BTC/USDT</span>
-         <span style="font-size: 12px;" v-else-if="index == '2'">ETH/USDT</span>
-         <span style="font-size: 12px;" v-else-if="index == '3'">XRP/USDT</span>
-         <span style="font-size: 12px;" v-else-if="index == '4'">EOS/USDT</span>
-         <span style="font-size: 12px;" v-else-if="index == '5'">LTC/USDT</span>
-         <span style="font-size: 12px;" v-else-if="index == '6'">BHB/USDT</span>
+         <span style="font-size: 12px;" v-if="index == '0'">CSCCT/CNY</span>
+         <span style="font-size: 12px;" v-else-if="index == '1'">BTC/CNY</span>
+         <span style="font-size: 12px;" v-else-if="index == '2'">ETH/CNY</span>
+         <span style="font-size: 12px;" v-else-if="index == '3'">XRP/CNY</span>
+         <span style="font-size: 12px;" v-else-if="index == '4'">EOS/CNY</span>
+         <span style="font-size: 12px;" v-else-if="index == '5'">LTC/CNY</span>
+         <span style="font-size: 12px;" v-else-if="index == '6'">BHB/CNY</span>
 
          <span style="color:#65b974; margin-top: 10px;">{{item.result.last}}</span>
          <span style="color:#65b974;">{{((item.result.last - item.result.open) / item.result.open).toFixed(2)}}</span>
@@ -36,9 +36,38 @@
 export default {
   name: "HomeOne",
   props: {
-    data: Array
+    data:{
+      type:Array,
+      default:[{
+        result:{
+          deal: "",
+          high: "",
+          last: "",
+          low: "",
+          open: "",
+          volume: ""
+         }
+      }]
+    }
+  },
+  data() {
+    return {
+      hackReset:true
+    };
+  },
+  watch: {
+      // data(val) {
+      //   var $this = this
+      //   console.log('12341234',val)
+      //   $this.hackReset = false;
+      //   // 重新创建子标签
+      //   $this.$nextTick(() => {
+      //     $this.hackReset = true;
+      //   });
+      // }
   },
   created(){
+    
   }
 };
 </script>
