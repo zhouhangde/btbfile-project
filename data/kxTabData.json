@@ -2,11 +2,11 @@
     "navTab": [
 		{
             "name": "盘口",
-            "condition":"zixu"
+            "condition":"pk"
         },
         {
             "name": "最新成交",
-            "condition":"usdt"
+            "condition":"zxcj"
         }
     ]
 }

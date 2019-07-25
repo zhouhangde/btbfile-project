@@ -8,10 +8,12 @@
         </div>
         <div :style="{backgroundColor:item.color,padding:'8px 18px',color:'white'}">{{item.zhangThor}}</div>
     </div> -->
-    <div v-for="(item,index) in zorjdata" :key="index" class="itemzord"  @click="$router.push({name:'homeKxEarchat'})">
+    <div v-for="(item,index) in zorjdata" :key="index" class="itemzord"  @click="$router.push({name:'homeKxEarchatNew'})">
         <div>CNY</div>
         <div class="centeritem">
-          <span style="margin-left:30px;">{{item.result.last}}</span>
+          <!-- 最新价 -->
+          <span style="margin-left:30px;"><i data-v-61dd7a3d="" class="fa fa-yen (alias)"></i>{{item.result.last}}</span>
+          <!-- 开盘价 -->
           <span style="margin-top:10px;margin-left:30px;color:#999;"><i data-v-61dd7a3d="" class="fa fa-yen (alias)"></i>{{item.result.open}}</span>
         </div>
         <div :style="{backgroundColor:item.color,padding:'8px 18px',color:'white'}">{{((item.result.last - item.result.open) / item.result.open).toFixed(2)}}</div>

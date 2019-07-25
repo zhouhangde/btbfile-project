@@ -30,7 +30,7 @@ axios.interceptors.request.use(
     if (config.method == 'post') {
       config.data = qs.stringify(config.data);
     }
-
+    
     // 加载动画
     Indicator.open();
     return config;

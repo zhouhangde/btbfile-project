@@ -6,7 +6,7 @@
         <span class="header_title">bilongwang</span>
       </div>
       <div v-if="hasLogin">
-        <span style="color: rgb(114, 114, 224);margin-right:15px" @click="$router.push({name:'homeKxEarchatNew'})">socket</span>
+        <!-- <span style="color: rgb(114, 114, 224);margin-right:15px" @click="$router.push({name:'homeKxEarchatNew'})">socket</span> -->
         <span style="color: rgb(114, 114, 224);" @click="$router.push({name:'phoneRigst'})">注册</span>
         <span style="color: rgb(114, 114, 224);margin-left:15px" @click="$router.push({name:'phoneLogin'})">登陆</span>
       </div>
@@ -107,7 +107,7 @@ export default {
   // },
   created() {
     this.getData();
-    this.initsetInterval();  //定时刷新页面
+    // this.initsetInterval();  //定时刷新页面
     // this.checkLogin();   //检查是否登陆
   },
   watch: {

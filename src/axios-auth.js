@@ -5,5 +5,5 @@ const instance = axios.create({
 })
 
 // instance.defaults.headers.common['SOMETHING'] = 'SOMETHING'
-
+// instance.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';    //将json数据变成form data 
 export default instance

@@ -1,5 +1,5 @@
 <template>
-  <div class="HomeOne" @click="$router.push({name:'homeKxEarchat'})" v-if="hackReset">
+  <div class="HomeOne" @click="$router.push({name:'homeKxEarchatNew'})" v-if="hackReset">
      <!-- <table>
          <tr v-for="(item,index) in data" :key="index">
              <td>{{item.title}}</td>
@@ -21,11 +21,16 @@
          <span style="font-size: 12px;" v-else-if="index == '4'">EOS/CNY</span>
          <span style="font-size: 12px;" v-else-if="index == '5'">LTC/CNY</span>
          <span style="font-size: 12px;" v-else-if="index == '6'">BHB/CNY</span>
-
+         
+         <!-- 最终价 -->
          <span style="color:#65b974; margin-top: 10px;">{{item.result.last}}</span>
+         <!-- 涨幅 -->
          <span style="color:#65b974;">{{((item.result.last - item.result.open) / item.result.open).toFixed(2)}}</span>
+         <!-- 最高价 -->
          <span style="font-size: 8px;">{{item.result.high}}</span>
+         <!-- 最低价 -->
          <span style="font-size: 8px;">{{item.result.low}}</span>
+         <!-- 成交量 -->
          <span style="font-size: 11px;color: #8a8383;">{{new Number(item.result.deal).toFixed(2)}}</span>
        </li>
      </ul>  

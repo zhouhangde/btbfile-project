@@ -19,7 +19,7 @@
      <span v-if="aside" class="myicon" @click="showActionsheet">
        <i class="fa fa-ellipsis-v"></i>
      </span>
-     <span v-if="biao" class="myicon" @click="$router.push({name:'homeKxEarchat'})">
+     <span v-if="biao" class="myicon" @click="$router.push({name:'homeKxEarchatNew'})">
        <i class="fa fa-bar-chart"></i>
      </span>
      <span v-if="xin" class="myicon" @click="shoucan">
@@ -70,7 +70,7 @@ export default {
 
   },
   created(){
-    console.log(this.title)
+    // console.log(this.title)
   },
   methods:{
     showActionsheet(){

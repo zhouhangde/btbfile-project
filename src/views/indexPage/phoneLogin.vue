@@ -2,8 +2,8 @@
   <div class="phoneLogin">
     <Header :isleftHome="true"/>
     <div style="padding: 30px;">
-      <div style="text-align:center"> 
-        <img src="" style="width:60px;height:30px"/>
+      <div style="text-align:center;padding-bottom: 20px;"> 
+        <img src="../../assets/image/image_p3fFiDdpZz.png" style="width:96px;height:32px"/>
       </div>
       <div class="theItem">
         <p>

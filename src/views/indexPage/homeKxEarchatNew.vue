@@ -41,7 +41,7 @@
         >
         <div class="Datalist">
             <!-- <kxImgTabList v-for="(item,index) in zxorusData" :key="index" :zorjdata="item.myData"/> -->
-            <kxImgTabList v-for="(item,index) in zxorusData" :key="index" :zorjdata="item.myData"/>
+            <kxImgTabList  :pkData="pkData" :cjData="cjData" :showData="showData"/>
         </div>
     </mt-loadmore>
     <div class="foot-buttS">
@@ -66,10 +66,16 @@ export default {
        title:'XRP/USDT',
        hanqTabData:{},  //tab切换的title
        zxorusData:[],   //tab下的切换的列表数据
-       zxorusDataNew:{
-           asks:[],
-           bids:[]
-       },  //盘口的websocket数据
+       //tab下的切换的列表数据websocket盘口数据
+       pkData:{
+         asks:[],
+         bids:[]
+       },
+       //tab下的切换的列表数据websocket最新成交数据
+      cjData:{
+        cj:[]
+       },
+       showData:'pk',  //初始化显示盘口开关
        page: 1,   //当前页数
        size: 5,   //分页数
        allLoaded: false,   //是否已经加载完毕，无加载数据的开关
@@ -83,17 +89,38 @@ export default {
          low: "",
          open: "",
          volume: ""
-       }
+       },
+      
     }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => vm.getData());
   },
   watch: {
-      zxorusDataNew(val) {
-        // this.zxorusDataNew = val;
-        console.log('val',val)
-        this.zxorusDataNew = val[1]
+      // zxorusDataNew(val) {
+      //   // this.zxorusDataNew = val;
+      //   this.zxorusDataNew.asks =  val[1].asks
+      //   this.zxorusDataNew.bids =  val[1].bids
+      //   console.log('this.zxorusDataNew',this.zxorusDataNew)
+      // },
+      pkData: {
+        handler(newValue, oldValue) {
+          if(newValue.asks != undefined){
+            this.pkData.asks = newValue.asks
+            this.pkData.bids = newValue.bids
+          }
+          //  console.log('this.zxorusDataNew',this.zxorusDataNew)
+        },
+        immediate: true,
+        deep: true
+      },
+      cjData:{
+        // 暂时没有监听到变化
+        handler(newValue, oldValue) {
+          this.cjData = newValue
+        },
+        immediate: true,
+        deep: true
       }
   },
   methods: {
@@ -101,40 +128,54 @@ export default {
     getData() {
        var $this = this
        this.hanqTabData = myhanqTabData
-      //  console.log('导航的title',this.hanqTabData)
        window.revieceData1 = function(res) {
-        //  console.log('usdt最高最低数据',res)
+        // usdt最高最低数据
          return $this.storeData(res)
        }
        window.revieceData17 = function(res) {
             // 只需要交易挂单返回成功的数据（目前将其作为盘口的数据）
             if(res.params[0]){
-                console.log('盘口数据',res)
+                // console.log('盘口数据',res)
                 return $this.storePkData(res)
             }
        }
+       window.revieceData61 = function(res) {
+            return $this.storeCjData(res)
+        },
        this.loadData()
     },
     // 点击导航切换
     handleChange (item, index) {
       if(index == '0'){
+
       }else if(index == '1'){
+
       }
     },
      //初始加载数据
     loadData() {
       // 拉取商家信息，默认是综合排序的第一页的数据
-      this.zxorusData = myzixuDataOne;
-      // 判断是否有点击tab，初始状态this.data为null
+      // this.zxorusData = myzixuDataOne;
+      // // 判断是否有点击tab，初始状态this.data为null
+      // if(this.data){
+      //   if(this.data.condition== "pk"){
+      //     // 加载自选数据
+      //     console.log("加载涨幅数据");
+      //     this.zxorusData = myzixuDataOne;
+      //   }else{
+      //     // 加载usdt的数据
+      //     console.log("加载跌幅的数据");
+      //     this.zxorusData = myusdtDataOne;
+      //   }
+      // }
+
       if(this.data){
-        if(this.data.condition== "zixu"){
+        if(this.data.condition== "pk"){
           // 加载自选数据
-          console.log("加载涨幅数据");
-          this.zxorusData = myzixuDataOne;
+          this.showData = 'pk'
         }else{
           // 加载usdt的数据
-          console.log("加载跌幅的数据");
-          this.zxorusData = myusdtDataOne;
+          this.showData = 'zxcj'
         }
       }
     },
@@ -149,7 +190,6 @@ export default {
     },
      //tab切换，根据点击tab的条件加载数据
     update(condation) {  
-      // console.log(condation);
       this.data = condation;
       this.loadData();
     },
@@ -157,7 +197,17 @@ export default {
       this.myrevieceGaoOrLow = data.result
     },
     storePkData(data){
-      this.zxorusDataNew = data.params
+      this.pkData = {
+          asks:data.params[1].asks,
+          bids:data.params[1].bids
+      }
+    },
+    storeCjData(data){
+      if(data.params[1].length >50 ){
+         this.cjData = {
+          cj:data.params[1].slice(0,50)
+        }
+      }
     }
   },
   // 调用
