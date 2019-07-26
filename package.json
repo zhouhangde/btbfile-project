@@ -18,10 +18,12 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",
     "@vue/cli-service": "^3.4.0",
+    "animate.css": "^3.7.2",
     "echarts": "^4.2.1",
     "ly-tab": "^2.1.2",
     "moment": "^2.24.0",
     "qs": "^6.7.0",
+    "vue-fakin-slider": "^0.1.0",
     "vue-template-compiler": "^2.5.21"
   },
   "postcss": {

@@ -11,10 +11,12 @@
         :auto-fill="false"   
         ref="loadmore"
         >
-        <div class="Datalist">
-            <!-- <HanqTabList v-for="(item,index) in zxorusData" :key="index" :zorjdata="item.myData"/> -->
-            <HanqTabList :zorjdata="homeOneDataNew.slice('0','7')"/>
-        </div>
+          <div class="Datalist">
+              <!-- <HanqTabList v-for="(item,index) in zxorusData" :key="index" :zorjdata="item.myData"/> -->
+              <!-- <transition name="slide"> -->
+               <HanqTabList :zorjdata="homeOneDataNew.slice('0','7')"/>
+              <!-- </transition> -->
+          </div>
     </mt-loadmore>
   </div>
 </template>
@@ -25,6 +27,8 @@ const myhanqTabData = require('../../data/hanqTabData.json');
 import Header from "../components/Header";
 import HanqTab from "../components/hanq/HanqTab";
 import HanqTabList from "../components/hanq/HanqTabList";
+// 引入加载动画插件
+import { Indicator } from 'mint-ui';
 export default {
   name: "hanq",
   data() {
@@ -41,8 +45,13 @@ export default {
        
     };
   },
-  beforeRouteEnter(to, from, next) {
-    next(vm => vm.getData());
+  // beforeRouteEnter(to, from, next) {
+  //   next(vm => vm.getData());
+  // },
+  created() {
+    this.getData();
+    // this.initsetInterval();  //定时刷新页面
+    // this.checkLogin();   //检查是否登陆
   },
   watch: {
       homeOneDataNew(val) {
@@ -63,7 +72,6 @@ export default {
     getData() {
        var $this = this
        this.hanqTabData = myhanqTabData
-       console.log('导航的title',this.hanqTabData)
        window.revieceData2 = function(res) {
          return $this.storeData(res)
        }
@@ -95,13 +103,20 @@ export default {
     },
      //tab切换，根据点击tab的条件加载数据
     update(condation) {  
-      // console.log(condation);
       this.data = condation;
       this.loadData();
     },
     storeData(data){
-      console.log('data',data)
       this.homeOneDataNew.push(data)
+    },
+    initsetInterval(){
+      var $this = this
+      setInterval(function(){
+        // 加载动画
+        Indicator.open();
+        location.reload();
+        Indicator.close();
+     },60000)   
     }
   },
   components: {
@@ -113,5 +128,15 @@ export default {
 </script>
 
 <style scoped>
-
+  /* .slide-enter-active, .slide-leave-active {
+    transition: all 0.5s linear;
+  }
+  .slide-enter{
+    transform: translateY(20px) scale(1);
+    opacity: 1;
+  }
+  .slide-leave-to {
+    transform: translateY(-20px) scale(0.8);
+    opacity: 0;
+  } */
 </style>

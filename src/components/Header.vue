@@ -29,6 +29,10 @@
      <span v-if="newIcon" class="myicon" @click="newItem">
        <i class="fa fa-plus"></i>
      </span>
+     <!-- 新增收款信息 -->
+     <span v-if="newSkMethordIcon" class="myicon" @click="shownewSkMethord">
+       <i class="fa fa-plus"></i>
+     </span>
      <span v-if="historytitle" class="myicon" @click="$router.push({name:'zzmx'})">
        历史
      </span>
@@ -66,6 +70,7 @@ export default {
     biao:Boolean,  //显示统计图标
     aside:Boolean,  //显示右侧的三个点图标
     newIcon:Boolean, //新增图标
+    newSkMethordIcon:Boolean, //新增收款方式
     historytitle:Boolean //显示历史
 
   },
@@ -90,6 +95,10 @@ export default {
       this.$emit("shownewItem", {
             showBottom:true    //获取条件距离最近distance，作为条件
       });
+    },
+    shownewSkMethord(){
+      // 新增收款方式
+      this.$emit("shownewSkMethord");
     }
   }
 };

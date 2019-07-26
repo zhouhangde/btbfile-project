@@ -23,13 +23,21 @@
     <!-- <HomeOne :data="homeOneData"/> -->
     <HomeOne :data="homeOneDataNew.slice('0','3')"/>
     <div class="zh_gonggao">
-      <div class="gonggao">
+      <div class="gonggao" style="display: flex;">
         <i class="fa fa-volume-up" style="font-size: 17px;"></i>
-        <span style="margin-left: 7px;">
+        <span style="margin-left: 7px;display: flex;align-items: center;">
           <em style="color:#989292">公告:</em>
-          <em style="margin-left: 5px;">交易所bilongwang即将开盘交易</em></span>
+          <!-- <em style="margin-left: 5px;">交易所bilongwang即将开盘交易</em></span> -->
+          <div class="scroll" style="height: 14px; overflow: hidden;margin-left: 7px">
+              <ul id="scrollDiv"  ref="rollul" :class="{anim:animate==true}">
+                  <li v-for="(item,index) in cateData" :key="index"><span>{{item.title}}</span></li>
+              </ul>
+           </div>
+         </span>
       </div>
     </div>
+
+
      <!-- 导航 -->
      <HomeTwo :filterData="homeTwoData"  @update="update"/>
 
@@ -67,7 +75,7 @@ import HomeList from "../components/home/HomeList";
 import {
     findhomeOneData   //分页查询
 } from '../../src/api/home/home'
-
+import { Indicator } from 'mint-ui';
 export default {
   name: "home",
   data() {
@@ -85,7 +93,9 @@ export default {
       data: null,  //tab切换条件
       // hasLogin:true   //是否登陆（默认为未登录）
       zfData:[],   //存储websocket涨幅数据
-      dfData:[]    //存储websocket跌幅数据
+      dfData:[],    //存储websocket跌幅数据
+      cateData:[],   //公告数据
+      animate:false  //公告轮播状态
     };
   },
   computed: {
@@ -109,6 +119,9 @@ export default {
     this.getData();
     // this.initsetInterval();  //定时刷新页面
     // this.checkLogin();   //检查是否登陆
+  },
+  mounted () {
+    setInterval(this.scroll,2000)  //开启公告
   },
   watch: {
       homeOneDataNew(val) {
@@ -140,6 +153,8 @@ export default {
       window.revieceData2 = function(res) {
          return $this.storeData(res)
        }
+
+      this.getCate();   //获取公告内容 
       this.homeTwoData = myHomeTwoData;   //导航标题
       this.loadData();
     },
@@ -241,12 +256,62 @@ export default {
     storeData(data){
       this.homeOneDataNew.push(data)
     },
+    getCate(){
+      var $this = this
+        this.$axios
+        .post("api/start/cate", {
+          id: '9',
+          limit_begin:'0',
+          limit_num:'10',
+          access_token:'8MLF4DEItozx5xQLev5lZGn862BZ5E0B_1561786555',
+          chain_network:'chain_network',
+          os:'web',
+          os_ver:'1.0.0',
+          soft_ver:'1.0.0',
+          language:'zh_cn'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+              //  console.log('res',res)
+               $this.cateData = res.data.data
+          }else{
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            $this.$toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        });
+    },
     initsetInterval(){
       var $this = this
       setInterval(function(){
+        // 加载动画
+        Indicator.open();
         location.reload();
+        Indicator.close();
      },60000)   
-    }
+    },
+    scroll(){
+       this.animate = true         
+       var that = this;      
+       setTimeout(function(){          
+           that.cateData.push(that.cateData[0]);          
+           that.cateData.shift();      
+           that.animate=false; 
+        },3000)
+     }
+          
   },
   components: {
     HomeOne,
@@ -307,4 +372,5 @@ mt-loadmore{
   height: calc(100% - 95px);
   overflow: auto;
 }
+
 </style>

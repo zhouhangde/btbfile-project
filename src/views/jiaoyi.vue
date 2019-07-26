@@ -1,7 +1,8 @@
 <template>
   <div class="jiaoyi">
+    <!-- :xin="xin" 此为收藏到自选的星星 -->
     <Header :title="title" 
-    :xial="xial" :xin="xin" 
+    :xial="xial" 
     :biao="biao" :aside="aside" 
     @condit="condit"
     @showAction="showactionSheet"/>
@@ -43,50 +44,18 @@
                <span style="color:#999;">价格</span>
                <span style="color:#999;">数量</span>
              </div>
-             <div class="itemShop itemShopzf" @click="sendPrice($event)">
-               <span class="itemprice">3.995</span>
-               <span>45.2463</span>
-             </div>
-             <div class="itemShop itemShopzf">
-               <span>3.995</span>
-               <span>45.2463</span>
-             </div>
-             <div class="itemShop itemShopzf">
-               <span>3.995</span>
-               <span>45.2463</span>
-             </div>
-             <div class="itemShop itemShopzf">
-               <span>3.995</span>
-               <span>45.2463</span>
-             </div>
-             <div class="itemShop itemShopzf">
-               <span>3.995</span>
-               <span>45.2463</span>
+             <div class="itemShop itemShopzf" @click="sendPrice($event)" v-for="(item,index) in pkData.asks" :key="index">
+               <span class="itemprice">{{item[0]}}</span>
+               <span>{{item[1]}}</span>
              </div>
            </li>
          </ul>
-         <div class="pjprice">3.3855</div>
+         <div class="pjprice">1.49597342/￥10.3073</div>
          <ul style="padding-top:10px">
            <li id="num">
-             <div class="itemShop itemShopdf">
-               <span>3.995</span>
-               <span>45.2463</span>
-             </div>
-             <div class="itemShop itemShopdf">
-               <span>3.995</span>
-               <span>45.2463</span>
-             </div>
-             <div class="itemShop itemShopdf">
-               <span>3.995</span>
-               <span>45.2463</span>
-             </div>
-             <div class="itemShop itemShopdf">
-               <span>3.995</span>
-               <span>45.2463</span>
-             </div>
-             <div class="itemShop itemShopdf">
-               <span>3.995</span>
-               <span>45.2463</span>
+             <div class="itemShop itemShopdf" @click="sendPrice($event)" v-for="(item,index) in pkData.bids" :key="index"> 
+               <span>{{item[0]}}</span>
+               <span>{{item[1]}}</span>
              </div>
            </li>
          </ul>
@@ -99,7 +68,7 @@
               <em v-if="inputru">828.7273USDT</em>
               <em v-else>0CSCCT</em>
             </span>
-            <button class="toinput" @click="toinput">充值</button>
+            <!-- <button class="toinput" @click="toinput">充值</button> -->
         </div>
       </div>
     </div>
@@ -153,7 +122,11 @@ export default {
       }],
       sheetVisible:false, //上拉的sheet显示开关
       changScState:false,  //收藏状态开关
-      popupVisible:true   //显示顶部的提示
+      popupVisible:true,   //显示顶部的提示
+      pkData:{     //右侧的交易挂单数据
+         asks:[],
+         bids:[]
+       },
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -162,7 +135,16 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+      var $this = this
       this.jiaoyiTabData = myjiaoyiTabData
+      // 获取右侧交易挂单的数据
+      window.revieceData17 = function(res) {
+            // 只需要交易挂单返回成功的数据（也对应为我要买和我要卖的数据）
+            if(res.params[0]){
+                console.log('挂单数据',res)
+                return $this.storePkData(res)
+            }
+      };
       console.log('父页面的tab数据',this.jiaoyiTabData);
       this.loadData();
     },
@@ -220,7 +202,13 @@ export default {
       //  console.log(dom)
       //  console.log(dom.target.firstChild.innerText)
       //  this.theDj.x = dom.target.firstChild.innerText
-    }
+    },
+    storePkData(data){
+      this.pkData = {
+          asks:data.params[1].asks,
+          bids:data.params[1].bids
+      }
+    },
   },
   components: {
       Header,
@@ -242,7 +230,7 @@ export default {
     width: 50%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
   .center-contain-right{
     padding: 5px;

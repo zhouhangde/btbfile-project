@@ -117,6 +117,12 @@ const router = new Router({
       name: 'skfs',
       component: () => import('./views/me/skfsPage/skfs.vue')
     },
+    // 添加收款方式
+    {
+      path: '/addSkMethord',
+      name: 'addSkMethord',
+      component: () => import('./views/me/skfsPage/addSkMethord.vue')
+    },
     // 进入支付宝方式
     {
       path: '/zfbMethod',

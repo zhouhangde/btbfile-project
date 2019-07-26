@@ -2,20 +2,20 @@
   <div class="smrz">
     <Header :isLeft="true" :title="title"/>
     <div>
-      <div class="address-cell"  @click="$router.push({name:'grrzDetail'})">
+      <div class="address-cell"  @click="$router.push({name:'grrzDetail',params: {grRzStaue: grRzStaue}})">
         <div class="address-index">
           <span>个人认证</span>
           <span>
-             已认证
+             {{status_msg}}
              <i class="fa fa-angle-right" style="margin-left: 2.1vw"></i>
           </span>
         </div>
       </div>
-      <div class="address-cell"  @click="$router.push({name:'sjrzDetail'})">
+      <div class="address-cell"  @click="$router.push({name:'sjrzDetail',params: {sjRzStaue: sjRzStaue}})">
         <div class="address-index">
           <span>商家认证</span>
           <span>
-             审核已通过
+             {{otc_merchant_msg}}
              <i class="fa fa-angle-right" style="margin-left: 2.1vw"></i>
           </span>
         </div>
@@ -26,11 +26,17 @@
 
 <script>
 import Header from "../../../components/Header";
+import { Toast } from "mint-ui";
 export default {
   name: "smrz",
   data() {
     return {
-        title:'实名认证'
+        title:'实名认证',
+        status_msg:'',   //个人认证提示
+        otc_merchant_msg:'',   //商家认证提示
+        access_token:'',
+        grRzStaue:'',
+        sjRzStaue:''
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -39,7 +45,103 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
-      
+       let access_token = localStorage.getItem('access_token')
+       if(access_token!= undefined && access_token!= null && access_token!= ''){
+         this.getUserInfo(access_token)
+         this.getRzInfo(access_token)
+       }else{
+         this.status_msg = ''
+         this.otc_merchant_msg = ''
+         Toast({
+              message: '暂未登陆，未能获取认证信息',
+              position: "bottom",
+              duration: 2000
+         });
+         return;
+       }
+       
+    },
+    getUserInfo(access_token){
+      // 获取用户信息
+      var _this =this;
+      this.$axios
+      .post("api/user/user-info",{
+        access_token:access_token,
+        chain_network:'main_network'
+      })
+      .then(res => {
+        if(res.data.code == '200'){
+            // 检验成功 设置登录状态并且跳转到/
+            if(res.data.data.otc_merchant_msg == "审核已通过"){
+               _this.otc_merchant_msg  = '审核已通过'
+               _this.sjRzStaue = '1'
+            }else if(res.data.data.otc_merchant_msg == "等待审核中"){
+               _this.otc_merchant_msg  = '等待审核中'
+               _this.sjRzStaue = '2'
+            }else{
+              _this.sjRzStaue = '0'
+              if(res.data.data.verified_status_msg == "审核已通过"){
+                  _this.otc_merchant_msg  = '暂未认证,请及时认证'
+              }else{
+                  _this.otc_merchant_msg  = '请先进行个人认证'
+              }
+            }
+            
+        }else{
+          Toast({
+              message: res.data.message,
+              position: "bottom",
+              duration: 2000
+            });
+            return;
+        }
+      })
+      .catch(err => {
+          Toast({
+              message: '网络错误',
+              position: "bottom",
+              duration: 2000
+            });
+            return;
+      });
+    },
+    // 获取认证信息
+    getRzInfo(access_token){
+      var _this =this;
+      this.$axios
+      .post("api/user/get-info",{
+        access_token:access_token,
+        chain_network:'main_network'
+      })
+      .then(res => {
+        if(res.data.code == '200'){
+            // 检验成功 设置登录状态并且跳转到/
+            if(res.data.data.status_msg == "等待审核中"){
+               _this.status_msg  = '等待审核中'
+               _this.grRzStaue = '2'
+            }else{
+               _this.status_msg  = '已认证'
+               _this.grRzStaue = '1'
+            }
+        }else{
+            _this.status_msg  = '暂未认证,请及时认证'
+            _this.grRzStaue = '0'
+          // Toast({
+          //     message: res.data.message,
+          //     position: "bottom",
+          //     duration: 2000
+          //   });
+          //   return;
+        }
+      })
+      .catch(err => {
+          Toast({
+              message: '网络错误',
+              position: "bottom",
+              duration: 2000
+            });
+            return;
+      });
     }
   },
   components: {

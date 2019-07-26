@@ -8,12 +8,13 @@ import axios from 'axios';
 // qs用于处理post请求失败的问题
 import qs from 'qs';
 // 引入加载动画插件
-import { Indicator } from 'mint-ui';
+import { Indicator,Toast } from 'mint-ui';
 import echarts from 'echarts';
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
 Vue.prototype.$echarts = echarts;
+Vue.prototype.$toast = Toast;
 
 Vue.use(MintUI);
 

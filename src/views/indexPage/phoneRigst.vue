@@ -70,9 +70,11 @@ export default {
             varcode:'',
             code:''
       },
+      // 获取验证码
       show: true,
       count: '',
       timer: null,
+      // 获取验证码结束
     };
   },
   beforeRouteEnter(to, from, next) {

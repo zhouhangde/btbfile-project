@@ -1,6 +1,6 @@
 <template>
   <div class="skfs">
-    <Header :isLeft="true" :title="title" :newIcon="newIcon" @shownewItem="shownewItem"/>
+    <Header :isLeft="true" :title="title" :newSkMethordIcon="newSkMethordIcon" @shownewSkMethord="shownewSkMethord"/>
     <div class="item-input" @click="$router.push({name:'zfbMethod'})">
         <i class="fa fa-cny (alias)"></i>
         <div class="item-right">
@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       title:'收款方式',
-      newIcon:true
+      newSkMethordIcon:true
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -36,10 +36,8 @@ export default {
     getData() {
       
     },
-    shownewItem(conditon){
-      if(conditon.showBottom){
-         
-      }
+    shownewSkMethord(){
+       this.$router.push({name:'addSkMethord'})
     }
   },
   components: {

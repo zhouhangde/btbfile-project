@@ -139,3 +139,17 @@ D:\window\nginx-1.10.2\conf\myconfig\dist.conf为nginx的配置
 ###batter-scroll
 用于处理手机端上没有滚动的问题，类似区域滚动
 有时候样式发生改动需要命令重启下
+
+###vue的图片上传插件  -----暂未使用到
+https://blog.csdn.net/u014302759/article/details/78634951
+
+###公告的文字滚动可参考
+https://www.cnblogs.com/cheryshi/p/10998161.html    ---VueJS和Javascript实现文字上下滚动效果
+https://www.jianshu.com/p/f16bb819e240    --vue实现
+
+###vue中使用websocket
+https://www.jianshu.com/p/9d8b2e42328c
+
+
+###vue的图片上传
+https://blog.csdn.net/qq_27717857/article/details/79917995
