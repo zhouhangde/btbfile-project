@@ -50,6 +50,7 @@ export default {
     },
     loginOut(){
       localStorage.removeItem('access_token');
+      localStorage.removeItem("login_methord");
       this.$store.dispatch("setAccessToken", null);
       this.$router.push({name:"phoneLogin"});
     }

@@ -4,7 +4,8 @@
       <!-- <i class="fa fa-minus"></i> -->
       -
     </span>
-    <span class="cartcount">{{dataNumberr.x}}</span>
+    <!-- <span class="cartcount">{{dataNumberr.x}}</span> -->
+    <span class="cartcount">{{dataNumberr}}</span>
     <span @click.stop="increaseCount" class="cartbutton" style="color:#999;font-size:22px;line-height:14px;padding-right:5px;">
       <!-- <i class="fa fa-plus-circle"></i> -->
       +
@@ -21,7 +22,8 @@ export default {
     };
   },
   props: {
-    dataNumberr:Object,
+    // dataNumberr:Object,
+    dataNumberr:Number,
     // default() {
     //   return  {count:0}
     // }
@@ -51,15 +53,15 @@ export default {
   // },
   methods: {
     decreaseCount() {
-      if(this.dataNumberr.x<='0.1'){
+      if(this.dataNumberr<='0.1'){
         return
       }
-       this.dataNumberr.x-=0.1;
+       this.dataNumberr-=0.00000001;
        
     },
     increaseCount() {
       
-      this.dataNumberr.x+=0.1;
+      this.dataNumberr+=0.00000001;
     }
   }
 };
@@ -97,7 +99,7 @@ export default {
   color: rgba(0, 0, 0, 0.87);
   vertical-align: middle;
   font-size: 0.8rem;
-  width: 6.933333vw;
+  /* width: 6.933333vw; */
   overflow: hidden;
   line-height: 18px;
 }

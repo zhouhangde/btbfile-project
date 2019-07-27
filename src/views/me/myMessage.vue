@@ -29,7 +29,7 @@ export default {
   name: "myMessage",
   data() {
     return {
-        title:'消息',
+       title:'消息',
        hanqTabData:{},  //tab切换的title
        zxorusData:[],   //tab下的切换的列表数据
        page: 1,   //当前页数

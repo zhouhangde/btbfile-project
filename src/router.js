@@ -75,11 +75,23 @@ const router = new Router({
       name: 'showOrder',
       component: () => import('./views/otc/showOrder.vue')
     },
-    // 进入实名认证
+    // 进入通知和消息
     {
       path: '/myMessage',
       name: 'myMessage',
       component: () => import('./views/me/myMessage.vue')
+    },
+    // 进入个人中心
+    {
+      path: '/personCenter',
+      name: 'personCenter',
+      component: () => import('./views/me/personCenter.vue')
+    },
+    // 进入修改我的昵称
+    {
+      path: '/myNiChen',
+      name: 'myNiChen',
+      component: () => import('./views/me/myNiChen.vue')
     },
     // 进入实名认证
     {
@@ -117,11 +129,29 @@ const router = new Router({
       name: 'skfs',
       component: () => import('./views/me/skfsPage/skfs.vue')
     },
-    // 添加收款方式
+    // 添加支付宝收款方式
     {
-      path: '/addSkMethord',
-      name: 'addSkMethord',
-      component: () => import('./views/me/skfsPage/addSkMethord.vue')
+      path: '/addZfbMethord',
+      name: 'addZfbMethord',
+      component: () => import('./views/me/skfsPage/addZfbMethord.vue')
+    },
+    // 添加微信收款方式
+    {
+      path: '/addWxMethord',
+      name: 'addWxMethord',
+      component: () => import('./views/me/skfsPage/addWxMethord.vue')
+    },
+    // 添加银行卡收款方式
+    {
+      path: '/addYhkMethord',
+      name: 'addYhkMethord',
+      component: () => import('./views/me/skfsPage/addYhkMethord.vue')
+    },
+    // 选择银行卡
+    {
+      path: '/chooseBank',
+      name: 'chooseBank',
+      component: () => import('./views/me/skfsPage/chooseBank.vue')
     },
     // 进入支付宝方式
     {
@@ -164,6 +194,12 @@ const router = new Router({
       path: '/mytj',
       name: 'mytj',
       component: () => import('./views/me/mytjPage/mytj.vue')
+    },
+     // 进入我的推荐详情页
+     {
+      path: '/myTuijian',
+      name: 'myTuijian',
+      component: () => import('./views/me/mytjPage/myTuijian.vue')
     },
     // 进入OTC交易平台
     {

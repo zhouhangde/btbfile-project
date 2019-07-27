@@ -1,8 +1,9 @@
 <template>
   <div class="home">
     <div class="header">
-      <div>
-        <i class="fa fa-address-book" style="color:#7272e0"></i>
+      <div style="display:flex;align-items: center;">
+        <img src="../assets/image/image_p3fFiDdpZz.png" style="width: 50px;height: 17px;"/>
+        <!-- <i class="fa fa-address-book" style="color:#7272e0"></i> -->
         <span class="header_title">bilongwang</span>
       </div>
       <div v-if="hasLogin">
@@ -43,9 +44,15 @@
 
      <!-- 涨幅跌幅信息 ，bottom-all-loaded上拉加载是否完成-->
     <!-- auto-fill若为真，loadmore 会自动检测并撑满其容器 -->
-    <mt-loadmore
+    <!-- <mt-loadmore
       :top-method="loadTop"
       :bottom-method="loadMore"   
+      :bottom-all-loaded="allLoaded"
+      :auto-fill="false"   
+      :bottomPullText="bottomPullText"
+      ref="loadmore"
+    > -->
+    <mt-loadmore
       :bottom-all-loaded="allLoaded"
       :auto-fill="false"   
       :bottomPullText="bottomPullText"
@@ -95,7 +102,8 @@ export default {
       zfData:[],   //存储websocket涨幅数据
       dfData:[],    //存储websocket跌幅数据
       cateData:[],   //公告数据
-      animate:false  //公告轮播状态
+      animate:false,  //公告轮播状态
+      timer:null,  //定时器
     };
   },
   computed: {
@@ -115,9 +123,14 @@ export default {
   // beforeRouteEnter(to, from, next) {
   //   next(vm => vm.getData());
   // },
+  beforeRouteLeave(to, from, next) {
+    // 离开页面关闭定时器
+    this.timer = null
+    next()
+  },
   created() {
     this.getData();
-    // this.initsetInterval();  //定时刷新页面
+    this.initsetInterval();  //定时刷新页面
     // this.checkLogin();   //检查是否登陆
   },
   mounted () {
@@ -295,9 +308,13 @@ export default {
     },
     initsetInterval(){
       var $this = this
-      setInterval(function(){
+      $this.timer = setInterval(function(){
         // 加载动画
-        Indicator.open();
+        Indicator.open({
+          text: '加载中...',
+          spinnerType: 'fading-circle'
+        });
+        
         location.reload();
         Indicator.close();
      },60000)   
@@ -372,5 +389,7 @@ mt-loadmore{
   height: calc(100% - 95px);
   overflow: auto;
 }
+
+
 
 </style>

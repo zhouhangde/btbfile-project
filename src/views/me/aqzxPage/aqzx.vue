@@ -10,14 +10,14 @@
           </span>
         </div>
        </div>
-       <div class="the-cell"  @click="$router.push({name:'googleYz'})">
+       <!-- <div class="the-cell"  @click="$router.push({name:'googleYz'})">
          <div class="the-index">
           <span>谷歌验证</span>
           <span>
              <i class="fa fa-angle-right" style="margin-left: 2.1vw"></i>
           </span>
         </div>
-       </div>
+       </div> -->
 
     </div>
   </div>

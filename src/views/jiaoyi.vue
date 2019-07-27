@@ -22,15 +22,17 @@
           <span style="padding: 0 3px;" @click="add">+</span>
         </div> -->
         <div style="text-align:left;padding:10px 0;color:#999">估值 :
-          <span><i class="fa fa-yen (alias)" style="margin-right:5px"></i>0</span>
+          <span><i class="fa fa-yen (alias)" style="margin-right:5px"></i>{{guzhi}}</span>
         </div>
         <div class="jishuktwo">
           <span style="padding: 0 3px;">-</span>
-          <span>数量</span>
+          <!-- 数量 -->
+          <span>{{themount}}</span>
           <span style="padding: 0 3px;">+</span>
         </div>
         <div style="margin-top:10px">
-          <button style="width:100%;padding:5px 0px;text-align:center;border: 1px solid #e0e0e6;">0</button>
+          <!-- 总额：单价*数量 -->
+          <button style="width:100%;padding:5px 0px;text-align:center;border: 1px solid #e0e0e6;">{{theTotal}}</button>
         </div>
         <div style="margin-top:5px">
            <button style="width:100%;padding:5px 0px;text-align:center;color:#fff;" :class="{'inputru':inputru}" v-if="inputru">买入</button>
@@ -50,7 +52,7 @@
              </div>
            </li>
          </ul>
-         <div class="pjprice">1.49597342/￥10.3073</div>
+         <div class="pjprice">1/￥6.88</div>
          <ul style="padding-top:10px">
            <li id="num">
              <div class="itemShop itemShopdf" @click="sendPrice($event)" v-for="(item,index) in pkData.bids" :key="index"> 
@@ -65,8 +67,8 @@
       <div class="inputPrice-center">
         <div class="inputPrice">
             <span>可用
-              <em v-if="inputru">828.7273USDT</em>
-              <em v-else>0CSCCT</em>
+              <em v-if="inputru">{{buyAvailable}}USDT</em>
+              <em v-else>{{sellerAvailable}}CSCCT</em>
             </span>
             <!-- <button class="toinput" @click="toinput">充值</button> -->
         </div>
@@ -85,7 +87,8 @@
 
 <script>
 const myjiaoyiTabData = require('../../data/jiaoyiTabData.json');
-import { Actionsheet,Popup } from 'mint-ui';
+import { Actionsheet,Popup,Indicator } from 'mint-ui';
+import { Toast } from "mint-ui";
 import Header from "../components/Header";
 import JiaoyiTab from "../components/jiaoyi/JiaoyiTab";
 import AddOrIncreas from "../components/jiaoyi/AddOrIncreas";
@@ -102,12 +105,11 @@ export default {
       data:null,  //tab切换条件
       inputru:true,  //默认显示买入样式
       output:false,   //卖出的
-      theDj:{
-        x:0 //单价数
-      },
+      theDj:0, //单价数
       theDjs:{
         y:0,  //估值
       },
+      themount:0,  //数量
       theBs:{
         z:0,  //倍数
       },
@@ -127,10 +129,28 @@ export default {
          asks:[],
          bids:[]
        },
+       buyAvailable:0,
+       sellerAvailable:0
     };
   },
-  beforeRouteEnter(to, from, next) {
-    next(vm => vm.getData());
+  computed:{
+    guzhi:function (){
+      return (this.theDj * 6.88).toFixed(4);
+    },
+    theTotal:function (){
+      return (this.theDj * this.themount).toFixed(4);
+    }
+  },
+  // beforeRouteEnter(to, from, next) {
+  //   next(vm => vm.getData());
+  // },
+  created() {
+    // 加载动画
+    Indicator.open({
+      text: '加载中...',
+      spinnerType: 'fading-circle'
+    });
+    this.getData();
   },
   methods: {
     // 获取用户信息
@@ -141,11 +161,12 @@ export default {
       window.revieceData17 = function(res) {
             // 只需要交易挂单返回成功的数据（也对应为我要买和我要卖的数据）
             if(res.params[0]){
-                console.log('挂单数据',res)
+                // console.log('挂单数据',res)
                 return $this.storePkData(res)
             }
       };
-      console.log('父页面的tab数据',this.jiaoyiTabData);
+      this.getBalance();  //获取买和卖的交易对的可用余额
+      // console.log('父页面的tab数据',this.jiaoyiTabData);
       this.loadData();
     },
      //初始加载数据
@@ -154,13 +175,13 @@ export default {
       if(this.data){
         if(this.data.condition== "mairu"){
           // 加载涨幅数据
-          console.log("进行买入相关数据");
+          // console.log("进行买入相关数据");
           this.output = false;
           this.inputru = true;
 
         }else{
           // 加载降幅的数据
-          console.log("进行卖出相关数据");
+          // console.log("进行卖出相关数据");
           this.inputru = false;
           this.output = true;
           
@@ -199,16 +220,54 @@ export default {
       }
     },
     sendPrice(dom){
-      //  console.log(dom)
-      //  console.log(dom.target.firstChild.innerText)
-      //  this.theDj.x = dom.target.firstChild.innerText
+       // target表示当前点击的元素非父元素
+       let selectPrice = dom.currentTarget.childNodes.item(0).innerText;
+       let selectMount = dom.currentTarget.childNodes.item(1).innerText;
+       this.theDj = new Number(selectPrice)
+       this.themount = selectMount
     },
     storePkData(data){
       this.pkData = {
           asks:data.params[1].asks,
           bids:data.params[1].bids
       }
+      // 关闭动画
+      Indicator.close();
     },
+    getBalance(){
+       var me = this
+       this.$axios
+        .post("/api/bargain/balance", {
+          asset_type: 'CSCCT|USDT',
+          access_token: 'WNoCLzeQWHyIdjuynB6hT5o30ieFRBXe_1560572313',
+          chain_network: 'main_network'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              console.log('res',res)
+              let theData = res.data.data.list
+              // 此处暂时将数组的第一个作为买入的数据
+              me.buyAvailable = theData[0].available
+              me.sellerAvailable = theData[1].available
+          }else{
+             Toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            Toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        }); 
+
+    }
   },
   components: {
       Header,

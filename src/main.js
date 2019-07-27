@@ -10,6 +10,8 @@ import qs from 'qs';
 // 引入加载动画插件
 import { Indicator,Toast } from 'mint-ui';
 import echarts from 'echarts';
+import VueClipboard from 'vue-clipboard2'
+
 
 Vue.config.productionTip = false;
 Vue.prototype.$axios = axios;
@@ -17,6 +19,7 @@ Vue.prototype.$echarts = echarts;
 Vue.prototype.$toast = Toast;
 
 Vue.use(MintUI);
+Vue.use(VueClipboard);  //vue复制链接地址  
 
 // axios.defaults.baseURL = 'http://localhost:8083/';
 // axios.defaults.baseURL = 'http://bilongwang.com/';
@@ -33,7 +36,10 @@ axios.interceptors.request.use(
     }
     
     // 加载动画
-    Indicator.open();
+    Indicator.open({
+      text: '加载中...',
+      spinnerType: 'fading-circle'
+    });
     return config;
   },
   error => {

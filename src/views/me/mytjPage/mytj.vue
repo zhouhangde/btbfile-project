@@ -8,8 +8,11 @@
         </div>
         <p style="padding: 17px;text-align:center">邀请码:<span>H444Du</span></p>
         <div style="display: flex;justify-content: space-between;">
-           <button class="theButton">复制链接</button>
-           <button class="theButton">我的推荐</button>
+           <button class="theButton" v-clipboard:copy="'http://btbfire.com/wap/share_register?os=ios&code=ohAs7v'"
+              v-clipboard:success="onCopy"
+              v-clipboard:error="onError"
+           >复制链接</button>
+           <button class="theButton" @click="$router.push({name:'myTuijian'})">我的推荐</button>
         </div>
       </div>
     </div>
@@ -18,6 +21,7 @@
 
 <script>
 import Header from "../../../components/Header";
+import { Toast } from "mint-ui";
 export default {
   name: "mytj",
   data() {
@@ -32,6 +36,22 @@ export default {
     // 获取用户信息
     getData() {
       
+    },
+    onCopy () {
+      Toast({
+          message: '复制成功',
+          position: "bottom",
+          duration: 2000
+        });
+        return;
+    },
+    onError () {
+      Toast({
+          message: '复制失败',
+          position: "bottom",
+          duration: 2000
+        });
+        return;
     }
   },
   components: {

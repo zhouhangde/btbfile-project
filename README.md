@@ -153,3 +153,7 @@ https://www.jianshu.com/p/9d8b2e42328c
 
 ###vue的图片上传
 https://blog.csdn.net/qq_27717857/article/details/79917995
+
+###vue复制链接功能
+vue-clipboard2 
+https://blog.csdn.net/liurong1028/article/details/84850131

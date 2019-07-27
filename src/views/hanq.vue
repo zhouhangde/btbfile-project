@@ -6,11 +6,15 @@
 
      <!-- 涨幅跌幅信息 ，bottom-all-loaded上拉加载是否完成-->
      <!-- auto-fill若为真，loadmore 会自动检测并撑满其容器 -->
-    <mt-loadmore
+    <!-- <mt-loadmore
         :top-method="loadTop"
         :auto-fill="false"   
         ref="loadmore"
-        >
+        > -->
+    <mt-loadmore
+        :auto-fill="false"   
+        ref="loadmore"
+        >    
           <div class="Datalist">
               <!-- <HanqTabList v-for="(item,index) in zxorusData" :key="index" :zorjdata="item.myData"/> -->
               <!-- <transition name="slide"> -->
@@ -42,15 +46,25 @@ export default {
        allLoaded: false,   //是否已经加载完毕，无加载数据的开关
        bottomPullText: "上拉加载更多",   //底部的加载显示字样
        data: null,  //tab切换条件
-       
+       timer: null  //定时器
     };
   },
   // beforeRouteEnter(to, from, next) {
   //   next(vm => vm.getData());
   // },
+  beforeRouteLeave(to, from, next) {
+    // 离开页面关闭定时器
+    this.timer = null
+    next()
+  },
   created() {
+    // 加载动画
+    Indicator.open({
+      text: '加载中...',
+      spinnerType: 'fading-circle'
+    });
     this.getData();
-    // this.initsetInterval();  //定时刷新页面
+    this.initsetInterval();  //定时刷新页面
     // this.checkLogin();   //检查是否登陆
   },
   watch: {
@@ -108,10 +122,12 @@ export default {
     },
     storeData(data){
       this.homeOneDataNew.push(data)
+       // 关闭动画
+      Indicator.close();
     },
     initsetInterval(){
       var $this = this
-      setInterval(function(){
+      $this.timer = setInterval(function(){
         // 加载动画
         Indicator.open();
         location.reload();

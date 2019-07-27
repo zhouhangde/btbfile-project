@@ -62,7 +62,12 @@ export default {
         .then(res => {
           if(res.data.code == '200'){
               // 检验成功 设置登录状态并且跳转到/
+              let login_methord = {
+                "methord":"email",
+                "email":me.email
+              }
               localStorage.setItem("access_token", res.data.data.access_token);
+              localStorage.setItem("login_methord",JSON.stringify(login_methord));
               me.$store.dispatch("setAccessToken", res.data.data.access_token);  //必须有？？？
               me.$router.push('/home');
           }else{

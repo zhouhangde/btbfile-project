@@ -2,9 +2,15 @@
   <div class="forgetPw">
     <Header :isLeft="true" :title="title"/>
     <div style="margin-top: 10px;">
-       <div class="item-input">
+       <div class="item-input" v-if="showPhone">
             <div class="item-right">
-                <input type="text"  placeholder="请输入手机号"/>
+                <input type="text"  :placeholder="placholderValue" disabled/>
+                <span style="color: #40a1e2;">获取验证码</span>
+            </div>
+        </div>
+        <div class="item-input" v-else>
+            <div class="item-right">
+                <input type="text"  :placeholder="placholderValue" disabled/>
                 <span style="color: #40a1e2;">获取验证码</span>
             </div>
         </div>
@@ -39,7 +45,9 @@ export default {
   name: "forgetPw",
   data() {
     return {
-        title:'忘记密码'
+        title:'忘记密码',
+        showPhone:true,
+        placholderValue:''
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -48,7 +56,14 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
-      
+      let login_methord = JSON.parse(localStorage.getItem("login_methord"))
+      if(login_methord.methord == 'phone'){
+         this.showPhone = true
+         this.placholderValue = login_methord.phone
+      }else if(login_methord.methord == 'email'){
+         this.showPhone = false
+         this.placholderValue = login_methord.email
+      }
     }
   },
   components: {

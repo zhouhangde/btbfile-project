@@ -4,7 +4,7 @@
       <span @click="$router.push({name:'myMessage'})"><i class="fa fa-bell-o" style="font-size: 23px;"></i></span>
     </p>
     <div class="headInfo">
-      <div class="head-img"></div>
+      <div class="head-img" @click="$router.push({name:'personCenter'})"></div>
       <div class="head-profile">
         <p class="user-id">Q7E2n2NX</p>
         <p class="user-phone">
