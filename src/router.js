@@ -69,6 +69,12 @@ const router = new Router({
       name: 'shichan',
       component: () => import('./views/jiaoyi/shichan.vue')
     },
+    // 进入成交记录
+    {
+      path: '/cjHistory',
+      name: 'cjHistory',
+      component: () => import('./views/jiaoyi/cjHistory.vue')
+    },
     // 进入下单页面
     {
       path: '/showOrder',

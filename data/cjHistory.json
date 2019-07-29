@@ -1,0 +1,78 @@
+{
+    "error": null,
+    "result": {
+        "offset": 0,
+        "limit": 10,
+        "records": [
+            {
+                "price": "1.46726931",
+                "id": 3971943,
+                "deal_fee": "0.002",
+                "ctime": 1564366494.7825251,
+                "maker_fee": "0.002",
+                "ftime": 1564366494.782531,
+                "deal_stock": "1",
+                "user": 1218969,
+                "amount": "1",
+                "market": "CSCCTUSDT",
+                "source": "web",
+                "side": 2,
+                "type": 1,
+                "deal_money": "1.46726931",
+                "taker_fee": "0.002"
+            },
+            {
+                "price": "1.46726931",
+                "id": 3971929,
+                "deal_fee": "0.002",
+                "ctime": 1564366481.1062191,
+                "maker_fee": "0.002",
+                "ftime": 1564366481.1062231,
+                "deal_stock": "1",
+                "user": 1218969,
+                "amount": "1",
+                "market": "CSCCTUSDT",
+                "source": "web",
+                "side": 2,
+                "type": 1,
+                "deal_money": "1.46726931",
+                "taker_fee": "0.002"
+            },
+            {
+                "price": "2.9551561",
+                "id": 2805923,
+                "deal_fee": "0.02",
+                "ctime": 1562748377.43239,
+                "maker_fee": "0.002",
+                "ftime": 1562748414.3150451,
+                "deal_stock": "10",
+                "user": 1218969,
+                "amount": "10",
+                "market": "CSCCTUSDT",
+                "source": "web",
+                "side": 2,
+                "type": 1,
+                "deal_money": "29.551561",
+                "taker_fee": "0.002"
+            },
+            {
+                "price": "2.9551561",
+                "id": 2805922,
+                "deal_fee": "0.02",
+                "ctime": 1562748377.1820071,
+                "maker_fee": "0.002",
+                "ftime": 1562748414.3147089,
+                "deal_stock": "10",
+                "user": 1218969,
+                "amount": "10",
+                "market": "CSCCTUSDT",
+                "source": "web",
+                "side": 2,
+                "type": 1,
+                "deal_money": "29.551561",
+                "taker_fee": "0.002"
+            }
+        ]
+    },
+    "id": 32
+}

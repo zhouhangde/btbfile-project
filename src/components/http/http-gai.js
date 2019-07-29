@@ -89,7 +89,10 @@
 	        this.reconnect(url);
 	      }
 	      return this.ws
-      },
+	  },
+	  close:function(){
+		$this.close();
+	  },
       reconnect:function() {
 		  if(this.lockReconnect) {
 		    return;

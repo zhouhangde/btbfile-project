@@ -157,3 +157,6 @@ https://blog.csdn.net/qq_27717857/article/details/79917995
 ###vue复制链接功能
 vue-clipboard2 
 https://blog.csdn.net/liurong1028/article/details/84850131
+
+####javascript中加减乘除出错的解决办法
+https://blog.csdn.net/qq_26291823/article/details/50478892

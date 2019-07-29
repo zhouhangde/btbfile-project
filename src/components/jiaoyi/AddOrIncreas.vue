@@ -5,7 +5,7 @@
       -
     </span>
     <!-- <span class="cartcount">{{dataNumberr.x}}</span> -->
-    <span class="cartcount">{{dataNumberr}}</span>
+    <span class="cartcount">{{dataNumberr.x}}</span>
     <span @click.stop="increaseCount" class="cartbutton" style="color:#999;font-size:22px;line-height:14px;padding-right:5px;">
       <!-- <i class="fa fa-plus-circle"></i> -->
       +
@@ -19,16 +19,18 @@ export default {
   data() {
     return {
       // theNumber: this.dataNumberr,    //默认当前点击的是综合排序，不是距离最近等
+      currentDataNumberr:this.dataNumberr
     };
   },
   props: {
-    // dataNumberr:Object,
-    dataNumberr:Number,
+    dataNumberr:Object,
+    // dataNumberr:Number
     // default() {
-    //   return  {count:0}
+    //   return  0
     // }
   },
   created(){
+    console.log('this.dataNumberr',this.dataNumberr)
   },
   // data(){
   //     return {
@@ -53,15 +55,27 @@ export default {
   // },
   methods: {
     decreaseCount() {
-      if(this.dataNumberr<='0.1'){
+      // 处理js科学计数法的显示问题
+      // const a = 0.00000001;
+      // let result = String(a);
+      // if (result.indexOf('-') >= 0) {
+      //   result = '0' + String(Number(result) + 1).substr(1);
+      // }
+
+      if(this.dataNumberr.x<='0.1'){
         return
       }
-       this.dataNumberr-=0.00000001;
+       this.dataNumberr.x = Number(this.dataNumberr.x).sub(0.00000001).toFixed(8);
        
     },
     increaseCount() {
-      
-      this.dataNumberr+=0.00000001;
+      // const a = 0.00000001;
+      // let result = String(a);
+      // if (result.indexOf('-') >= 0) {
+      //   result = '0' + String(Number(result) + 1).substr(1);
+      // }
+
+      this.dataNumberr.x = Number(this.dataNumberr.x).add(0.00000001).toFixed(8);
     }
   }
 };

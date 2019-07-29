@@ -21,6 +21,7 @@ export default {
   },
   methods: {
      initWebsocket(){
+       var $this = this
        http.createWebSocket();
 		
 	     window.openSend = function(r){
@@ -34,24 +35,36 @@ export default {
                 //交易挂单中的数据
                 http.sendData({"id":30,"method":"server.auth","params":["8MLF4DEItozx5xQLev5lZGn862BZ5E0B_1561786555|web","web"]})
                 http.sendData({"id":61,"method":"deals.subscribe","params":["CSCCTUSDT"]})
-                //暂时不知
-                http.sendData({"id":31,"method":"order.query","params":["CSCCTUSDT",0,50]})
-                http.sendData({"id":32,"method":"order.history","params":["CSCCTUSDT",0,0,0,10,0]})
-
-                // 对应web端首页的7种交易对的最新价，24H涨跌，24H最高，24H最低，24H成交量
-                http.sendData({"id":2,"method":"today.query","params":["CSCCTUSDT"]})
-                http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
-                http.sendData({"id":2,"method":"today.query","params":["ETHUSDT"]})
-                http.sendData({"id":2,"method":"today.query","params":["XRPUSDT"]})
-                http.sendData({"id":2,"method":"today.query","params":["EOSUSDT"]})
-                http.sendData({"id":2,"method":"today.query","params":["LTCUSDT"]})
-                http.sendData({"id":2,"method":"today.query","params":["BHBUSDT"]})
+                $this.sendHistory()
+                $this.sendHightOrLow()  
+                
 		      }
           send1();
           setInterval(function(){
             send1();
-          },3000)
+          },5000)
         }
+     },
+     sendHistory(){
+          window.revieceData30 = function(res) {
+            if(res.result && res.result.status == 'success') {
+              //历史挂单，注意需要时"id":30发送成功后才发送有数据
+                  http.sendData({"id":31,"method":"order.query","params":["CSCCTUSDT",0,50]})
+                  http.sendData({"id":32,"method":"order.history","params":["CSCCTUSDT",0,0,0,10,0]})
+            }
+         }
+     },
+     sendHightOrLow(){
+         window.revieceData32 = function(res) {
+            // 对应web端首页的7种交易对的最新价，24H涨跌，24H最高，24H最低，24H成交量
+            http.sendData({"id":2,"method":"today.query","params":["CSCCTUSDT"]})
+            http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
+            http.sendData({"id":2,"method":"today.query","params":["ETHUSDT"]})
+            http.sendData({"id":2,"method":"today.query","params":["XRPUSDT"]})
+            http.sendData({"id":2,"method":"today.query","params":["EOSUSDT"]})
+            http.sendData({"id":2,"method":"today.query","params":["LTCUSDT"]})
+            http.sendData({"id":2,"method":"today.query","params":["BHBUSDT"]})
+         }
      }
   },
 };

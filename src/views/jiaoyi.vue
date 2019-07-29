@@ -25,18 +25,19 @@
           <span><i class="fa fa-yen (alias)" style="margin-right:5px"></i>{{guzhi}}</span>
         </div>
         <div class="jishuktwo">
-          <span style="padding: 0 3px;">-</span>
+          <span style="padding: 0 3px;" @click="godecreaseCount">-</span>
           <!-- 数量 -->
-          <span>{{themount}}</span>
-          <span style="padding: 0 3px;">+</span>
+          <input type="text" v-model="themount" style="text-align: center;width: 66%;"/>
+          <!-- <span>{{themount}}</span> -->
+          <span style="padding: 0 3px;" @click="goincreaseCount">+</span>
         </div>
         <div style="margin-top:10px">
           <!-- 总额：单价*数量 -->
           <button style="width:100%;padding:5px 0px;text-align:center;border: 1px solid #e0e0e6;">{{theTotal}}</button>
         </div>
         <div style="margin-top:5px">
-           <button style="width:100%;padding:5px 0px;text-align:center;color:#fff;" :class="{'inputru':inputru}" v-if="inputru">买入</button>
-          <button style="width:100%;padding:5px 0px;text-align:center;color:#fff;" :class="{'output':output}" v-else>卖出</button>
+           <button style="width:100%;padding:5px 0px;text-align:center;color:#fff;" :class="{'inputru':inputru}" v-if="inputru" @click="buyCoin">买入</button>
+           <button style="width:100%;padding:5px 0px;text-align:center;color:#fff;" :class="{'output':output}" v-else @click="sellerCoin">卖出</button>
         </div>
       </div>
       <div class="center-contain-right">
@@ -105,7 +106,9 @@ export default {
       data:null,  //tab切换条件
       inputru:true,  //默认显示买入样式
       output:false,   //卖出的
-      theDj:0, //单价数
+      theDj:{   //使用对象则可以父子组件都可以改变此值，传number此只会传一次
+        x:0,
+      }, //单价数
       theDjs:{
         y:0,  //估值
       },
@@ -120,7 +123,7 @@ export default {
       actions:[{
         // icon: 'icon-article', // 引入iconfont的类名作为展示的icon
         name: '成交记录', // 引入文字作为标题
-        method : this.cj
+        method : this.cjHistory
       }],
       sheetVisible:false, //上拉的sheet显示开关
       changScState:false,  //收藏状态开关
@@ -130,33 +133,104 @@ export default {
          bids:[]
        },
        buyAvailable:0,
-       sellerAvailable:0
+       sellerAvailable:0,
+       theParam:{},   //存储路由参数
+       timer:null
     };
   },
   computed:{
     guzhi:function (){
-      return (this.theDj * 6.88).toFixed(4);
+      return (this.theDj.x * 6.88).toFixed(4);
     },
     theTotal:function (){
-      return (this.theDj * this.themount).toFixed(4);
+      return (this.theDj.x * this.themount).toFixed(4);
     }
   },
-  // beforeRouteEnter(to, from, next) {
-  //   next(vm => vm.getData());
+  // beforeRouteEnter是每次进入都会执行
+  beforeRouteEnter(to, from, next) {
+    if(to.params.slectBz){
+       next(vm => vm.getData(to.params));
+    }else{
+       next(vm => vm.getData());
+    }
+    // next(vm => vm.getData());
+    // next();
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log('离开了',this.timer)
+    // 离开页面关闭定时器
+    this.timer = null
+    next()
+    console.log('离开了2',this.timer)
+  },
+  // beforeRouteUpdate (to, from, next) {
+  //   // 同一页面，刷新不同数据时调用，
+  // },
+  // keep-alive时只会执行一次
+  // created() {
+    
+  //   // 获取最高最低和成交量
+  //   setInterval(function(){
+  //      http.sendData({"id":1,"method":"today.query","params":["CSCCTUSDT"]})
+  //      http.sendData({"id":61,"method":"deals.subscribe","params":["CSCCTUSDT"]})
+  //   },1000)
+  //   this.getData();
   // },
   created() {
-    // 加载动画
-    Indicator.open({
-      text: '加载中...',
-      spinnerType: 'fading-circle'
-    });
-    this.getData();
+    
   },
   methods: {
     // 获取用户信息
-    getData() {
+    getData(data) {
       var $this = this
-      this.jiaoyiTabData = myjiaoyiTabData
+      this.jiaoyiTabData = myjiaoyiTabData   //切换tab导航
+      // 根据路由参数，进行相应币种的websocket数据发送
+      if(data != undefined && data != null && data != ''){
+         console.log('我的参数',data)
+         $this.title = data.title   //切换title
+         switch(data.slectBz) {
+            case 'CSCCTUSDT':
+                //  默认在app.vue中已经有发送
+                break;
+            case 'BTCUSDT':
+                $this.timer = setInterval(function(){
+                  http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
+                  http.sendData({"id":62,"method":"deals.subscribe","params":["BTCUSDT"]})
+                },1000)
+                break;
+            case 'ETHUSDT':
+                $this.timer = setInterval(function(){
+                  http.sendData({"id":3,"method":"today.query","params":["ETHUSDT"]})
+                  http.sendData({"id":63,"method":"deals.subscribe","params":["ETHUSDT"]})
+                },5000)
+                break;
+            case 'XRPUSDT':
+                $this.timer = setInterval(function(){
+                  http.sendData({"id":4,"method":"today.query","params":["XRPUSDT"]})
+                  http.sendData({"id":64,"method":"deals.subscribe","params":["XRPUSDT"]})
+                },5000)
+                break;
+            case 'EOSUSDT':
+                $this.timer = setInterval(function(){
+                  http.sendData({"id":5,"method":"today.query","params":["EOSUSDT"]})
+                  http.sendData({"id":65,"method":"deals.subscribe","params":["EOSUSDT"]})
+                },5000)
+                break;
+            case 'LTCUSDT':
+                $this.timer = setInterval(function(){
+                  http.sendData({"id":6,"method":"today.query","params":["LTCUSDT"]})
+                  http.sendData({"id":66,"method":"deals.subscribe","params":["LTCUSDT"]})
+                },5000)
+                break;
+            case 'BHBUSDT':
+                $this.timer = setInterval(function(){
+                  http.sendData({"id":7,"method":"today.query","params":["BHBUSDT"]})
+                  http.sendData({"id":67,"method":"deals.subscribe","params":["BHBUSDT"]})
+                },5000)
+                break;                    
+         } 
+      }
+
       // 获取右侧交易挂单的数据
       window.revieceData17 = function(res) {
             // 只需要交易挂单返回成功的数据（也对应为我要买和我要卖的数据）
@@ -166,6 +240,7 @@ export default {
             }
       };
       this.getBalance();  //获取买和卖的交易对的可用余额
+      this.openWatite();   //开启提示等待
       // console.log('父页面的tab数据',this.jiaoyiTabData);
       this.loadData();
     },
@@ -189,12 +264,15 @@ export default {
       }
     },
     // 减少
-    increace(){
-       
+    godecreaseCount(){
+       if(this.themount<='0.1'){
+        return
+      }
+       this.themount = Number(this.themount).sub(0.0001).toFixed(4);
     },
     // 增加
-    add(){
-
+    goincreaseCount(){
+       this.themount = Number(this.themount).add(0.0001).toFixed(4);
     },
     //tab切换，根据点击tab的条件加载数据
     update(condation) {  
@@ -206,24 +284,23 @@ export default {
     toinput(){
       this.$router.push({name:'chongz'});
     },
-    cj(){
+    // 成交记录
+    cjHistory(){
 
-
+       this.$router.push({name:'cjHistory'});   
     },
     showactionSheet(){
     	// 打开action sheet
       this.sheetVisible = true;
     },
     condit(condit){
-      if(condit.conditon == 'CSCCT/USDT'){
-        this.$router.push({name:'shichan'});
-      }
+      this.$router.push({name:'shichan'});
     },
     sendPrice(dom){
        // target表示当前点击的元素非父元素
        let selectPrice = dom.currentTarget.childNodes.item(0).innerText;
        let selectMount = dom.currentTarget.childNodes.item(1).innerText;
-       this.theDj = new Number(selectPrice)
+       this.theDj.x =new Number(selectPrice)
        this.themount = selectMount
     },
     storePkData(data){
@@ -232,7 +309,6 @@ export default {
           bids:data.params[1].bids
       }
       // 关闭动画
-      Indicator.close();
     },
     getBalance(){
        var me = this
@@ -244,7 +320,6 @@ export default {
         })
         .then(res => {
           if(res.data.code == '200'){
-              console.log('res',res)
               let theData = res.data.data.list
               // 此处暂时将数组的第一个作为买入的数据
               me.buyAvailable = theData[0].available
@@ -267,6 +342,93 @@ export default {
               return;
         }); 
 
+    },
+    openWatite(){
+        // 加载动画
+        Indicator.open({
+          text: '加载中...',
+          spinnerType: 'fading-circle'
+        });
+    },
+    // 买入
+    buyCoin(){
+       var $this = this
+        this.$axios
+        .post("api/bargain/order-limit", {
+          'market': 'CSCCTUSDT',
+          'side': '2',
+          'pride': $this.theDj.x + '',
+          'amount': $this.themount,
+          'access_token': 'WNoCLzeQWHyIdjuynB6hT5o30ieFRBXe_1560572313',
+          'chain_network': 'main_network'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+               console.log('res买入',res)
+               $this.$toast({
+                message: '买入成功',
+                position: "bottom",
+                duration: 2000
+               });
+               $this.getBalance();
+          }else{
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            $this.$toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        });
+    },
+    // 卖出
+    sellerCoin(){
+       var $this = this
+        this.$axios
+        .post("api/bargain/order-limit", {
+          'market': 'CSCCTUSDT',
+          'side': '1',
+          'pride': $this.theDj.x + '',
+          'amount': $this.themount,
+          'access_token': 'WNoCLzeQWHyIdjuynB6hT5o30ieFRBXe_1560572313',
+          'chain_network': 'main_network'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+               console.log('res卖出',res)
+               $this.$toast({
+                message: '卖出成功',
+                position: "bottom",
+                duration: 2000
+               });
+               $this.getBalance();
+          }else{
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            $this.$toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        });
     }
   },
   components: {

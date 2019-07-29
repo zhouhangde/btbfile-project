@@ -120,16 +120,16 @@ export default {
       }
     }
   },
-  // beforeRouteEnter(to, from, next) {
-  //   next(vm => vm.getData());
-  // },
+  beforeRouteEnter(to, from, next) {
+    next(vm => vm.getData());
+  },
   beforeRouteLeave(to, from, next) {
     // 离开页面关闭定时器
     this.timer = null
     next()
   },
   created() {
-    this.getData();
+    // this.getData();
     this.initsetInterval();  //定时刷新页面
     // this.checkLogin();   //检查是否登陆
   },
