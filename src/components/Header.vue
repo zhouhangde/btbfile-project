@@ -36,6 +36,9 @@
      <span v-if="historytitle" class="myicon" @click="$router.push({name:'zzmx'})">
        历史
      </span>
+     <span v-if="fabu" class="myicon" style="color: #27ce13;" @click="$router.push({name:'gofabu'})">
+       发布
+     </span>
   </div>
 </template>
 
@@ -71,7 +74,8 @@ export default {
     aside:Boolean,  //显示右侧的三个点图标
     newIcon:Boolean, //新增图标
     newSkMethordIcon:Boolean, //新增收款方式
-    historytitle:Boolean //显示历史
+    historytitle:Boolean, //显示历史
+    fabu:Boolean //显示发布
 
   },
   created(){

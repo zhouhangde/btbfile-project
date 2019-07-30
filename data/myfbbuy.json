@@ -1,0 +1,21 @@
+[{
+	"myData": {
+    "allData": [
+			{
+				"imgage": "../../../public/image/mytitle.png",
+				"name": "包秀敏",
+				"money": "20.00-4000.00",
+				"price": "7.02",
+				"chengjiao":"0.0000",
+				"chengjiaolv":"0.00%",
+				"item":"撤销",
+				"staus":"buy",
+				"iconArray":[
+					{
+						"icon":"fa fa-cny (alias)"
+					}
+				]
+			}
+    ]
+	}
+}]

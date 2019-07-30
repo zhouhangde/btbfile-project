@@ -87,14 +87,14 @@
       v-model="popupVisible"
       pop-transition="popup-fade"
       :modal="true"
-      position="top" style="height: 30px;width: 100%;line-height: 30px;">
+      position="top" style="height: auto;width: 100%;line-height: 30px;">
       <div class="the-content">
         <p>
-          <i class="fa fa-chevron-left" style="font-size: 17px;"></i>
+          <i class="fa fa-usd" style="font-size: 17px;"></i>
           <span style="margin-left: 15px;">USDT</span>
         </p>
         <p>
-          <i class="fa fa-chevron-left"></i>
+          <i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;"></i>
         </p>
       </div>
     </mt-popup>
@@ -122,12 +122,12 @@ export default {
          {
           // icon: 'icon-article', // 引入iconfont的类名作为展示的icon
           name: '我的发布', // 引入文字作为标题
-          method : this.fb
+          method : this.myFb
          },
          {
           // icon: 'icon-article', // 引入iconfont的类名作为展示的icon
           name: '历史订单', // 引入文字作为标题
-          method : this.dd
+          method : this.myHistoryOrder
          }
        ],
        sheetVisible:false, //上拉的sheet显示开关
@@ -185,11 +185,13 @@ export default {
     	// 打开action sheet
       this.sheetVisible = true;
     },
-    fb(){
-
+    // 我的发布
+    myFb(){
+      this.$router.push({name:'myFb'})
     },
-    dd(){
-      
+    // 历史订单
+    myHistoryOrder(){
+      this.$router.push({name:'otcJi'})
     },
     condit(condit){
       if(condit.conditon == 'USDT'){
@@ -215,6 +217,6 @@ export default {
   .the-content{
     display: flex;
     justify-content: space-between;
-    padding: 0 5px;
+    padding: 5px;
   }
 </style>

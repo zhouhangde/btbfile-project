@@ -196,7 +196,7 @@ export default {
                 $this.timer = setInterval(function(){
                   http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
                   http.sendData({"id":62,"method":"deals.subscribe","params":["BTCUSDT"]})
-                },1000)
+                },5000)
                 break;
             case 'ETHUSDT':
                 $this.timer = setInterval(function(){
@@ -231,7 +231,7 @@ export default {
          } 
       }
 
-      // 获取右侧交易挂单的数据
+      // 获取右侧交易挂单的数据cscct/usdt
       window.revieceData17 = function(res) {
             // 只需要交易挂单返回成功的数据（也对应为我要买和我要卖的数据）
             if(res.params[0]){

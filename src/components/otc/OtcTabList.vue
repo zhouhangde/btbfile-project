@@ -31,7 +31,7 @@
                <span>成交率:</span>
                <span>{{item.chengjiaolv}}</span>
             </div>
-            <button class="tobug" :class="{'activetabOne':(item.item=='我要买'),'activetabTwo':(item.item=='我要卖')}" 
+            <button class="tobug" :class="{'activetabOne':(item.staus=='buy'),'activetabTwo':(item.staus=='seller')}" 
             >{{item.item}}</button>
           </div>
         </li>

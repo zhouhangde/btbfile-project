@@ -9,6 +9,7 @@
 				"chengjiao":"5225.2998",
 				"chengjiaolv":"69.57%",
 				"item":"我要卖",
+				"staus":"seller",
 				"iconArray":[
 					{
 						"icon":"fa fa-wechat (alias)"
@@ -29,6 +30,7 @@
 				"chengjiao":"529.0000",
 				"chengjiaolv":"100.00%",
 				"item":"我要卖",
+				"staus":"seller",
 				"iconArray":[
 					{
 						"icon":"fa fa-wechat (alias)"
@@ -49,6 +51,7 @@
 				"chengjiao":"9945.0898",
 				"chengjiaolv":"84.62%",
 				"item":"我要卖",
+				"staus":"seller",
 				"iconArray":[
 					{
 						"icon":"fa fa-wechat (alias)"
@@ -69,6 +72,7 @@
 				"chengjiao":"617.7600",
 				"chengjiaolv":"66.67%",
 				"item":"我要卖",
+				"staus":"seller",
 				"iconArray":[
 					{
 						"icon":"fa fa-wechat (alias)"

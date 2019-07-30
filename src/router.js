@@ -81,6 +81,18 @@ const router = new Router({
       name: 'showOrder',
       component: () => import('./views/otc/showOrder.vue')
     },
+    // 进入我的发布页面
+    {
+      path: '/myFb',
+      name: 'myFb',
+      component: () => import('./views/otc/myFb.vue')
+    },
+    // 进入去发布详情页面
+    {
+      path: '/gofabu',
+      name: 'gofabu',
+      component: () => import('./views/otc/gofabu.vue')
+    },
     // 进入通知和消息
     {
       path: '/myMessage',

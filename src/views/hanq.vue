@@ -64,7 +64,7 @@ export default {
       spinnerType: 'fading-circle'
     });
     this.getData();
-    this.initsetInterval();  //定时刷新页面
+    // this.initsetInterval();  //定时刷新页面
     // this.checkLogin();   //检查是否登陆
   },
   watch: {
