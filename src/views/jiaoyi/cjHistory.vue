@@ -48,6 +48,8 @@ export default {
     };
   },
   beforeRouteEnter(to, from, next) {
+    //交易挂单中的数据
+    http.sendData({"id":30,"method":"server.auth","params":["8MLF4DEItozx5xQLev5lZGn862BZ5E0B_1561786555|web","web"]})
     next(vm => vm.getData());
   },
   methods: {

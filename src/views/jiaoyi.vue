@@ -148,6 +148,7 @@ export default {
   },
   // beforeRouteEnter是每次进入都会执行
   beforeRouteEnter(to, from, next) {
+
     if(to.params.slectBz){
        next(vm => vm.getData(to.params));
     }else{
@@ -191,44 +192,45 @@ export default {
          switch(data.slectBz) {
             case 'CSCCTUSDT':
                 //  默认在app.vue中已经有发送
+                http.sendData({"id":1,"method":"depth.subscribe","params":["CSCCTUSDT",10,"0"]})
+                http.sendData({"id":31,"method":"today.query","params":["CSCCTUSDT"]})
+                http.sendData({"id":32,"method":"deals.subscribe","params":["CSCCTUSDT"]})
                 break;
             case 'BTCUSDT':
-                $this.timer = setInterval(function(){
-                  http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
-                  http.sendData({"id":62,"method":"deals.subscribe","params":["BTCUSDT"]})
-                },5000)
+                http.sendData({"id":1,"method":"depth.subscribe","params":["BTCUSDT",10,"0"]})
+                http.sendData({"id":31,"method":"today.query","params":["BTCUSDT"]})
+                http.sendData({"id":32,"method":"deals.subscribe","params":["BTCUSDT"]})
                 break;
             case 'ETHUSDT':
-                $this.timer = setInterval(function(){
-                  http.sendData({"id":3,"method":"today.query","params":["ETHUSDT"]})
-                  http.sendData({"id":63,"method":"deals.subscribe","params":["ETHUSDT"]})
-                },5000)
+                http.sendData({"id":1,"method":"depth.subscribe","params":["ETHUSDT",10,"0"]})
+                  http.sendData({"id":31,"method":"today.query","params":["ETHUSDT"]})
+                  http.sendData({"id":32,"method":"deals.subscribe","params":["ETHUSDT"]})
                 break;
             case 'XRPUSDT':
-                $this.timer = setInterval(function(){
-                  http.sendData({"id":4,"method":"today.query","params":["XRPUSDT"]})
-                  http.sendData({"id":64,"method":"deals.subscribe","params":["XRPUSDT"]})
-                },5000)
+                http.sendData({"id":1,"method":"depth.subscribe","params":["XRPUSDT",10,"0"]})
+                http.sendData({"id":31,"method":"today.query","params":["XRPUSDT"]})
+                http.sendData({"id":32,"method":"deals.subscribe","params":["XRPUSDT"]})
                 break;
             case 'EOSUSDT':
-                $this.timer = setInterval(function(){
-                  http.sendData({"id":5,"method":"today.query","params":["EOSUSDT"]})
-                  http.sendData({"id":65,"method":"deals.subscribe","params":["EOSUSDT"]})
-                },5000)
+                http.sendData({"id":1,"method":"depth.subscribe","params":["EOSUSDT",10,"0"]})
+                http.sendData({"id":31,"method":"today.query","params":["EOSUSDT"]})
+                http.sendData({"id":32,"method":"deals.subscribe","params":["EOSUSDT"]})
                 break;
             case 'LTCUSDT':
-                $this.timer = setInterval(function(){
-                  http.sendData({"id":6,"method":"today.query","params":["LTCUSDT"]})
-                  http.sendData({"id":66,"method":"deals.subscribe","params":["LTCUSDT"]})
-                },5000)
+                http.sendData({"id":1,"method":"depth.subscribe","params":["LTCUSDT",10,"0"]})
+                http.sendData({"id":31,"method":"today.query","params":["LTCUSDT"]})
+                http.sendData({"id":32,"method":"deals.subscribe","params":["LTCUSDT"]})
                 break;
             case 'BHBUSDT':
-                $this.timer = setInterval(function(){
-                  http.sendData({"id":7,"method":"today.query","params":["BHBUSDT"]})
-                  http.sendData({"id":67,"method":"deals.subscribe","params":["BHBUSDT"]})
-                },5000)
+                http.sendData({"id":1,"method":"depth.subscribe","params":["BHBUSDT",10,"0"]})
+                http.sendData({"id":31,"method":"today.query","params":["BHBUSDT"]})
+                http.sendData({"id":32,"method":"deals.subscribe","params":["BHBUSDT"]})
                 break;                    
          } 
+      }else{
+         http.sendData({"id":1,"method":"depth.subscribe","params":["CSCCTUSDT",10,"0"]})
+         http.sendData({"id":31,"method":"today.query","params":["CSCCTUSDT"]})
+         http.sendData({"id":32,"method":"deals.subscribe","params":["CSCCTUSDT"]})
       }
 
       // 获取右侧交易挂单的数据cscct/usdt

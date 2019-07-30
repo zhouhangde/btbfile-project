@@ -2,9 +2,9 @@
   <div class="home">
     <div class="header">
       <div style="display:flex;align-items: center;">
-        <img src="../assets/image/image_p3fFiDdpZz.png" style="width: 50px;height: 17px;"/>
+        <img src="../assets/image/image_p3fFiDdpZz.png" style="width: 68px;height: 20px;"/>
         <!-- <i class="fa fa-address-book" style="color:#7272e0"></i> -->
-        <span class="header_title">bilongwang</span>
+        <!-- <span class="header_title">bilongwang</span> -->
       </div>
       <div v-if="hasLogin">
         <!-- <span style="color: rgb(114, 114, 224);margin-right:15px" @click="$router.push({name:'homeKxEarchatNew'})">socket</span> -->
@@ -15,8 +15,8 @@
      <div id="container">
       <!-- 轮播 -->
       <mt-swipe :auto="4000" class="swiper" :show-indicators="false">
-        <mt-swipe-item v-for="(img,index) in swipeImgs" :key="index">
-          <img :src="img" alt>
+        <mt-swipe-item v-for="(item,index) in swipeImgs" :key="index">
+          <img :src="item.img" alt>
         </mt-swipe-item>
       </mt-swipe>
     </div>
@@ -121,6 +121,13 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
+    http.sendData({"id":2,"method":"today.query","params":["CSCCTUSDT"]})
+    http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
+    http.sendData({"id":2,"method":"today.query","params":["ETHUSDT"]})
+    http.sendData({"id":2,"method":"today.query","params":["XRPUSDT"]})
+    http.sendData({"id":2,"method":"today.query","params":["EOSUSDT"]})
+    http.sendData({"id":2,"method":"today.query","params":["LTCUSDT"]})
+    http.sendData({"id":2,"method":"today.query","params":["BHBUSDT"]})
     next(vm => vm.getData());
   },
   beforeRouteLeave(to, from, next) {
@@ -143,6 +150,37 @@ export default {
         if(this.homeOneDataNew.length == 7){
             var $this = this
             this.homeOneDataNew.filter(function(item, index, arr){
+               switch(index) {
+                    case 0:
+                        //  默认在app.vue中已经有发送
+                        item.titleBefore = 'CSCCT'
+                        item.titleAfter = '/USDT'
+                        break;
+                    case 1:
+                        item.titleBefore = 'BTC'
+                        item.titleAfter = '/USDT'
+                        break;
+                    case 2:
+                        item.titleBefore = 'ETH'
+                        item.titleAfter = '/USDT'
+                        break;
+                    case 3:
+                        item.titleBefore = 'XRP'
+                        item.titleAfter = '/USDT'
+                        break;
+                    case 4:
+                        item.titleBefore = 'EOS'
+                        item.titleAfter = '/USDT'
+                        break;
+                    case 5:
+                        item.titleBefore = 'LTC'
+                        item.titleAfter = '/USDT'
+                        break;
+                    case 6:
+                        item.titleBefore = 'BHB'
+                        item.titleAfter = '/USDT'
+                        break;                    
+                } 
                if(item.result.last>item.result.open){
                     // 涨幅的数据
                     item.color = "rgb(77,169,144)"
@@ -161,12 +199,14 @@ export default {
     getData() {
       // 获取轮播信息
       var $this = this
-      this.swipeImgs = shoppingData.swipeImgs;   //轮播图片
+      // this.swipeImgs = shoppingData.swipeImgs;   //轮播图片
+      this.getBanner();
+
       this.homeOneData = myHomeOneData.mydata;   //轮播下面的列表数据
       window.revieceData2 = function(res) {
          return $this.storeData(res)
        }
-
+       
       this.getCate();   //获取公告内容 
       this.homeTwoData = myHomeTwoData;   //导航标题
       this.loadData();
@@ -268,6 +308,34 @@ export default {
     },
     storeData(data){
       this.homeOneDataNew.push(data)
+    },
+    getBanner(){
+      var $this = this
+      this.$axios
+        .post("api/start/start-page", {
+          type: '1'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+               $this.swipeImgs = res.data.data
+          }else{
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            $this.$toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        });
     },
     getCate(){
       var $this = this

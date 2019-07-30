@@ -94,6 +94,10 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
+    // 获取最高最低和成交量
+    http.sendData({"id":1,"method":"today.query","params":["CSCCTUSDT"]})
+    http.sendData({"id":17,"method":"depth.subscribe","params":["CSCCTUSDT",10,"0"]})
+    http.sendData({"id":61,"method":"deals.subscribe","params":["CSCCTUSDT"]})
     next(vm => vm.getData());
   },
   watch: {

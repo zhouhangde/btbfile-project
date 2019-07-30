@@ -40,9 +40,9 @@ export default {
                 
 		      }
           send1();
-          setInterval(function(){
-            send1();
-          },5000)
+          // setInterval(function(){
+          //   send1();
+          // },5000)
         }
      },
      sendHistory(){

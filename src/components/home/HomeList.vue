@@ -9,7 +9,9 @@
         <div :style="{backgroundColor:item.color,padding:'8px 18px',color:'white'}">{{item.zhangThor}}</div>
     </div> -->
     <div v-for="(item,index) in zorjdata" :key="index" class="itemzord"  @click="$router.push({name:'homeKxEarchatNew'})">
-        <div>CNY</div>
+        <div>
+          {{item.titleBefore}}<small style="font-size: 7px;color: #b9acac;">{{item.titleAfter}}</small>
+        </div>
         <div class="centeritem">
           <!-- 最新价 -->
           <span style="margin-left:30px;"><i data-v-61dd7a3d="" class="fa fa-yen (alias)"></i>{{item.result.last}}</span>
