@@ -1,10 +1,12 @@
 <template>
   <div class="jiaoyi">
-    <!-- :xin="xin" 此为收藏到自选的星星 -->
     <Header :title="title" 
     :xial="xial" 
+    :xin="xin" 
+    :bizhStaus="bizhStaus"
     :biao="biao" :aside="aside" 
     @condit="condit"
+    @addOrDeleteSj="addOrDeleteSj"
     @showAction="showactionSheet"/>
     <div class="center-contain">
       <div class="center-contain-left">
@@ -135,7 +137,11 @@ export default {
        buyAvailable:0,
        sellerAvailable:0,
        theParam:{},   //存储路由参数
-       timer:null
+       timer:null,
+       bizhStaus:{
+         staus:false
+       },  //收藏状态
+       currentBizh:'CSCCT'  //存储当前的bizhong
     };
   },
   computed:{
@@ -158,11 +164,9 @@ export default {
     // next();
   },
   beforeRouteLeave(to, from, next) {
-    console.log('离开了',this.timer)
     // 离开页面关闭定时器
     this.timer = null
     next()
-    console.log('离开了2',this.timer)
   },
   // beforeRouteUpdate (to, from, next) {
   //   // 同一页面，刷新不同数据时调用，
@@ -187,7 +191,6 @@ export default {
       this.jiaoyiTabData = myjiaoyiTabData   //切换tab导航
       // 根据路由参数，进行相应币种的websocket数据发送
       if(data != undefined && data != null && data != ''){
-         console.log('我的参数',data)
          $this.title = data.title   //切换title
          switch(data.slectBz) {
             case 'CSCCTUSDT':
@@ -195,55 +198,76 @@ export default {
                 http.sendData({"id":1,"method":"depth.subscribe","params":["CSCCTUSDT",10,"0"]})
                 http.sendData({"id":31,"method":"today.query","params":["CSCCTUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["CSCCTUSDT"]})
+                $this.currentBizh = 'CSCCT'
+                $this.getBalance('CSCCT|USDT');  //获取买和卖的交易对的可用余额
+                $this.getXinStaus('CSCCTUSDT');   //获取是否收藏为自选
                 break;
             case 'BTCUSDT':
                 http.sendData({"id":1,"method":"depth.subscribe","params":["BTCUSDT",10,"0"]})
                 http.sendData({"id":31,"method":"today.query","params":["BTCUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["BTCUSDT"]})
+                $this.currentBizh = 'BTC'
+                $this.getBalance('BTC|USDT');  //获取买和卖的交易对的可用余额
+                $this.getXinStaus('BTCUSDT');   //获取是否收藏为自选
                 break;
             case 'ETHUSDT':
                 http.sendData({"id":1,"method":"depth.subscribe","params":["ETHUSDT",10,"0"]})
                   http.sendData({"id":31,"method":"today.query","params":["ETHUSDT"]})
                   http.sendData({"id":32,"method":"deals.subscribe","params":["ETHUSDT"]})
+                  $this.currentBizh = 'ETH'
+                  $this.getBalance('ETH|USDT');  //获取买和卖的交易对的可用余额
+                  $this.getXinStaus('ETHUSDT');   //获取是否收藏为自选
                 break;
             case 'XRPUSDT':
                 http.sendData({"id":1,"method":"depth.subscribe","params":["XRPUSDT",10,"0"]})
                 http.sendData({"id":31,"method":"today.query","params":["XRPUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["XRPUSDT"]})
+                $this.currentBizh = 'XRP'
+                $this.getBalance('XRP|USDT');  //获取买和卖的交易对的可用余额
+                $this.getXinStaus('XRPUSDT');   //获取是否收藏为自选
                 break;
             case 'EOSUSDT':
                 http.sendData({"id":1,"method":"depth.subscribe","params":["EOSUSDT",10,"0"]})
                 http.sendData({"id":31,"method":"today.query","params":["EOSUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["EOSUSDT"]})
+                $this.currentBizh = 'EOS'
+                $this.getBalance('EOS|USDT');  //获取买和卖的交易对的可用余额
+                $this.getXinStaus('EOSUSDT');   //获取是否收藏为自选
                 break;
             case 'LTCUSDT':
                 http.sendData({"id":1,"method":"depth.subscribe","params":["LTCUSDT",10,"0"]})
                 http.sendData({"id":31,"method":"today.query","params":["LTCUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["LTCUSDT"]})
+                $this.currentBizh = 'LTC'
+                $this.getBalance('LTC|USDT');  //获取买和卖的交易对的可用余额
+                $this.getXinStaus('LTCUSDT');   //获取是否收藏为自选
                 break;
             case 'BHBUSDT':
                 http.sendData({"id":1,"method":"depth.subscribe","params":["BHBUSDT",10,"0"]})
                 http.sendData({"id":31,"method":"today.query","params":["BHBUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["BHBUSDT"]})
+                $this.currentBizh = 'BHB'
+                $this.getBalance('BHB|USDT');  //获取买和卖的交易对的可用余额
+                $this.getXinStaus('BHBUSDT');   //获取是否收藏为自选
                 break;                    
          } 
       }else{
          http.sendData({"id":1,"method":"depth.subscribe","params":["CSCCTUSDT",10,"0"]})
          http.sendData({"id":31,"method":"today.query","params":["CSCCTUSDT"]})
          http.sendData({"id":32,"method":"deals.subscribe","params":["CSCCTUSDT"]})
+         this.getBalance('CSCCT|USDT');  //获取买和卖的交易对的可用余额
+         this.getXinStaus('CSCCTUSDT');   //获取是否收藏为自选
       }
 
       // 获取右侧交易挂单的数据cscct/usdt
       window.revieceData17 = function(res) {
             // 只需要交易挂单返回成功的数据（也对应为我要买和我要卖的数据）
             if(res.params[0]){
-                // console.log('挂单数据',res)
                 return $this.storePkData(res)
             }
       };
-      this.getBalance();  //获取买和卖的交易对的可用余额
+      
       this.openWatite();   //开启提示等待
-      // console.log('父页面的tab数据',this.jiaoyiTabData);
       this.loadData();
     },
      //初始加载数据
@@ -252,13 +276,11 @@ export default {
       if(this.data){
         if(this.data.condition== "mairu"){
           // 加载涨幅数据
-          // console.log("进行买入相关数据");
           this.output = false;
           this.inputru = true;
 
         }else{
           // 加载降幅的数据
-          // console.log("进行卖出相关数据");
           this.inputru = false;
           this.output = true;
           
@@ -278,7 +300,6 @@ export default {
     },
     //tab切换，根据点击tab的条件加载数据
     update(condation) {  
-      // console.log(condation);
       this.data = condation;
       this.loadData();
     },
@@ -312,11 +333,11 @@ export default {
       }
       // 关闭动画
     },
-    getBalance(){
+    getBalance(asset_type){
        var me = this
        this.$axios
         .post("/api/bargain/balance", {
-          asset_type: 'CSCCT|USDT',
+          asset_type: asset_type,
           access_token: 'WNoCLzeQWHyIdjuynB6hT5o30ieFRBXe_1560572313',
           chain_network: 'main_network'
         })
@@ -352,6 +373,45 @@ export default {
           spinnerType: 'fading-circle'
         });
     },
+    // 获取收藏状态
+    getXinStaus(bizh){
+       var $this = this
+        this.$axios
+        .post("/api/exchange/market", {
+          'access_token': 'WNoCLzeQWHyIdjuynB6hT5o30ieFRBXe_1560572313',
+          'chain_network': 'main_network',
+          'os': 'web',
+          'os_ver': '1.0.0',
+          'soft_ver': '1.0.0',
+          'language': 'zh_cn'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              let bizhList = res.data.data[0].list
+              let currentBz = bizhList.filter((item, index, arr) => item.name  == bizh)
+              if(currentBz[0].status == 0){
+                $this.bizhStaus.staus = false
+              }else{
+                $this.bizhStaus.staus = true
+              }
+          }else{
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            $this.$toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        });
+    },
     // 买入
     buyCoin(){
        var $this = this
@@ -367,13 +427,98 @@ export default {
         .then(res => {
           if(res.data.code == '200'){
               // 检验成功 设置登录状态并且跳转到/
-               console.log('res买入',res)
                $this.$toast({
                 message: '买入成功',
                 position: "bottom",
                 duration: 2000
                });
                $this.getBalance();
+          }else{
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            $this.$toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        });
+    },
+    // 收藏或取消收藏
+    addOrDeleteSj(condition){
+        if(condition.condition){
+           this.addShouc(this.currentBizh)
+        }else{
+           this.deleteShouc(this.currentBizh)
+        }
+    },
+    deleteShouc(currentBizh){
+       var $this = this
+        this.$axios
+        .post("/api/trade/trade-delete", {
+          'os_ver':'',
+          'access_token':'9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313',
+          'stock':currentBizh,
+          'money':'USDT',
+          'language':'zh_cn',
+          'soft_ver':'2.0.0',
+          'chain_network':'main_network',
+          'os':'android'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+               $this.$toast({
+                message: '取消收藏成功',
+                position: "bottom",
+                duration: 2000
+               });
+          }else{
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            $this.$toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        });
+    },
+    addShouc(currentBizh){
+       var $this = this
+        this.$axios
+        .post("/api/trade/trade-add", {
+          'os_ver':'',
+          'access_token':'9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313',
+          'stock':currentBizh,
+          'money':'USDT',
+          'language':'zh_cn',
+          'soft_ver':'2.0.0',
+          'chain_network':'main_network',
+          'os':'android'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+               $this.$toast({
+                message: '收藏成功',
+                position: "bottom",
+                duration: 2000
+               });
           }else{
             $this.$toast({
                 message: res.data.message,
@@ -407,7 +552,6 @@ export default {
         .then(res => {
           if(res.data.code == '200'){
               // 检验成功 设置登录状态并且跳转到/
-               console.log('res卖出',res)
                $this.$toast({
                 message: '卖出成功',
                 position: "bottom",

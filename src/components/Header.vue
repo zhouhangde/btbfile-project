@@ -23,7 +23,7 @@
        <i class="fa fa-bar-chart"></i>
      </span>
      <span v-if="xin" class="myicon" @click="shoucan">
-       <i class="fa fa-star-o" style="color:#b62727" v-if="shoucanState"></i>
+       <i class="fa fa-star-o" style="color:#b62727" v-if="bizhStaus.staus"></i>
        <i class="fa fa-star-o" v-else></i>
      </span>
      <span v-if="newIcon" class="myicon" @click="newItem">
@@ -47,7 +47,7 @@ export default {
   name: "Header",
   data() {
     return {
-      shoucanState:false
+      shoucanState:true
     }
   },
   props: {
@@ -75,11 +75,16 @@ export default {
     newIcon:Boolean, //新增图标
     newSkMethordIcon:Boolean, //新增收款方式
     historytitle:Boolean, //显示历史
-    fabu:Boolean //显示发布
+    fabu:Boolean, //显示发布
+    bizhStaus:{
+      type: Object,
+      default: function () {
+          return { staus: false }
+      }  //注意对象和数组必须已工程的方式返回
+    }   //币种是否收藏的状态
 
   },
   created(){
-    // console.log(this.title)
   },
   methods:{
     showActionsheet(){
@@ -88,7 +93,11 @@ export default {
       });
     },
     shoucan(){
-      this.shoucanState = !this.shoucanState;
+      this.bizhStaus.staus = !this.bizhStaus.staus;
+      // this.bizhStaus= !this.bizhStaus;
+      this.$emit("addOrDeleteSj", {
+            condition:this.bizhStaus.staus  //获取条件距离最近distance，作为条件
+      });
     },
     showCondition(conditon){
       this.$emit("condit", {

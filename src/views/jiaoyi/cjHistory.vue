@@ -48,29 +48,37 @@ export default {
     };
   },
   beforeRouteEnter(to, from, next) {
-    //交易挂单中的数据
-    http.sendData({"id":30,"method":"server.auth","params":["8MLF4DEItozx5xQLev5lZGn862BZ5E0B_1561786555|web","web"]})
+    http.sendData({"id":30,"method":"server.auth","params":["WNoCLzeQWHyIdjuynB6hT5o30ieFRBXe_1560572313|web","web"]})
     next(vm => vm.getData());
+  },
+  watch: {
+      cjHistory(val) {
+        this.cjHistory = val;
+      }
   },
   methods: {
     // 获取用户信息
     getData() {
+      var $this = this
       // 获取成交记录数据
-      this.cjHistory = mycjHistory.result.records
-      console.log('this.cjHistory',this.cjHistory)
+      // this.cjHistory = mycjHistory.result.records
 
       window.revieceData30 = function(res) {
-        // console.log('res',res)
+        // 历史委托(对应即为成交记录的数据)
         if(res.result && res.result.status == 'success') {
-            //历史挂单，注意需要时"id":30发送成功后才发送有数据
-                http.sendData({"id":31,"method":"order.query","params":["CSCCTUSDT",0,50]})
-                http.sendData({"id":32,"method":"order.history","params":["CSCCTUSDT",0,0,0,10,0]})
+            http.sendData({"id":32,"method":"order.history","params":["CSCCTUSDT",0,0,0,10,0]})
         }
-      }
-    //   window.revieceData32 = function(res) {
-    //     // 历史委托(对应即为成交记录的数据)
-    //     console.log('历史委托数据',res)
-    //   }
+      } 
+
+      window.revieceData32 = function(res) {
+        // 历史委托(对应即为成交记录的数据)
+        return $this.storeData(res)
+      }  
+      
+      
+    },
+    storeData(data){
+      this.cjHistory = data.result.records
     },
     storePkData(data){
       

@@ -10,7 +10,9 @@
        <span style="color:rgb(71,71,71);">您的余额:</span>
        <span style="color:rgb(18,169,237);">{{yuMoney}}</span>
     </div>
-    <OtcTabList  :key="index" v-for="(item,index) in otcDataList" :zorjdata="item.myData" @showtheDetail="showtheDetail"/>
+    <!-- <OtcTabList  :key="index" v-for="(item,index) in otcDataList" :zorjdata="item.myData" @showtheDetail="showtheDetail"/> -->
+
+    <OtcTabList  :zorjdata="otcDataListNew" @showtheDetail="showtheDetail" v-if="showThis"/>
     <!-- <div>
       <ul class="parent">
         <li class="pareant-item" >
@@ -117,6 +119,7 @@ export default {
        xial:true, 
        otcTabData:{},   //tab数据
        otcDataList:[],   //tab下的切换的列表数据
+       otcDataListNew:[],   //tab下的切换的列表接口数据
        // 底部的弹出
        actions:[
          {
@@ -132,7 +135,8 @@ export default {
        ],
        sheetVisible:false, //上拉的sheet显示开关
        popupVisible:false,   //显示顶部的提示
-       yuMoney:9978243.8214654
+       yuMoney:0,
+       showThis:false  //是否显示列表数据开关
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -142,7 +146,9 @@ export default {
     // 获取用户信息
     getData() {
       this.otcTabData =  myotcTabData
-      this.otcDataList = mymybuy
+      // this.otcDataList = mymybuy
+      this.getAvirible();  //查询余额
+      this.getBuyOrSeller('1');
       console.log("列表数据",this.otcDataList)
       this.loadData();
     },
@@ -155,15 +161,14 @@ export default {
       if(this.data){
         if(this.data.condition== "itomi"){
           // 加载涨幅数据
-          console.log("我要买相关数据");
-          this.otcDataList = mymybuy;
-
+          // this.otcDataList = mymybuy;
+          this.getBuyOrSeller('1');
         }else{
           // 加载降幅的数据
-          console.log("我要卖出相关数据");
           // this.inputru = false;
           // this.output = true;
-          this.otcDataList = mymyseller;
+          // this.otcDataList = mymyseller;
+          this.getBuyOrSeller('2');
         }
       }
     },
@@ -197,6 +202,77 @@ export default {
       if(condit.conditon == 'USDT'){
         this.popupVisible = true
       }
+    },
+    getAvirible(){
+       var $this = this
+        this.$axios
+        .post("/api/exchange/balance ", {
+          'asset_type': 'USDT',
+          'access_token': '9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+              $this.yuMoney = res.data.data.list[0].available
+             
+          }else{
+            $this.showThis = false  //没有数据
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 1000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            $this.$toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 1000
+              });
+              return;
+        });
+    },
+    getBuyOrSeller(staus){
+      var $this = this
+        this.$axios
+        .post("/api/otc/market-list", {
+          'side': staus,
+          'coin_name': 'USDT'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+              $this.showThis = true
+              $this.otcDataListNew = res.data.data
+              for(let item of $this.otcDataListNew){
+                
+                 if(staus == '1'){
+                   item.staus = 'buy'
+                 }else{
+                   item.staus = 'seller'
+                 }
+              }
+              
+          }else{
+            $this.showThis = false  //没有数据
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 1000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            $this.$toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 1000
+              });
+              return;
+        });
     }
   },
   components: {

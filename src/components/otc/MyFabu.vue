@@ -37,7 +37,7 @@
           <div class="pareant-item-header">
              <img style="width:60px;height:60px;border-radius:50%;" :src="item.head_portrait"/>
              <div>
-               <p>{{item.nickname}}</p>
+               <p>{{item.coin_name}}</p>
                <p>
                 <span style="color:#999;">限额:<img style="width:12px;height:12px;border-radius:100%;" :src="item.head_portrait"/></span>
                 <span style="color:#999;">{{item.min_num}} - {{item.max_num}}</span>
@@ -64,7 +64,7 @@
             </div>
             <!-- item.side为1表示我要买的的 -->
             <button class="tobug" :class="{'activetabOne':(item.staus=='buy'),'activetabTwo':(item.staus=='seller')}" 
-            >{{item.staus == 'buy'?'我要买':'我要卖'}}</button>
+            >撤销</button>
           </div>
         </li>
       </ul>
@@ -73,7 +73,7 @@
 
 <script>
 export default {
-  name: "OtcTabList",
+  name: "MyFabu",
   props: {
     // zorjdata: Object
     zorjdata: Array

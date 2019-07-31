@@ -33,7 +33,7 @@ export default {
                 //暂时不知
                 http.sendData({"id":17,"method":"depth.subscribe","params":["CSCCTUSDT",10,"0"]})
                 //交易挂单中的数据
-                http.sendData({"id":30,"method":"server.auth","params":["8MLF4DEItozx5xQLev5lZGn862BZ5E0B_1561786555|web","web"]})
+                http.sendData({"id":30,"method":"server.auth","params":["WNoCLzeQWHyIdjuynB6hT5o30ieFRBXe_1560572313|web","web"]})
                 http.sendData({"id":61,"method":"deals.subscribe","params":["CSCCTUSDT"]})
                 $this.sendHistory()
                 $this.sendHightOrLow()  
