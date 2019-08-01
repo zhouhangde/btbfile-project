@@ -160,3 +160,19 @@ https://blog.csdn.net/liurong1028/article/details/84850131
 
 ####javascript中加减乘除出错的解决办法
 https://blog.csdn.net/qq_26291823/article/details/50478892
+
+####vue-cli3 一直运行 /sockjs-node/info?t= 解决方案
+https://www.cnblogs.com/sichaoyun/p/10178080.html   -----此为网络环境发生改变的时候回发送的请求
+注意最好不要注释，否则在控制台会包错
+
+####使用scss
+https://www.cnblogs.com/sdcs/p/9104474.html
+cnpm install node-sass --save-dev //安装node-sass 
+cnpm install sass-loader --save-dev //安装sass-loader 
+cnpm install style-loader --save-dev //安装style-loader 有些人安装的是 vue-style-loader 其实是一样的！
+
+####移动端调用相机
+https://www.cnblogs.com/wind-wang/p/9635595.html（目前暂时都不能直接打开相册）
+
+####type为file的详解
+https://www.haowuliaoa.com/article/info/114042.html

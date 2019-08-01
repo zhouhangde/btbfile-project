@@ -1,20 +1,28 @@
 <template>
   <div class="skfs">
     <Header :isLeft="true" :title="title" :newSkMethordIcon="newSkMethordIcon" @shownewSkMethord="shownewSkMethord"/>
-    <div class="item-input" @click="$router.push({name:'zfbMethod'})">
+    <!-- <div class="item-input" @click="$router.push({name:'zfbMethod'})">
         <i class="fa fa-cny (alias)"></i>
         <div class="item-right">
             <span>支付宝(28838823839)</span>
             <i class="fa fa-angle-right" style="font-size: 17px;"></i>
         </div>
-    </div>
-      <div class="item-input" @click="$router.push({name:'wxMethod'})">
+    </div> -->
+      <!-- <div class="item-input" @click="$router.push({name:'wxMethod'})">
         <i class="fa fa-wechat (alias)"></i>
         <div class="item-right">
             <span>微信(18828383)</span>
             <i class="fa fa-angle-right" style="font-size: 17px;"></i>
         </div>
+    </div> -->
+    <div class="item-input" v-for="(item,index) in mySkList" :key="index" @click="goUpdataPage(item.name)">
+        <img :src="item.icon" style="width:30px;height:30px"/>
+        <div class="item-right">
+            <span>{{item.name}}</span>
+            <i class="fa fa-angle-right" style="font-size: 17px;"></i>
+        </div>
     </div>
+
     <mt-actionsheet
       :actions="actions"
       v-model="sheetVisible">
@@ -24,7 +32,7 @@
 
 <script>
 import Header from "../../../components/Header";
-import { Actionsheet,Popup } from 'mint-ui';
+import { Actionsheet,Popup,Toast } from 'mint-ui';
 export default {
   name: "skfs",
   data() {
@@ -40,7 +48,7 @@ export default {
         {
           // icon: 'icon-article', // 引入iconfont的类名作为展示的icon
           name: '微信', // 引入文字作为标题
-          method : this.showWx
+          method : this.wxMethod
         },
         {
           // icon: 'icon-article', // 引入iconfont的类名作为展示的icon
@@ -50,6 +58,7 @@ export default {
       
       ],
       sheetVisible:false, //上拉的sheet显示开关
+      mySkList:[]   //收款方式列表
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -58,7 +67,7 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
-      
+       this.selectSkMethord()  //查询收款方式
     },
     shownewSkMethord(){
        this.sheetVisible = true;
@@ -73,6 +82,43 @@ export default {
     },
     showYhk(){
       this.$router.push({name:'addYhkMethord'})
+    },
+    goUpdataPage(name){
+      if(name == '支付宝'){
+        this.$router.push({name:'zfbMethod'})
+      }else if(name == '微信'){
+        this.$router.push({name:'wxMethod'}) 
+      }else if(name == '银行卡'){
+      }
+    },
+    selectSkMethord(){
+       var $this = this
+      this.$axios
+        .post("/api/gathering/get-list", {
+          access_token: '9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+               console.log('收款方式列表',res)
+               $this.mySkList = res.data.data
+          }else{
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            $this.$toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        });
     }
   },
   components: {

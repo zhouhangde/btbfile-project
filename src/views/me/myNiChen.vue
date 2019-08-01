@@ -7,7 +7,7 @@
       <div style="padding: 15px;">
          请填写修改后的昵称（3-12个字）
       </div>
-      <div class="complate" :style="{backgroundColor:(nichen.length>0?'#40a1e2':'rgb(64, 161, 226,0.3)')}" :disabled="nichen.length<1">
+      <div class="complate" :style="{backgroundColor:(nichen.length>0?'#40a1e2':'rgb(64, 161, 226,0.3)')}" :disabled="nichen.length<1" @click="goUpdate">
         确认修改
       </div>
   </div>
@@ -30,6 +30,43 @@ export default {
     // 获取用户信息
     getData() {
       
+    },
+    goUpdate(){
+      var $this = this
+      if($this.nichen.length <1){
+        $this.$toast({
+            message: '昵称不能为空',
+            position: "bottom",
+            duration: 2000
+          });
+          return;
+      }
+      this.$axios
+        .post("/api/member/info-update", {
+          access_token: '9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313',
+          nickname:$this.nichen
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+               this.$router.push({name:'personCenter'})
+          }else{
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            $this.$toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        });
     }
   },
   components: {

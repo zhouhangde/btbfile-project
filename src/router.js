@@ -45,6 +45,18 @@ const router = new Router({
         }
       ]
     },
+    // 测试的demo页面
+    {
+      path: '/demo',
+      name: 'demo',
+      component: () => import('./views/demo/demo.vue')
+    },
+    // 测试的demo从手机选择相机或拍照页面
+    {
+      path: '/demo-camera',
+      name: 'demo-camera',
+      component: () => import('./views/demo/demo-camera.vue')
+    },
     // 首页点击列表进入k线图展示页面，之前的
     {
       path: '/homeKxEarchat',

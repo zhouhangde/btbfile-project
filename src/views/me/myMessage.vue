@@ -12,7 +12,8 @@
         ref="loadmore"
         >
         <div class="Datalist">
-            <HanqTabList v-for="(item,index) in zxorusData" :key="index" :zorjdata="item.myData"/>
+            <!-- <HanqTabList v-for="(item,index) in zxorusData" :key="index" :zorjdata="item.myData"/> -->
+            <HanqTabList  :zorjdata="zxorusDataNew" v-if="showGgOrmess"/>
         </div>
     </mt-loadmore>
   </div>
@@ -25,6 +26,8 @@ const myhanqTabData = require('../../../data/myMessageTabData.json');
 import Header from "../../components/Header";
 import HanqTab from "../../components/me/myMessgTab";
 import HanqTabList from "../../components/me/myMessgTabList";
+import { Toast } from "mint-ui";
+
 export default {
   name: "myMessage",
   data() {
@@ -32,11 +35,13 @@ export default {
        title:'消息',
        hanqTabData:{},  //tab切换的title
        zxorusData:[],   //tab下的切换的列表数据
+       zxorusDataNew:[],   //tab下的切换的列表接口数据
        page: 1,   //当前页数
        size: 5,   //分页数
        allLoaded: false,   //是否已经加载完毕，无加载数据的开关
        bottomPullText: "上拉加载更多",   //底部的加载显示字样
        data: null,  //tab切换条件
+       showGgOrmess:false  //显示列表数据的开关
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -45,7 +50,8 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
-      this.hanqTabData = myhanqTabData
+       this.hanqTabData = myhanqTabData
+       this.getGgData()    //获取tab下的公告数据
        console.log('导航的title',this.hanqTabData)
        this.loadData()
     },
@@ -57,12 +63,15 @@ export default {
       if(this.data){
         if(this.data.condition== "zixu"){
           // 加载自选数据
-          console.log("加载涨幅数据");
-          this.zxorusData = myzixuDataOne;
+          // console.log("加载公告数据");
+          // this.zxorusData = myzixuDataOne;
+          this.getGgData()
+          
         }else{
           // 加载usdt的数据
-          console.log("加载跌幅的数据");
-          this.zxorusData = myusdtDataOne;
+          // console.log("加载消息的数据");
+          // this.zxorusData = myusdtDataOne;
+          this.getMessageData()
         }
       }
     },
@@ -80,6 +89,67 @@ export default {
       // console.log(condation);
       this.data = condation;
       this.loadData();
+    },
+    getGgData(){
+       var me = this
+       this.$axios
+        .post("/api/start/cate", {
+          id: '9',
+          limit_num: '20',
+          limit_begin: '0'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              me.showGgOrmess = true
+              me.zxorusDataNew = res.data.data
+          }else{
+             me.showGgOrmess = false
+             Toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            Toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        });
+    },
+    getMessageData(){
+       var me = this
+       this.$axios
+        .post("/api/member/message-list", {
+          access_token: '9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313',
+          type: '1'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+               me.showGgOrmess = true
+              me.zxorusDataNew = res.data.data
+          }else{
+            me.showGgOrmess = false
+             Toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            Toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        });
     }
   },
   components: {

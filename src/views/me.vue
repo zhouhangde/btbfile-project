@@ -3,12 +3,23 @@
     <p class="showIcon">
       <span @click="$router.push({name:'myMessage'})"><i class="fa fa-bell-o" style="font-size: 23px;"></i></span>
     </p>
-    <div class="headInfo">
+    <!-- <div class="headInfo">
       <div class="head-img" @click="$router.push({name:'personCenter'})"></div>
       <div class="head-profile">
         <p class="user-id">Q7E2n2NX</p>
         <p class="user-phone">
           <span>UID:</span>1218969
+        </p>
+      </div>
+    </div> -->
+    <div class="headInfo">
+      <!-- <div class="head-img" ></div> -->
+      <img :src="userInfo.head_portrait" style="width: 48px;height:48px"
+      @click="$router.push({name:'personCenter'})" />
+      <div class="head-profile">
+        <p class="user-id">{{userInfo.nickname}}</p>
+        <p class="user-phone">
+          <span>UID:</span>{{userInfo.id}}
         </p>
       </div>
     </div>
@@ -144,7 +155,35 @@ export default {
     },
     // 获取用户信息
     getData() {
-      
+      this.getUserInfo()   //获取用户个人信息
+    },
+    getUserInfo(){
+      var $this = this
+      this.$axios
+        .post("/api/member/info", {
+          access_token: '9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313'
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+               $this.userInfo = res.data.data
+          }else{
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            $this.$toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        });
     }
   }
 };
