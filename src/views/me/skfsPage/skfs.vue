@@ -15,7 +15,7 @@
             <i class="fa fa-angle-right" style="font-size: 17px;"></i>
         </div>
     </div> -->
-    <div class="item-input" v-for="(item,index) in mySkList" :key="index" @click="goUpdataPage(item.name)">
+    <div class="item-input" v-for="(item,index) in mySkList" :key="index" @click="goUpdataPage(item.proceeds_type,item.id,item)">
         <img :src="item.icon" style="width:30px;height:30px"/>
         <div class="item-right">
             <span>{{item.name}}</span>
@@ -48,7 +48,7 @@ export default {
         {
           // icon: 'icon-article', // 引入iconfont的类名作为展示的icon
           name: '微信', // 引入文字作为标题
-          method : this.wxMethod
+          method : this.showWx
         },
         {
           // icon: 'icon-article', // 引入iconfont的类名作为展示的icon
@@ -83,12 +83,14 @@ export default {
     showYhk(){
       this.$router.push({name:'addYhkMethord'})
     },
-    goUpdataPage(name){
-      if(name == '支付宝'){
-        this.$router.push({name:'zfbMethod'})
-      }else if(name == '微信'){
-        this.$router.push({name:'wxMethod'}) 
-      }else if(name == '银行卡'){
+    goUpdataPage(proceeds_type,id,item){
+      console.log('proceeds_type',proceeds_type)
+      if(proceeds_type == 'alipay'){
+        this.$router.push({name:'zfbMethod',params:{id:id}})
+      }else if(proceeds_type == 'alipay'){
+        this.$router.push({name:'wxMethod',params:{id:id}}) 
+      }else if(proceeds_type == 'bank'){
+        this.$router.push({name:'yhkMethod',params:{item:item}}) 
       }
     },
     selectSkMethord(){

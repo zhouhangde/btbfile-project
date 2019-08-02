@@ -45,7 +45,8 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
-       let access_token = localStorage.getItem('access_token')
+      //  let access_token = localStorage.getItem('access_token')
+        let access_token = 'i1ixbSYx0-R-3yCF9gTTBGhIXz8q0AuV_1564050548'
        if(access_token!= undefined && access_token!= null && access_token!= ''){
          this.getUserInfo(access_token)
          this.getRzInfo(access_token)
@@ -82,8 +83,10 @@ export default {
               _this.sjRzStaue = '0'
               if(res.data.data.verified_status_msg == "审核已通过"){
                   _this.otc_merchant_msg  = '暂未认证,请及时认证'
+              }else if(res.data.data.verified_status_msg == "审核未通过,请上传真实信息"){
+                  _this.otc_merchant_msg  = '审核未通过,请上传真实信息'
               }else{
-                  _this.otc_merchant_msg  = '请先进行个人认证'
+                 _this.otc_merchant_msg  = '请先进行个人认证'
               }
             }
             

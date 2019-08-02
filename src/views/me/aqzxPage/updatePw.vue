@@ -4,25 +4,25 @@
     <div style="margin-top: 10px;">
        <div class="item-input">
             <div class="item-right">
-                <input type="text"  placeholder="请输入原密码"/>
+                <input type="text"  placeholder="请输入原密码" v-model="updateData.oldpassword"/>
             </div>
         </div>
         <div class="item-input">
             <div class="item-right">
-                <input type="text"  placeholder="请输入您的新密码"/>
+                <input type="text"  placeholder="请输入您的新密码" v-model="updateData.password"/>
                 <i class="fa fa-eye-slash" style="font-size: 17px;"></i>
             </div>
         </div>
         <div class="item-input">
             <div class="item-right">
-                <input type="text"  placeholder="请确认您的新密码"/>
+                <input type="text"  placeholder="请确认您的新密码" v-model="updateData.repassword"/>
                 <i class="fa fa-eye-slash" style="font-size: 17px;"></i>
             </div>
         </div>
         <p style="text-align:right;width: 91%;margin: 0 auto;" >
             <span style="color: #d0b35b;" @click="$router.push({name:'forgetPw'})">忘记密码?</span>
         </p>
-        <div class="complate">
+        <div class="complate" @click="updatePassword">
             完成
         </div>
     </div>
@@ -31,11 +31,18 @@
 
 <script>
 import Header from "../../../components/Header";
+import { Toast } from "mint-ui";
 export default {
   name: "updatePw",
   data() {
     return {
-        title:'修改密码'
+        title:'修改密码',
+        updateData:{
+          access_token:'Xzm-aeCSIe1WgMoZc2rNU7l2t0Qjs9kU_1564715612',
+          oldpassword:'',  //老密码
+          password:'',
+          repassword:''  //第二次输入的密码
+        }
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -45,6 +52,36 @@ export default {
     // 获取用户信息
     getData() {
       
+    },
+    updatePassword(){
+      var me = this
+       this.$axios
+        .post("/api/user/password-edit", me.updateData)
+        .then(res => {
+          if(res.data.code == '200'){
+              Toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              me.$router.push({name:'aqzx'});
+          }else{
+             Toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            Toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        }); 
     }
   },
   components: {

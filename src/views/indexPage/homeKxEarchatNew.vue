@@ -45,8 +45,8 @@
         </div>
     </mt-loadmore>
     <div class="foot-buttS">
-       <button class="buy-in">买入</button>
-       <button class="seller-out">卖出</button>
+       <button class="buy-in" @click="$router.push({name:'jiaoyi'})">买入</button>
+       <button class="seller-out" @click="$router.push({name:'jiaoyi'})">卖出</button>
     </div>
   </div>
 </template>

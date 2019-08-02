@@ -10,11 +10,11 @@
           </span>
         </div>
       </div>
-      <div class="address-cell">
+      <div class="address-cell" @click="clearHc">
         <div class="address-index">
           <span>清理缓存</span>
           <span>
-             215.52k
+             {{hunc}}
              <i class="fa fa-angle-right" style="margin-left: 2.1vw"></i>
           </span>
         </div>
@@ -37,7 +37,8 @@ export default {
   name: "setting",
   data() {
     return {
-      title:'设置'
+      title:'设置',
+      hunc:'215.52k'
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -53,6 +54,9 @@ export default {
       localStorage.removeItem("login_methord");
       this.$store.dispatch("setAccessToken", null);
       this.$router.push({name:"phoneLogin"});
+    },
+    clearHc(){
+      this.hunc = '0'
     }
   },
   components: {

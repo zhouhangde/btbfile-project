@@ -183,6 +183,12 @@ const router = new Router({
       name: 'chooseBank',
       component: () => import('./views/me/skfsPage/chooseBank.vue')
     },
+    // 修改银行卡对应选择银行卡
+    {
+      path: '/chooseBankUpdate',
+      name: 'chooseBankUpdate',
+      component: () => import('./views/me/skfsPage/chooseBankUpdate.vue')
+    },
     // 进入支付宝方式
     {
       path: '/zfbMethod',
@@ -194,6 +200,12 @@ const router = new Router({
       path: '/wxMethod',
       name: 'wxMethod',
       component: () => import('./views/me/skfsPage/wxMethod.vue')
+    },
+    // 进入银行卡方式
+    {
+      path: '/yhkMethod',
+      name: 'yhkMethod',
+      component: () => import('./views/me/skfsPage/yhkMethod.vue')
     },
     // 进入安全中心
     {
@@ -230,6 +242,12 @@ const router = new Router({
       path: '/myTuijian',
       name: 'myTuijian',
       component: () => import('./views/me/mytjPage/myTuijian.vue')
+    },
+    // 进入我的推荐ifram嵌套页面
+    {
+      path: '/myTuijianIfram',
+      name: 'myTuijianIfram',
+      component: () => import('./views/me/mytjPage/myTuijianIfram.vue')
     },
     // 进入OTC交易平台
     {

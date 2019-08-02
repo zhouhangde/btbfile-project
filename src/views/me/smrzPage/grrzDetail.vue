@@ -52,7 +52,7 @@
           </div> 
       </div>
 
-      <div class="complate" @click="goGrRz">
+      <div class="complate" @click="imageSubmit">
             完成
         </div>
     </div>
@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 import Header from "../../../components/Header";
 import { Toast } from "mint-ui";
 export default {
@@ -69,11 +70,11 @@ export default {
        title:'实名认证',
        grRzStaue:false,
        selectDatafor:{
-         access_token:'',
-         real_name:'',
-         id_number:'',
-         id_card_img:'',
-         id_card_img2:''
+         access_token:'i1ixbSYx0-R-3yCF9gTTBGhIXz8q0AuV_1564050548',
+         real_name:'zhou',
+         id_number:'420982199410306436',
+         id_card_img:'', //正面图片路径
+         id_card_img2:'' //反面面图片路径
        },
        
        imageSaveZm:"",//正面图片路径
@@ -89,7 +90,7 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
-      this.selectDatafor.access_token = localStorage.getItem('access_token')
+      // this.selectDatafor.access_token = localStorage.getItem('access_token')
       this.grRzStaue = this.$route.params.grRzStaue   //获取路由的个人认证状态
     },
     goGrRz(){
@@ -127,9 +128,11 @@ export default {
           document.getElementById('saveImageFm').click()
     },
     yulan(){
+        var $this = this
         document.getElementById('saveImageZm').onchange = function () {
             
             var imgFile = this.files[0];
+            $this.goupload(imgFile,'zm')
             var fr = new FileReader();
             fr.onload = function () {
                 document.getElementById('portraitZm').src = fr.result;
@@ -138,6 +141,7 @@ export default {
         }
         document.getElementById('saveImageFm').onchange = function () {
             var imgFile = this.files[0];
+            $this.goupload(imgFile,'fm')
             var fr = new FileReader();
             fr.onload = function () {
                 document.getElementById('portraitFm').src = fr.result;
@@ -145,35 +149,67 @@ export default {
             fr.readAsDataURL(imgFile);
         }
     },
-    //上传
-		 imageSubmit(){
-        let _this=this
-        let x = document.getElementById('saveImage').files[0];
-        let params = new FormData() ; //创建一个form对象
-        params.append('file',x,x.name);  //append 向form表单添加数据
-       //添加请求头  通过form添加的图片和文件的格式必须是multipart/form-data
-        let config = {headers:{'Content-Type':'multipart/form-data'}};
+    goupload(file,staus){
+      var $this = this
+      var dataTwo = new FormData();
+      dataTwo.append("access_token", 'i1ixbSYx0-R-3yCF9gTTBGhIXz8q0AuV_1564050548');
+      dataTwo.append("image", file);
+      $.ajax({
+          url: "http://btbfire.com/api/certification/upload-image",
+          data: dataTwo,
+          beforeSend: function(request) {
+          },
+          dataType: "JSON",
+          processData: false,
+          contentType: false,
+          cache: false,
+          async: false, //请求是否异步，默认为异步
+          type: "POST",
+          success: function(list) {
+            if(staus == 'zm'){
+              $this.selectDatafor.id_card_img = list.data.urlPath   //存储从服务器获取的正面图片地址
+              // $this.imageSaveZm = list.data.urlPath   //存储从服务器获取的正面图片地址
+            }else{
+              $this.selectDatafor.id_card_img2 = list.data.urlPath   //存储从服务器获取的正面图片地址
+              // $this.imageSaveFm = list.data.urlPath   //存储从服务器获取的反面图片地址
+            }
+          },
+          error: function() {}
+      });
 
-        //发起ajax请求存放在服务端
-        this.$axios.post('api/merchants/image',params,config)
-        .then(function(res){
-          console.log('res',res)
-              // _this.imageSave = res.data.lujing;
-              // let mydate=new Date()
-              // _this.uploadDate="上传时间："+mydate.toLocaleString()
-              // Toast({
-              //       message: res.data.message,
-              //       position: "bottom",
-              //       duration: 2000
-              // })
-          }).catch(function (error) {
-                Toast({
-                  message: '网络错误',
-                  position: "bottom",
-                  duration: 2000
-                });
-                return;
-          })
+    },
+    //完成提交审核
+		 imageSubmit(){
+        var $this = this
+        this.$axios
+        .post("/api/certification/set-real", $this.selectDatafor)
+        .then(res => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+               console.log('res',res)
+               $this.$toast({
+                message: '提交成功',
+                position: "bottom",
+                duration: 2000
+              });
+
+          }else{
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            $this.$toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        });
      }
   },
   components: {
