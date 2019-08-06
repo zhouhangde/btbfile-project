@@ -32,7 +32,8 @@
 		ws:null,
 		timer:null,
 		sendFlag:false,
-		url:'ws://47.244.61.7:8090',
+		// url:'ws://47.244.61.7:8090',   //btbfile的
+		url:'ws://47.52.130.245:8090',
 		post:function(url,data,callBack,failer){
 			var token = localStorage.getItem('access_token'); 
 			if(token !='undefined' && token != null ){
@@ -70,9 +71,15 @@
 		      
 		},
 		createWebSocket:function() {
-			var $url = 'ws://192.168.1.208:8090/'
+			// var $url = 'ws://192.168.1.208:8090/'   //btbfile的
+			var $url = 'ws://47.52.130.245:8090/'  //91bilong的
 			var that = this;
-			this.post('http://www.btbfire.com/api/init/info',{},function(res){
+			// this.post('http://www.btbfire.com/api/init/info',{},function(res){
+			// 	that.createWs(res.data.via_websocket_url)
+			// },function(){
+			// 	that.createWs($url);
+			// })
+			this.post('http://91bilong.com/api/init/info',{},function(res){
 				that.createWs(res.data.via_websocket_url)
 			},function(){
 				that.createWs($url);

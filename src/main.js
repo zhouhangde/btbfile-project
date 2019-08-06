@@ -23,7 +23,9 @@ Vue.use(VueClipboard);  //vue复制链接地址
 
 // axios.defaults.baseURL = 'http://localhost:8083/';
 // axios.defaults.baseURL = 'http://bilongwang.com/';
-axios.defaults.baseURL = 'http://btbfire.com/';
+// axios.defaults.baseURL = 'http://btbfire.com/';
+axios.defaults.baseURL = 'http://91bilong.com/';
+
 
 
 //加法

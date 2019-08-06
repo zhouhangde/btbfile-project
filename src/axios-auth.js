@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const instance = axios.create({
-  baseURL:"http://btbfire.com/"
+  // baseURL:"http://btbfire.com/"
+  baseURL:"http://91bilong.com/"
 })
 
 // instance.defaults.headers.common['SOMETHING'] = 'SOMETHING'
