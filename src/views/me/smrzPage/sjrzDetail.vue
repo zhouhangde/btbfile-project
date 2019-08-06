@@ -83,7 +83,7 @@ export default {
        title:'实名认证',
        sjRzStaue:false,
        selectDatafor:{
-         access_token:'fJmsZgoBIfdMvmiAc3AwfhS2-Y7GScc9_1563504284',
+         access_token:'',
          image:'',
         //  describe:'',
          video:''
@@ -102,6 +102,9 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+      let access_token = localStorage.getItem('access_token')
+      this.selectDatafor.access_token = access_token 
+
       this.selectDatafor.access_token = localStorage.getItem('access_token')
       this.sjRzStaue = this.$route.params.sjRzStaue   //获取路由的个人认证状态
     },
@@ -139,7 +142,7 @@ export default {
     gouploadImage(file,staus){
       var $this = this
       var dataTwo = new FormData();
-      dataTwo.append("access_token", 'i1ixbSYx0-R-3yCF9gTTBGhIXz8q0AuV_1564050548');
+      dataTwo.append("access_token", $this.selectDatafor.access_token);
       dataTwo.append("image", file);
       $.ajax({
           url: "http://btbfire.com/api/merchants/image",
@@ -172,7 +175,7 @@ export default {
     gouploadVideo(file,staus){
       var $this = this
       var dataTwo = new FormData();
-      dataTwo.append("params", 'access_token=fJmsZgoBIfdMvmiAc3AwfhS2-Y7GScc9_1563504284&os=android');
+      dataTwo.append("params", $this.selectDatafor.access_token);
       dataTwo.append("video", file);
       $.ajax({
           url: "http://btbfire.com/api/merchants/video",

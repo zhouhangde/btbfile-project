@@ -27,11 +27,12 @@ export default {
       title:'新增收款信息(银行卡)',
       // theBank:'银行卡开户行',
       addData:{
-        access_token:'9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313',
+        access_token:'',
         account:'',
         bank_name:'银行卡开户行',
         proceeds_type:'bank',
-        username:''
+        username:'',
+        accessToken:''
       }
     };
   },
@@ -41,6 +42,10 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+
+      let access_token = localStorage.getItem('access_token')
+      this.addData.access_token = access_token
+
       if(this.$route.params.theBank){
        this.addData.bank_name = this.$route.params.theBank
       }

@@ -104,6 +104,7 @@ export default {
       cateData:[],   //公告数据
       animate:false,  //公告轮播状态
       timer:null,  //定时器
+      accessToken:''
     };
   },
   computed: {
@@ -197,6 +198,9 @@ export default {
   },
   methods: {
     getData() {
+      let access_token = localStorage.getItem('access_token')
+      this.accessToken = access_token
+
       // 获取轮播信息
       var $this = this
       // this.swipeImgs = shoppingData.swipeImgs;   //轮播图片
@@ -344,7 +348,7 @@ export default {
           id: '9',
           limit_begin:'0',
           limit_num:'10',
-          access_token:'8MLF4DEItozx5xQLev5lZGn862BZ5E0B_1561786555',
+          access_token:$this.accessToken,   //可没有
           chain_network:'chain_network',
           os:'web',
           os_ver:'1.0.0',

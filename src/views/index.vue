@@ -19,7 +19,8 @@ export default {
         { title: "首页", icon: "gg", path: "/home" },
         { title: "行情", icon: "credit-card", path: "/hanq" },
         { title: "交易", icon: "bandcamp", path: "/jiaoyi" },
-        { title: "OTC", icon: "yen (alias)", path: "/otc" },
+        // { title: "OTC", icon: "yen (alias)", path: "/otc" },
+        { title: "充值提现", icon: "yen (alias)", path: "/cztx" },
         { title: "我的", icon: "user", path: "/me" }
       ]
     };

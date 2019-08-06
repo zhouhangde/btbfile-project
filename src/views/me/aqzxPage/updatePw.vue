@@ -38,7 +38,7 @@ export default {
     return {
         title:'修改密码',
         updateData:{
-          access_token:'Xzm-aeCSIe1WgMoZc2rNU7l2t0Qjs9kU_1564715612',
+          access_token:'',
           oldpassword:'',  //老密码
           password:'',
           repassword:''  //第二次输入的密码
@@ -51,10 +51,21 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
-      
+      let accessToken = localStorage.getItem('access_token')
+      this.updateData.access_token = accessToken
     },
     updatePassword(){
-      var me = this
+
+       var me = this
+       if(me.updateData.access_token == '' || me.updateData.access_token == undefined || me.updateData.access_token != null){
+          me.$toast({
+            message: '请先登录，方可修改密码',
+            position: "bottom",
+            duration: 2000
+            });
+          return; 
+       }
+      
        this.$axios
         .post("/api/user/password-edit", me.updateData)
         .then(res => {

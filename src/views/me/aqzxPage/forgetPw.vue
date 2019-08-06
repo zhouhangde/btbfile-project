@@ -75,6 +75,15 @@ export default {
     // 获取用户信息
     getData() {
       let login_methord = JSON.parse(localStorage.getItem("login_methord"))
+      if(login_methord == '' || login_methord == undefined || login_methord == null){
+        this.$toast({
+          message: '暂未登录，无法进行操作',
+          position: "bottom",
+          duration: 1000
+        });
+        return
+      }
+
       if(login_methord.methord == 'phone'){
          this.showPhone = true
          this.placholderValue = login_methord.phone
@@ -84,6 +93,18 @@ export default {
       }
     },
     phoneGetYzm(){
+       var me = this
+       let login_methord = JSON.parse(localStorage.getItem("login_methord"))
+        if(login_methord == '' || login_methord == undefined || login_methord == null){
+          me.$toast({
+            message: '暂未登录，无法获取验证码',
+            position: "bottom",
+            duration: 1000
+          });
+          return
+        }
+
+
       // 60秒倒退
         const TIME_COUNT = 60;
         if (!this.timer) {
@@ -99,8 +120,8 @@ export default {
             }
           }, 1000)
           }
-
-       var me = this
+       
+       
        this.$axios
         .post("/api/register/mobile-varcode", {
           mobile_phone:me.placholderValue,
@@ -128,6 +149,17 @@ export default {
         }); 
     },
     emailGetYzm(){
+       var me = this
+       let login_methord = JSON.parse(localStorage.getItem("login_methord"))
+        if(login_methord == '' || login_methord == undefined || login_methord == null){
+          me.$toast({
+            message: '暂未登录，无法获取验证码',
+            position: "bottom",
+            duration: 1000
+          });
+          return
+        }
+
       // 60秒倒退
         const TIME_COUNT = 60;
         if (!this.timer) {
@@ -143,8 +175,8 @@ export default {
             }
           }, 1000)
           }
-
-       var me = this
+   
+      
        this.$axios
         .post("/api/register/mobile-varcode", {
           email:me.placholderValue,
@@ -173,6 +205,16 @@ export default {
     },
     updatePasswordPhone(){
         var me = this
+        let login_methord = JSON.parse(localStorage.getItem("login_methord"))
+        if(login_methord == '' || login_methord == undefined || login_methord == null){
+          me.$toast({
+            message: '暂未登录，无法获取验证码',
+            position: "bottom",
+            duration: 1000
+          });
+          return
+        }
+
        this.$axios
         .post("/api/register/mobile-varcode", {
           mobile_phone:me.placholderValue,
@@ -204,6 +246,16 @@ export default {
     },
     updatePasswordEmail(){
         var me = this
+        let login_methord = JSON.parse(localStorage.getItem("login_methord"))
+        if(login_methord == '' || login_methord == undefined || login_methord == null){
+          me.$toast({
+            message: '暂未登录，无法获取验证码',
+            position: "bottom",
+            duration: 1000
+          });
+          return
+        }
+        
        this.$axios
         .post("/api/register/mobile-varcode", {
           email:me.placholderValue,

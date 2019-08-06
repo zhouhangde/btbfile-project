@@ -58,7 +58,8 @@ export default {
       
       ],
       sheetVisible:false, //上拉的sheet显示开关
-      mySkList:[]   //收款方式列表
+      mySkList:[],   //收款方式列表
+      accessToken:''
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -67,7 +68,18 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
-       this.selectSkMethord()  //查询收款方式
+      let access_token = localStorage.getItem('access_token')
+      this.accessToken = access_token
+      if(access_token != '' && access_token != undefined && access_token != null){
+         this.selectSkMethord()  //查询收款方式  
+      }else{
+        this.$toast({
+          message: '暂未登录，无法获取收款方式',
+          position: "bottom",
+          duration: 1000
+        });
+      }
+       
     },
     shownewSkMethord(){
        this.sheetVisible = true;
@@ -97,7 +109,7 @@ export default {
        var $this = this
       this.$axios
         .post("/api/gathering/get-list", {
-          access_token: '9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313'
+          access_token: $this.accessToken
         })
         .then(res => {
           if(res.data.code == '200'){

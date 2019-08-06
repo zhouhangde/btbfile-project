@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { Toast } from "mint-ui";
 export default {
   name: "Header",
   data() {
@@ -93,6 +94,16 @@ export default {
       });
     },
     shoucan(){
+      let access_token = localStorage.getItem('access_token')
+      var $this = this
+      if(access_token ==null || access_token ==undefined || access_token ==''){
+         $this.$toast({
+            message: '请先登录，方可收藏操作',
+            position: "bottom",
+            duration: 2000
+            });
+          return;   
+      }
       this.bizhStaus.staus = !this.bizhStaus.staus;
       // this.bizhStaus= !this.bizhStaus;
       this.$emit("addOrDeleteSj", {

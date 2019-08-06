@@ -88,7 +88,7 @@ export default {
           card_enable:0,  //是否可以银行卡支付（1表示可以）
           alipay_enable:1,   //支付宝支付
           wechat_enable:0,    //微信支付
-          access_token:'9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313',
+          access_token:'',
           min_num:'',  //最小数量
           note:'',  //备注
           coin_name:'USDT', //币种
@@ -102,6 +102,9 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+      let access_token = localStorage.getItem('access_token')
+      this.orderData.access_token = access_token
+
       this.otcTabData =  myotcTabData
       this.getIcon();
     },

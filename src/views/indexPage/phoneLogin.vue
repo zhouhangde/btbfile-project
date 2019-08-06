@@ -57,7 +57,7 @@ export default {
         .post("/api/register/sign", {
           mobile_phone: this.phone,
           password: this.password,
-          os:'web'
+          os:'android'
         })
         .then(res => {
           if(res.data.code == '200'){

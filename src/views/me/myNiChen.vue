@@ -20,7 +20,8 @@ export default {
   data() {
     return {
        title:'昵称',
-       nichen:''
+       nichen:'',
+       accessToken:''
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -29,7 +30,8 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
-      
+      let access_token = localStorage.getItem('access_token')
+      this.accessToken = access_token
     },
     goUpdate(){
       var $this = this
@@ -43,7 +45,7 @@ export default {
       }
       this.$axios
         .post("/api/member/info-update", {
-          access_token: '9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313',
+          access_token: $this.accessToken,
           nickname:$this.nichen
         })
         .then(res => {

@@ -55,6 +55,73 @@
       <div class="complate" @click="imageSubmit">
             完成
         </div>
+
+        <div class="mask-order">
+      <div class="mask-order-content">
+        <a href="javascript:;" class="iconfont order-cancel">&#xe62a;</a>
+        <span class="order-title">汇款订单</span>
+        <div class="order-text one">1.请按提示信息向该卖家汇款</div>
+        <div class="order-wrap">
+          <div class="order-inner">
+            <table>
+              <tr>
+                <td class="order-block-title">收款方户名</td>
+                <td class="order-block-value">王钰霄</td>
+              </tr>
+              <tr>
+                <td class="order-block-title">收款方开户行</td>
+                <td class="order-block-value">中国银行武汉支行</td>
+              </tr>
+              <tr>
+                <td class="order-block-title">收款方账户</td>
+                <td class="order-block-value">654231543246532165421</td>
+              </tr>
+              <tr>
+                <td class="order-block-title">转账金额</td>
+                <td class="order-block-value">
+                  <span class="color-red">545.00</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="order-block-title">汇款时备注内容</td>
+                <td class="order-block-value">
+                  <span class="color-red">21546</span>(请务必填写)
+                </td>
+              </tr>
+              <tr>
+                <td class="order-block-title">状态</td>
+                <td class="order-block-value">
+                  <span>待支付</span>
+                  <button class="order-btn">我已付款</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="order-text two">
+          2.汇款时请一定要填写备注信息，付款完成后，请点击我已付款按钮；
+        </div>
+        <br />
+        <div class="order-text">
+          3.卖家确认收到款后，自动充值CNY。如超过24小时未收到币，请向客服反馈解决；
+        </div>
+        <br />
+        <div class="order-text color-red">
+          4.请务必使用本人绑定的银行卡通过手机银行或网银进行汇款；
+        </div>
+        <div class="order-text color-red">
+          5.禁止使用微信、支付宝、他人代付、ATM及柜台转账等第三方转账。
+        </div>
+        <div class="order-line"></div>
+        <div class="order-warning">
+          温馨提示：如有任何疑问请联系在线客服查看帮助中心。
+        </div>
+      </div>
+    </div>
+
+    
+
+    
     </div>
   </div>
 </template>
@@ -70,7 +137,7 @@ export default {
        title:'实名认证',
        grRzStaue:false,
        selectDatafor:{
-         access_token:'i1ixbSYx0-R-3yCF9gTTBGhIXz8q0AuV_1564050548',
+         access_token:'',
          real_name:'zhou',
          id_number:'420982199410306436',
          id_card_img:'', //正面图片路径
@@ -90,6 +157,11 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+
+
+      let access_token = localStorage.getItem('access_token')
+      this.selectDatafor.access_token = access_token 
+
       // this.selectDatafor.access_token = localStorage.getItem('access_token')
       this.grRzStaue = this.$route.params.grRzStaue   //获取路由的个人认证状态
     },
@@ -152,8 +224,9 @@ export default {
     goupload(file,staus){
       var $this = this
       var dataTwo = new FormData();
-      dataTwo.append("access_token", 'i1ixbSYx0-R-3yCF9gTTBGhIXz8q0AuV_1564050548');
+      dataTwo.append("access_token", $this.selectDatafor.access_token);
       dataTwo.append("image", file);
+
       $.ajax({
           url: "http://btbfire.com/api/certification/upload-image",
           data: dataTwo,

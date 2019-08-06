@@ -29,14 +29,15 @@ export default {
       title:'新增收款信息(银行卡)',
       // theBank:'银行卡开户行',
       selectInfo:{
-        access_token:'9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313',
+        access_token:'',
         id:''
       },
       zfbDetailData:{
         username:'',
         account:'',
         id:'',
-        name: ''  //银行卡种类
+        name: '',  //银行卡种类
+        accessToken:''
       }
     };
   },
@@ -46,6 +47,9 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+      let access_token = localStorage.getItem('access_token')
+      this.selectInfo.access_token = access_token  
+
       var $this = this
       if(this.$route.params.item){
        this.zfbDetailData = this.$route.params.item
@@ -97,7 +101,7 @@ export default {
       // dataTwo.append("username", 'zq');
       this.$axios
         .post("/api/gathering/up-proceed", {
-          access_token: 'fJmsZgoBIfdMvmiAc3AwfhS2-Y7GScc9_1563504284',
+          access_token: $this.selectInfo.access_token,
           id:'409',
           name:'中国农业银行',
           proceeds_type:'bank',
@@ -134,7 +138,7 @@ export default {
       var $this = this
       this.$axios
         .post("/api/gathering/del-proceed", {
-          access_token: 'fJmsZgoBIfdMvmiAc3AwfhS2-Y7GScc9_1563504284',
+          access_token: $this.selectInfo.access_token,
           id:$this.zfbDetailData.id
         })
         .then(res => {

@@ -127,7 +127,8 @@ export default {
       },
       // 滑动导航结束
       octJiData:[],
-      current:0   //存储当前点击的是哪一个tab
+      current:0,   //存储当前点击的是哪一个tab
+      accessToken:''
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -136,6 +137,8 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+      let access_token = localStorage.getItem('access_token')
+      this.accessToken = access_token
       this.getCjData('2');   //获取指定tab下的数据,默认查询未付款
       // this.octJiData = myyesWcDataOneData[0].myData.allData
     },
@@ -188,10 +191,20 @@ export default {
     },
     // 获取指定tab下的数据
     getCjData(type){
-      var $this = this
+        var $this = this
+
+        if($this.accessToken == '' || $this.accessToken == undefined || $this.accessToken == null){
+          $this.$toast({
+            message: '暂未登录，无法获取成交记录',
+            position: "bottom",
+            duration: 1000
+          });
+          return
+        }
+
       this.$axios
         .post("/api/otc/order-history", {
-          access_token:'9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313',
+          access_token:$this.accessToken,
           type:type   //（2为未付款，12为已付款，3为申诉中，0为已取消，1为已完成，11为申诉并处理）
         })
         .then(res => {

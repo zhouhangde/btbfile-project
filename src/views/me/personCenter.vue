@@ -60,7 +60,8 @@ export default {
        }],
        userInfo:"",
        sheetVisible:false, //上拉的sheet显示开关
-       imgsrc:''
+       imgsrc:'',
+       accessToken:''
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -72,6 +73,9 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+      let access_token = localStorage.getItem('access_token')
+      this.accessToken = access_token
+
       this.nickname =  this.$route.params.nickname
       this.image =  this.$route.params.image
       this.phone =  this.$route.params.phone
@@ -82,10 +86,11 @@ export default {
       this.sheetVisible = true;
     },
     getUserInfo(){
+
       var $this = this
       this.$axios
         .post("/api/member/info", {
-          access_token: '9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313'
+          access_token: $this.accessToken
         })
         .then(res => {
           if(res.data.code == '200'){
@@ -164,7 +169,7 @@ export default {
        var $this = this
       var dataTwo = new FormData();
       dataTwo.append("head_portrait", file);
-      dataTwo.append("access_token", '9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313');
+      dataTwo.append("access_token", $this.accessToken);
       dataTwo.append("nickname", $this.userInfo.nickname);
       $.ajax({
           url: "http://btbfire.com/api/member/info-update",

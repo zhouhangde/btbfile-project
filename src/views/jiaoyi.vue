@@ -141,7 +141,8 @@ export default {
        bizhStaus:{
          staus:false
        },  //收藏状态
-       currentBizh:'CSCCT'  //存储当前的bizhong
+       currentBizh:'CSCCT',  //存储当前的bizhong
+       accessToken:''
     };
   },
   computed:{
@@ -182,11 +183,14 @@ export default {
   //   this.getData();
   // },
   created() {
-    
+      
   },
   methods: {
     // 获取用户信息
     getData(data) {
+      let access_token = localStorage.getItem('access_token')
+      this.accessToken = access_token
+
       var $this = this
       this.jiaoyiTabData = myjiaoyiTabData   //切换tab导航
       // 根据路由参数，进行相应币种的websocket数据发送
@@ -338,7 +342,7 @@ export default {
        this.$axios
         .post("/api/bargain/balance", {
           asset_type: asset_type,
-          access_token: 'WNoCLzeQWHyIdjuynB6hT5o30ieFRBXe_1560572313',
+          access_token: me.accessToken,  //无token时获取的买与卖的可用余额都为0
           chain_network: 'main_network'
         })
         .then(res => {
@@ -378,7 +382,7 @@ export default {
        var $this = this
         this.$axios
         .post("/api/exchange/market", {
-          'access_token': 'WNoCLzeQWHyIdjuynB6hT5o30ieFRBXe_1560572313',
+          'access_token': $this.accessToken,   //无access_token时获取的收藏状态都为0，即未收藏状态
           'chain_network': 'main_network',
           'os': 'web',
           'os_ver': '1.0.0',
@@ -415,13 +419,21 @@ export default {
     // 买入
     buyCoin(){
        var $this = this
+      if($this.accessToken ==null || $this.accessToken ==undefined || $this.accessToken ==''){
+         $this.$toast({
+            message: '请先登录，方可买入操作',
+            position: "bottom",
+            duration: 2000
+            });
+          return;   
+      }
         this.$axios
         .post("api/bargain/order-limit", {
           'market': 'CSCCTUSDT',
           'side': '2',
           'pride': $this.theDj.x + '',
           'amount': $this.themount,
-          'access_token': 'WNoCLzeQWHyIdjuynB6hT5o30ieFRBXe_1560572313',
+          'access_token': $this.accessToken,
           'chain_network': 'main_network'
         })
         .then(res => {
@@ -460,11 +472,20 @@ export default {
         }
     },
     deleteShouc(currentBizh){
-       var $this = this
+      var $this = this
+       if($this.accessToken ==null || $this.accessToken ==undefined || $this.accessToken ==''){
+         $this.$toast({
+            message: '请先登录，方可进行取消收藏',
+            position: "bottom",
+            duration: 2000
+            });
+          return;   
+       }
+       
         this.$axios
         .post("/api/trade/trade-delete", {
           'os_ver':'',
-          'access_token':'9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313',
+          'access_token':$this.accessToken,
           'stock':currentBizh,
           'money':'USDT',
           'language':'zh_cn',
@@ -500,10 +521,18 @@ export default {
     },
     addShouc(currentBizh){
        var $this = this
+       if($this.accessToken ==null || $this.accessToken ==undefined || $this.accessToken ==''){
+         $this.$toast({
+            message: '请先登录，方可进行收藏',
+            position: "bottom",
+            duration: 2000
+            });
+          return;   
+       }
         this.$axios
         .post("/api/trade/trade-add", {
           'os_ver':'',
-          'access_token':'9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313',
+          'access_token':$this.accessToken,
           'stock':currentBizh,
           'money':'USDT',
           'language':'zh_cn',
@@ -540,13 +569,21 @@ export default {
     // 卖出
     sellerCoin(){
        var $this = this
+       if($this.accessToken ==null || $this.accessToken ==undefined || $this.accessToken ==''){
+         $this.$toast({
+            message: '请先登录，方可卖出操作',
+            position: "bottom",
+            duration: 2000
+            });
+          return;   
+       }
         this.$axios
         .post("api/bargain/order-limit", {
           'market': 'CSCCTUSDT',
           'side': '1',
           'pride': $this.theDj.x + '',
           'amount': $this.themount,
-          'access_token': 'WNoCLzeQWHyIdjuynB6hT5o30ieFRBXe_1560572313',
+          'access_token': $this.accessToken,
           'chain_network': 'main_network'
         })
         .then(res => {

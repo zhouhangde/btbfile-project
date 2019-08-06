@@ -41,7 +41,8 @@ export default {
        allLoaded: false,   //是否已经加载完毕，无加载数据的开关
        bottomPullText: "上拉加载更多",   //底部的加载显示字样
        data: null,  //tab切换条件
-       showGgOrmess:false  //显示列表数据的开关
+       showGgOrmess:false,  //显示列表数据的开关
+       accessToken:''
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -50,6 +51,10 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+
+       let access_token = localStorage.getItem('access_token')
+       this.accessToken = access_token
+
        this.hanqTabData = myhanqTabData
        this.getGgData()    //获取tab下的公告数据
        console.log('导航的title',this.hanqTabData)
@@ -122,10 +127,22 @@ export default {
         });
     },
     getMessageData(){
+     
+
        var me = this
+        if(me.accessToken == '' || me.accessToken == undefined || me.accessToken == null){
+          me.$toast({
+            message: '暂未登录，无法获取通知',
+            position: "bottom",
+            duration: 1000
+          });
+          me.showGgOrmess = false
+          return
+        }
+
        this.$axios
         .post("/api/member/message-list", {
-          access_token: '9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313',
+          access_token: me.accessToken,
           type: '1'
         })
         .then(res => {

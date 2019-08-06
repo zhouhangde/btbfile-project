@@ -45,11 +45,14 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+
+        let accessToken = localStorage.getItem('access_token')
+        this.access_token = accessToken
+
       //  let access_token = localStorage.getItem('access_token')
-        let access_token = 'i1ixbSYx0-R-3yCF9gTTBGhIXz8q0AuV_1564050548'
-       if(access_token!= undefined && access_token!= null && access_token!= ''){
-         this.getUserInfo(access_token)
-         this.getRzInfo(access_token)
+       if(accessToken!= undefined && accessToken!= null && accessToken!= ''){
+         this.getUserInfo(accessToken)
+         this.getRzInfo(accessToken)
        }else{
          this.status_msg = ''
          this.otc_merchant_msg = ''
@@ -67,7 +70,7 @@ export default {
       var _this =this;
       this.$axios
       .post("api/user/user-info",{
-        access_token:access_token,
+        access_token:_this.access_token,
         chain_network:'main_network'
       })
       .then(res => {
@@ -113,7 +116,7 @@ export default {
       var _this =this;
       this.$axios
       .post("api/user/get-info",{
-        access_token:access_token,
+        access_token:_this.access_token,
         chain_network:'main_network'
       })
       .then(res => {

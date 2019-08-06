@@ -89,7 +89,8 @@ export default {
         frozen_bhb: "0.00",   //bhb锁仓余额
         freeze_bhb: "0.00",   //bhb释放余额
         freeze_bhb_status: "0",  //bhb可转出额度
-        freeze_bhb_status_v2: "1"
+        freeze_bhb_status_v2: "1",
+        accessToken:''
       },
       myAllZiChangData:[]
     };
@@ -100,14 +101,27 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+      let access_token = localStorage.getItem('access_token')
+      this.accessToken = access_token
+
       this.getMyZiChang()   //获取当前登录人的资产信息
       this.getAllZiChang()    //获取所有的币种信息
     },
     getMyZiChang(){
+
       var $this = this
+      if($this.accessToken == '' || $this.accessToken == undefined || $this.accessToken == null){
+          $this.$toast({
+            message: '暂未登录，无法获取资产详情',
+            position: "bottom",
+            duration: 1000
+          });
+          return
+        }
+
       this.$axios
         .post("/api/user/freeze-bhb", {
-          access_token: 'fJmsZgoBIfdMvmiAc3AwfhS2-Y7GScc9_1563504284',
+          access_token: $this.accessToken,
           os:'android'
         })
         .then(res => {
@@ -135,9 +149,17 @@ export default {
     },
     getAllZiChang(){
        var $this = this
+      if($this.accessToken == '' || $this.accessToken == undefined || $this.accessToken == null){
+          $this.$toast({
+            message: '暂未登录，无法获取资产详情',
+            position: "bottom",
+            duration: 1000
+          });
+          return
+        }
        this.$axios
         .post("/api/exchange/balance", {
-          access_token: 'fJmsZgoBIfdMvmiAc3AwfhS2-Y7GScc9_1563504284'
+          access_token: $this.accessToken
         })
         .then(res => {
           if(res.data.code == '200'){

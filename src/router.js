@@ -39,6 +39,11 @@ const router = new Router({
           component: () => import('./views/otc.vue')
         },
         {
+          path: '/cztx',
+          name: 'cztx',
+          component: () => import('./views/cztx.vue')
+        },
+        {
           path: '/me',
           name: 'me',
           component: () => import('./views/me.vue')

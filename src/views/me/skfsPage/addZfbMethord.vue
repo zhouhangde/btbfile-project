@@ -39,6 +39,7 @@ export default {
       // },
       qrcode:'',    //图片
       imageSaveZm:"",//图片路径
+      accessToken:''
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -55,7 +56,8 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
-      
+      let access_token = localStorage.getItem('access_token')
+      this.accessToken = access_token
     },
     //身份证正面点击
     monidianjiZm(){
@@ -85,7 +87,7 @@ export default {
           return
       }
       var dataTwo = new FormData();
-      dataTwo.append("access_token", 'fJmsZgoBIfdMvmiAc3AwfhS2-Y7GScc9_1563504284');
+      dataTwo.append("access_token", $this.accessToken);
       dataTwo.append("qrcode", $this.qrcode);
       dataTwo.append("proceeds_type", 'alipay');
       dataTwo.append("account", '15527944464');

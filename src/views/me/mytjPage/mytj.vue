@@ -13,7 +13,8 @@
               v-clipboard:error="onError"
            >复制链接</button>
            <!-- <button class="theButton" @click="$router.push({name:'myTuijian'})">我的推荐</button> -->
-           <button class="theButton" @click="$router.push({name:'myTuijianIfram'})">我的推荐</button>
+           <!-- <button class="theButton"  @click="$router.push({name:'myTuijianIfram'})">我的推荐</button> -->
+           <button class="theButton"  @click="goMytuijian">我的推荐</button>
         </div>
       </div>
     </div>
@@ -32,7 +33,8 @@ export default {
         code:'',
         img:'',
         url:''
-      }
+      },
+      accessToken:''
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -41,13 +43,24 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+      let access_token = localStorage.getItem('access_token')
+      this.accessToken = access_token
       this.getMytuijian()   //获取推荐的url
     },
     getMytuijian(){
       var me = this
+      if(me.accessToken == '' || me.accessToken == undefined || me.accessToken == null){
+          me.$toast({
+            message: '暂未登录，无法获取推荐信息',
+            position: "bottom",
+            duration: 1000
+          });
+          return
+        }
+
        this.$axios
         .post("/api/register/recommend ", {
-          access_token:'fJmsZgoBIfdMvmiAc3AwfhS2-Y7GScc9_1563504284',
+          access_token:me.accessToken,
           os:'ios'
         })
         .then(res => {
@@ -73,6 +86,15 @@ export default {
         });  
     },
     onCopy () {
+      var me = this
+      if(me.accessToken == '' || me.accessToken == undefined || me.accessToken == null){
+          me.$toast({
+            message: '暂未登录，无法进行操作',
+            position: "bottom",
+            duration: 1000
+          });
+          return
+        }
       Toast({
           message: '复制成功',
           position: "bottom",
@@ -89,7 +111,17 @@ export default {
         return;
     },
     goMytuijian(){
-      window.location.href = 'http://btbfire.com/wap/invite_friends?access_token=fJmsZgoBIfdMvmiAc3AwfhS2-Y7GScc9_1563504284&os=ios&language=zh_cn HTTP/1.1'
+      var me = this
+      if(me.accessToken == '' || me.accessToken == undefined || me.accessToken == null){
+          me.$toast({
+            message: '暂未登录，无法进行操作',
+            position: "bottom",
+            duration: 1000
+          });
+          return
+        }
+        me.$router.push({name:'myTuijianIfram'})
+      // window.location.href = 'http://btbfire.com/wap/invite_friends?access_token='+this.accessToken+'&os=ios&language=zh_cn HTTP/1.1'
     }
   },
   components: {

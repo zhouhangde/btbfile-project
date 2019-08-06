@@ -17,7 +17,8 @@
       </p>
       <p class="theItem">
         <!-- 涨跌比率 -->
-        <span><small style="margin-left: 7px;font-size: 10px;color: #fff;" v-if="myrevieceGaoOrLow.last.length>0"
+        <!-- <span><small style="margin-left: 7px;font-size: 10px;color: #fff;" v-if="myrevieceGaoOrLow.last.length>0" -->
+        <span><small style="margin-left: 7px;font-size: 10px;color: #fff;"
         >{{((myrevieceGaoOrLow.last - myrevieceGaoOrLow.open) / myrevieceGaoOrLow.open).toFixed(2)}}</small>
         </span>
         <span>24h最低<small style="margin-left: 7px;">{{myrevieceGaoOrLow.low}}</small></span>

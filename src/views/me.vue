@@ -15,7 +15,7 @@
     <div class="headInfo">
       <!-- <div class="head-img" ></div> -->
       <img :src="userInfo.head_portrait" style="width: 48px;height:48px"
-      @click="$router.push({name:'personCenter'})" />
+      @click="goCenter"/>
       <div class="head-profile">
         <p class="user-id">{{userInfo.nickname}}</p>
         <p class="user-phone">
@@ -143,7 +143,8 @@ export default {
   name: "me",
   data() {
     return {
-      userInfo: ""
+      userInfo: "",
+      accessToken:''
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -155,13 +156,37 @@ export default {
     },
     // 获取用户信息
     getData() {
-      this.getUserInfo()   //获取用户个人信息
+      let access_token = localStorage.getItem('access_token')
+      this.accessToken = access_token
+      if(access_token != '' && access_token != undefined && access_token != null){
+         this.getUserInfo()   //获取用户个人信息
+      }else{
+        this.$toast({
+          message: '暂未登录，无法获取用户信息',
+          position: "bottom",
+          duration: 1000
+        });
+      }
+      
+    },
+    goCenter(){
+       var $this = this
+       if($this.accessToken == '' || $this.accessToken == undefined || $this.accessToken == null){
+          $this.$toast({
+            message: '暂未登录，无法查看用户信息',
+            position: "bottom",
+            duration: 1000
+            });
+          return; 
+       }
+         $this.$router.push({name:'personCenter'});
     },
     getUserInfo(){
       var $this = this
       this.$axios
         .post("/api/member/info", {
-          access_token: '9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313'
+          access_token:$this.accessToken,
+          os:'android'
         })
         .then(res => {
           if(res.data.code == '200'){

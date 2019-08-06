@@ -39,6 +39,7 @@
 const mycjHistory = require('../../../data/cjHistory.json');
 import Header from "../../components/Header";
 import moment from 'moment'  //时间转化工具
+import { Toast } from "mint-ui";
 export default {
   name: "cjHistory",
   data() {
@@ -48,7 +49,6 @@ export default {
     };
   },
   beforeRouteEnter(to, from, next) {
-    http.sendData({"id":30,"method":"server.auth","params":["WNoCLzeQWHyIdjuynB6hT5o30ieFRBXe_1560572313|web","web"]})
     next(vm => vm.getData());
   },
   watch: {
@@ -59,6 +59,19 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+
+      let access_token = localStorage.getItem('access_token')
+      if(access_token ==null || access_token ==undefined || access_token ==''){
+        this.$toast({
+          message: '请先登录，方可查看成交记录',
+          position: "bottom",
+          duration: 2000
+          });
+        return;   
+     }
+     var theParam = access_token+'|web'
+     http.sendData({"id":30,"method":"server.auth","params":[theParam,"web"]})
+
       var $this = this
       // 获取成交记录数据
       // this.cjHistory = mycjHistory.result.records

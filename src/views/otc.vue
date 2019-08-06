@@ -136,7 +136,8 @@ export default {
        sheetVisible:false, //上拉的sheet显示开关
        popupVisible:false,   //显示顶部的提示
        yuMoney:0,
-       showThis:false  //是否显示列表数据开关
+       showThis:false,  //是否显示列表数据开关
+       accessToken:''
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -145,6 +146,9 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+      let access_token = localStorage.getItem('access_token')
+      this.accessToken = access_token
+
       this.otcTabData =  myotcTabData
       // this.otcDataList = mymybuy
       this.getAvirible();  //查询余额
@@ -208,7 +212,7 @@ export default {
         this.$axios
         .post("/api/exchange/balance ", {
           'asset_type': 'USDT',
-          'access_token': '9yv8FP7oH7XdRSqXYunb1ySTAp8trd2B_1560572313'
+          'access_token': $this.accessToken
         })
         .then(res => {
           if(res.data.code == '200'){

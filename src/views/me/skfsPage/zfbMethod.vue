@@ -51,6 +51,10 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+
+      let access_token = localStorage.getItem('access_token')
+      this.selectInfo.access_token = access_token 
+
       console.log('this.$route.params.id',this.$route.params.id)
       if(this.$route.params.id){
        this.selectInfo.id = this.$route.params.id
@@ -121,7 +125,7 @@ export default {
       }
       var dataTwo = new FormData();
       dataTwo.append("id", '406');
-      dataTwo.append("access_token", 'fJmsZgoBIfdMvmiAc3AwfhS2-Y7GScc9_1563504284');
+      dataTwo.append("access_token", $this.selectInfo.access_token);
       dataTwo.append("qrcode", $this.currentFile);
       dataTwo.append("proceeds_type", 'alipay');
       dataTwo.append("account", '15527944464');
@@ -150,7 +154,7 @@ export default {
       var $this = this
       this.$axios
         .post("/api/gathering/del-proceed", {
-          access_token: 'fJmsZgoBIfdMvmiAc3AwfhS2-Y7GScc9_1563504284',
+          access_token: $this.selectInfo.access_token,
           id:$this.selectInfo.id
         })
         .then(res => {
