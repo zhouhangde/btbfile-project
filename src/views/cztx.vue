@@ -11,7 +11,6 @@
       <div v-if="current == 0">
         <div class="tabItem">
           <span style="font-weight: bolder;font-size: 16px;">一键充值CNY</span>
-          <!-- <span style="color: #9e9696;">参考单价</span> -->
         </div>
         <div class="tabItem">
           <span style="color: #9e9696;">参考单价</span>
@@ -19,19 +18,13 @@
         </div>
         <div class="tabItem">
           <span style="color: #9e9696;">购买数量:</span>
-          <input type="text" style="flex-grow: 1;text-indent:5px"  dir="rtl"/>
+          <input type="text" v-model="czNumber" style="flex-grow: 1;text-indent:5px"  dir="rtl"/>
           <span></span>
         </div>
-        <!-- <div class="tabItem">
-          <span style="color: #9e9696;">需要金额:</span>
-          <input type="text" value="0.00" style="flex-grow: 1;text-indent:5px;color: #de3636;"  dir="rtl"/>
-          <span style="color: #de3636;">CNY</span>
-        </div> -->
         <div class="tabItem">
-          <!-- <img src="../assets/image/selected.png"/> -->
           <button class="selectActive" style="">银行卡</button>
         </div>
-        <div class="theBuyEnd">
+        <div class="theBuyEnd" @click="getChonZhiData">
           一键充值
         </div>
       </div>
@@ -40,7 +33,6 @@
       <div v-else-if="current == 1">
         <div class="tabItem">
           <span style="font-weight: bolder;font-size: 16px;">一键提现CNY</span>
-          <!-- <span style="color: #9e9696;">QC 参考单价</span> -->
         </div>
         <div class="tabItem">
           <span style="color: #9e9696;">参考单价</span>
@@ -48,19 +40,37 @@
         </div>
         <div class="tabItem">
           <span style="color: #9e9696;">提现数量:</span>
-          <input type="text" style="flex-grow: 1;text-indent:5px"  dir="rtl"/>
+          <input type="text" v-model="txNumber" style="flex-grow: 1;text-indent:5px"  dir="rtl"/>
           <span></span>
         </div>
-        <!-- <div class="tabItem">
-          <span style="color: #9e9696;">获得金额:</span>
-          <input type="text" value="0.00" style="flex-grow: 1;text-indent:5px;color: rgb(58, 181, 161);"  dir="rtl"/>
-          <span style="color: rgb(58, 181, 161);">CNY</span>
-        </div> -->
         <div class="tabItem">
-          <!-- <img src="../assets/image/selected.png"/> -->
           <button class="selectActive" style="">银行卡</button>
+          <span>请选择银行卡</span>
         </div>
-        <div class="theSellerEnd">
+        <div>
+          <ul >
+            <li style="border-bottom: 1px solid #e8dcdc;" v-for="(item,index) in myBankDataList" :key="index">
+              <div class="the-cell"> 
+                <p class="the-index">
+                  <span style="color:blue">银行:</span>
+                  <span>{{item.bank_name}}</span>
+                </p>
+                <p class="the-index">
+                  <span style="color:blue">姓名:</span>
+                  <span>{{item.account_name}}</span>
+                </p>
+                <p class="the-index">
+                  <span style="color:blue">卡号:</span>
+                  <span>{{item.card_number}}</span>
+                </p>
+                <p style="text-align: center;">
+                  <button style="color: #fff;background-color: #a62424;padding: 3px 10px;" @click="deleteBankById(item.id)">删除</button>
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="theSellerEnd" @click="getTiXianData">
           一键提现
         </div>
       </div>
@@ -116,7 +126,7 @@
       <!-- 第三个tab结束 -->
       <!-- 第四个tab -->
       <div v-else-if="current == 3" style="display: flex;flex-direction: column;align-items: center;padding: 15px 0;">
-        <div>
+        <div @click="$router.push({name:'addBank'})">
             <img src="../assets/image/bank.svg" style="width: 68px;height: 68px;"/>
             <p style="padding: 10px 0;">添加银行卡</p>
         </div>
@@ -156,6 +166,7 @@
 import moment from 'moment'  //时间转化工具
 import $ from 'jquery'
 import LyTab from '../components/ly-tab/src/index.vue'
+import { Toast } from "mint-ui";
 export default {
   name: "cztx",
   data() {
@@ -177,8 +188,13 @@ export default {
       octJiData:[],
       current:0,   //存储当前点击的是哪一个tab
       myDhDataList:[],   //存储我的兑换记录列表数据
-      myBankDataList:[]    //存储我的新增的银行卡
+      myBankDataList:[],    //存储我的新增的银行卡
+      czNumber:'', //存储充值金额
+      txNumber:'' //存储提现金额
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => vm.getData());
   },
   filters: {
     formatDate: function (value) {
@@ -187,6 +203,9 @@ export default {
     }
   },
   methods: {
+    getData(){
+       this.getBankData() //重新查询我的银行卡
+    },
     // 点击导航切换
     handleChange (item, index) {
       this.octJiData = []
@@ -206,11 +225,70 @@ export default {
     },
     // 去充值
     getChonZhiData(){
-      
+        var inpNum = this.czNumber;
+        var accessToken = localStorage.getItem('access_token');
+        var myform = new FormData();
+        myform.append("access_token", 'usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222');
+        myform.append("num", inpNum);
+        $.ajax({
+          type : "POST",
+          contentType: false,
+          processData: false,
+          cache: false,
+          async: false, 
+          url : "/api/user/purchase",
+          dataType: "JSON",
+          data : myform,
+          success : function(result) {
+            if(result.code == 200){
+              Toast({
+                message: '充值成功',
+                position: "bottom",
+                duration: 2000
+              });
+            }
+          },
+          error : function(e){
+          }
+        });
     },
     // 去提现
     getTiXianData(){
-
+        var outpNum = this.txNumber;
+        var bankId = theId;
+        var accessToken = localStorage.getItem('access_token');
+        var myform = new FormData();
+        myform.append("access_token", 'usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222');
+        myform.append("bank_id", bankId);
+        myform.append("num", outpNum);
+        $.ajax({
+          type : "POST",
+          contentType: false,
+          processData: false,
+          cache: false,
+          async: false, 
+          url : "/api/user/sellout",
+          dataType: "JSON",
+          data : myform,
+          success : function(result) {
+            if(result.code == '501'){
+              Toast({
+                message: '余额不足',
+                position: "bottom",
+                duration: 2000
+              });
+            }else{
+              Toast({
+                message: '提现成功',
+                position: "bottom",
+                duration: 2000
+              });
+            }
+            
+          },
+          error : function(e){
+          }
+        });  
     },
     //查询兑换记录
     getDhData(){
@@ -285,8 +363,6 @@ export default {
             $this.getBankData()  
           },
           error : function(e){
-            // console.log(e.status);
-            // console.log(e.responseText);
           }
         });
     }

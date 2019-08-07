@@ -302,6 +302,12 @@ const router = new Router({
       name: 'zzmx',
       component: () => import('./views/me/zzmxPage/zzmx.vue')
     },
+    // 进入添加银行卡
+    {
+      path: '/addBank',
+      name: 'addBank',
+      component: () => import('./views/cztx/addBank.vue')
+    },
     // 进入设置
     {
       path: '/setting',
