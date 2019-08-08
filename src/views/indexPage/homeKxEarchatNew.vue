@@ -26,7 +26,7 @@
     </div>
 
 
-    <iframe id="tradingview_782fd" name="tradingview_782fd" src="http://www.btbfire.com/chartinglibrary/index_black.html?stock=CSCCT&money=USDT" frameborder="0" allowtransparency="true" scrolling="no" allowfullscreen="" style="display: block; width: 100%; height: 350px;;">
+    <iframe id="tradingview_782fd" name="tradingview_782fd" src="http://91bilong.com/chartinglibrary/index_black.html?stock=BTC&money=USDT" frameborder="0" allowtransparency="true" scrolling="no" allowfullscreen="" style="display: block; width: 100%; height: 350px;;">
 
 	  </iframe>
 
@@ -64,7 +64,7 @@ export default {
   name: "homeKxEarchatNew",
   data() {
     return {
-       title:'XRP/USDT',
+       title:'BTC/USDT',
        hanqTabData:{},  //tab切换的title
        zxorusData:[],   //tab下的切换的列表数据
        //tab下的切换的列表数据websocket盘口数据
@@ -91,14 +91,10 @@ export default {
          open: "",
          volume: ""
        },
-      
+       currentBizhong:''   //存储传过来的当前币种
     }
   },
   beforeRouteEnter(to, from, next) {
-    // 获取最高最低和成交量
-    http.sendData({"id":1,"method":"today.query","params":["CSCCTUSDT"]})
-    http.sendData({"id":17,"method":"depth.subscribe","params":["CSCCTUSDT",10,"0"]})
-    http.sendData({"id":61,"method":"deals.subscribe","params":["CSCCTUSDT"]})
     next(vm => vm.getData());
   },
   watch: {
@@ -131,6 +127,21 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
+       let titleBefore = this.$route.params.titleBefore
+       if(titleBefore !='' && titleBefore !=null && titleBefore !=undefined){
+         this.currentBizhong = this.$route.params.titleBefore + this.$route.params.titleAfter
+         this.title = this.$route.params.titleBefore + '/'+ 'CNY'
+         // 获取最高最低和成交量
+         http.sendData({"id":1,"method":"today.query","params":[this.currentBizhong]})
+         http.sendData({"id":17,"method":"depth.subscribe","params":[this.currentBizhong,10,"0"]})
+         http.sendData({"id":61,"method":"deals.subscribe","params":[this.currentBizhong]})
+       }else{
+         // 获取最高最低和成交量
+         http.sendData({"id":1,"method":"today.query","params":["BTCUSDT"]})
+         http.sendData({"id":17,"method":"depth.subscribe","params":["BTCUSDT",10,"0"]})
+         http.sendData({"id":61,"method":"deals.subscribe","params":["BTCUSDT"]})
+       }
+
        var $this = this
        this.hanqTabData = myhanqTabData
        window.revieceData1 = function(res) {

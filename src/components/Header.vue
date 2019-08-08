@@ -19,7 +19,7 @@
      <span v-if="aside" class="myicon" @click="showActionsheet">
        <i class="fa fa-ellipsis-v"></i>
      </span>
-     <span v-if="biao" class="myicon" @click="$router.push({name:'homeKxEarchatNew'})">
+     <span v-if="biao" class="myicon" @click="gohomeKxEarchatNew">
        <i class="fa fa-bar-chart"></i>
      </span>
      <span v-if="xin" class="myicon" @click="shoucan">
@@ -123,6 +123,10 @@ export default {
     shownewSkMethord(){
       // 新增收款方式
       this.$emit("shownewSkMethord");
+    },
+    gohomeKxEarchatNew(){
+      // 进入k线
+      this.$emit("gomyhomeKxEarchatNew");
     }
   }
 };

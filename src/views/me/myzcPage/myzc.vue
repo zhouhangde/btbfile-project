@@ -1,20 +1,18 @@
 <template>
   <div class="myzc">
     <Header :isLeftgoMe="true" :title="title" style="background-color: #5895c7;color:#fff;"/>
-    <div style="background-color: #5895c7;">
+    <!-- <div style="background-color: #5895c7;">
       <p style=" padding: 12px;">
         <span style="color:#fff;">总账户资产折合~<small style="color:rgb(224, 217, 217)">{{myZiChangData.unfrozen_bhb}}</small></span>
       </p>
       <p style=" padding: 4px 12px;">
         <span style="color:#fff;">BHB锁仓余额:
           <small style="color:rgb(224, 217, 217)">{{myZiChangData.frozen_bhb}}</small>
-          <!-- <small class="theButt">划转</small> -->
         </span>  
       </p>
       <p style=" padding: 14px 12px;">
         <span style="color:#fff;">BHB释放余额:
           <small style="color:rgb(224, 217, 217)">{{myZiChangData.freeze_bhb}}</small>
-          <!-- <small class="theButt">转出</small> -->
         </span>  
       </p>
       <p style="padding: 4px 12px 10px 12px;">
@@ -22,7 +20,7 @@
           <small style="color:rgb(224, 217, 217)">{{myZiChangData.freeze_bhb_status}}</small>
         </span> 
       </p>
-    </div>
+    </div> -->
     <div>
        <ul>
          <!-- <li @click="$router.push({name:'myzcDetail'})">
@@ -104,7 +102,7 @@ export default {
       let access_token = localStorage.getItem('access_token')
       this.accessToken = access_token
 
-      this.getMyZiChang()   //获取当前登录人的资产信息
+      // this.getMyZiChang()   //获取当前登录人的资产信息
       this.getAllZiChang()    //获取所有的币种信息
     },
     getMyZiChang(){

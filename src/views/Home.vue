@@ -122,13 +122,12 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    http.sendData({"id":2,"method":"today.query","params":["CSCCTUSDT"]})
     http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
     http.sendData({"id":2,"method":"today.query","params":["ETHUSDT"]})
     http.sendData({"id":2,"method":"today.query","params":["XRPUSDT"]})
     http.sendData({"id":2,"method":"today.query","params":["EOSUSDT"]})
     http.sendData({"id":2,"method":"today.query","params":["LTCUSDT"]})
-    http.sendData({"id":2,"method":"today.query","params":["BHBUSDT"]})
+    http.sendData({"id":2,"method":"today.query","params":["WTCUSDT"]})
     next(vm => vm.getData());
   },
   beforeRouteLeave(to, from, next) {
@@ -148,38 +147,33 @@ export default {
       homeOneDataNew(val) {
         this.homeOneDataNew = val;
         // this.$set(this.homeOneDataNew,this.theIndex, val);
-        if(this.homeOneDataNew.length == 7){
+        if(this.homeOneDataNew.length == 6){
             var $this = this
             this.homeOneDataNew.filter(function(item, index, arr){
                switch(index) {
                     case 0:
-                        //  默认在app.vue中已经有发送
-                        item.titleBefore = 'CSCCT'
-                        item.titleAfter = '/USDT'
+                        item.titleBefore = 'BTC'
+                        item.titleAfter = 'USDT'
                         break;
                     case 1:
-                        item.titleBefore = 'BTC'
-                        item.titleAfter = '/USDT'
+                        item.titleBefore = 'ETH'
+                        item.titleAfter = 'USDT'
                         break;
                     case 2:
-                        item.titleBefore = 'ETH'
-                        item.titleAfter = '/USDT'
+                        item.titleBefore = 'XRP'
+                        item.titleAfter = 'USDT'
                         break;
                     case 3:
-                        item.titleBefore = 'XRP'
-                        item.titleAfter = '/USDT'
+                        item.titleBefore = 'EOS'
+                        item.titleAfter = 'USDT'
                         break;
                     case 4:
-                        item.titleBefore = 'EOS'
-                        item.titleAfter = '/USDT'
+                        item.titleBefore = 'LTC'
+                        item.titleAfter = 'USDT'
                         break;
                     case 5:
-                        item.titleBefore = 'LTC'
-                        item.titleAfter = '/USDT'
-                        break;
-                    case 6:
-                        item.titleBefore = 'BHB'
-                        item.titleAfter = '/USDT'
+                        item.titleBefore = 'WTC'
+                        item.titleAfter = 'USDT'
                         break;                    
                 } 
                if(item.result.last>item.result.open){

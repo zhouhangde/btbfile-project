@@ -1,6 +1,6 @@
 <template>
   <div class="websocket">
-    <iframe id="tradingview_782fd" name="tradingview_782fd" src="http://www.btbfire.com/chartinglibrary/index_black.html?stock=CSCCT&money=USDT" frameborder="0" allowtransparency="true" scrolling="no" allowfullscreen="" style="display: block; width: 100%; height: 925px;">
+    <iframe id="tradingview_782fd" name="tradingview_782fd" src="http://91bilong.com/chartinglibrary/index_black.html?stock=CSCCT&money=USDT" frameborder="0" allowtransparency="true" scrolling="no" allowfullscreen="" style="display: block; width: 100%; height: 925px;">
 
 	 </iframe>
   </div>

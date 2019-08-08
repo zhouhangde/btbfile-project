@@ -27,14 +27,14 @@ export default {
 	     window.openSend = function(r){
 			   function send1(){
                 // 获取最高最低和成交量
-                http.sendData({"id":1,"method":"today.query","params":["CSCCTUSDT"]})
+                http.sendData({"id":1,"method":"today.query","params":["BTCTUSDT"]})
                 //暂时不知
                 http.sendData({"id":20,"method":"server.ping","params":[]})
                 //暂时不知
                 http.sendData({"id":17,"method":"depth.subscribe","params":["CSCCTUSDT",10,"0"]})
                 //交易挂单中的数据
-                http.sendData({"id":30,"method":"server.auth","params":["WNoCLzeQWHyIdjuynB6hT5o30ieFRBXe_1560572313|web","web"]})
-                http.sendData({"id":61,"method":"deals.subscribe","params":["CSCCTUSDT"]})
+                http.sendData({"id":30,"method":"server.auth","params":["usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222|web","web"]})
+                http.sendData({"id":61,"method":"deals.subscribe","params":["BTCTUSDT"]})
                 $this.sendHistory()
                 $this.sendHightOrLow()  
                 
@@ -48,22 +48,22 @@ export default {
      sendHistory(){
           window.revieceData30 = function(res) {
             if(res.result && res.result.status == 'success') {
-              //历史挂单，注意需要时"id":30发送成功后才发送有数据
-                  http.sendData({"id":31,"method":"order.query","params":["CSCCTUSDT",0,50]})
-                  http.sendData({"id":32,"method":"order.history","params":["CSCCTUSDT",0,0,0,10,0]})
+                 //历史挂单，注意需要时"id":30发送成功后才发送有数据
+                  http.sendData({"id":31,"method":"order.query","params":["BTCTUSDT",0,50]})
+                  http.sendData({"id":32,"method":"order.history","params":["BTCTUSDT",0,0,0,10,0]})
             }
          }
      },
      sendHightOrLow(){
          window.revieceData32 = function(res) {
             // 对应web端首页的7种交易对的最新价，24H涨跌，24H最高，24H最低，24H成交量
-            http.sendData({"id":2,"method":"today.query","params":["CSCCTUSDT"]})
             http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
             http.sendData({"id":2,"method":"today.query","params":["ETHUSDT"]})
             http.sendData({"id":2,"method":"today.query","params":["XRPUSDT"]})
             http.sendData({"id":2,"method":"today.query","params":["EOSUSDT"]})
             http.sendData({"id":2,"method":"today.query","params":["LTCUSDT"]})
-            http.sendData({"id":2,"method":"today.query","params":["BHBUSDT"]})
+            http.sendData({"id":2,"method":"today.query","params":["WTCUSDT"]})
+            
          }
      }
   },

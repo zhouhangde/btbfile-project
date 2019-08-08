@@ -9,9 +9,8 @@
         <div class="theItem">
             <span>开户银行:</span>
             <select style="flex-grow: 1;margin-left: 20px;height: 30px;" v-model="bankName">
-                <option>中国工商银行</option>
-                <option>中国银行</option>
-                <option>中国农业银行</option>
+                <option selected="selected" value="">请选择银行</option>
+                <option v-for="(item,index) in bankNameList" :value="item" :key="index">{{item}}</option>
             </select>
         </div>
         <div class="theItem">
@@ -28,6 +27,7 @@
 <script>
 import $ from 'jquery'
 import Header from "../../components/Header";
+import { Toast } from "mint-ui";
 export default {
   name: "addBank",
   data() {
@@ -35,12 +35,40 @@ export default {
       title:'添加银行卡',
       accountName:'',  //开户名
       bankName:'',  //开户银行
-      cardNumber:'' //开户卡号
+      cardNumber:'', //开户卡号
+      bankNameList:[] //我的所有可选择的银行卡
     };
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => vm.selectMhHelpBank());
   },
   methods:{
      addBank(){
         var $this = this
+        if($this.accountName.length<1){
+          Toast({
+              message: '请输入用户名',
+              position: "bottom",
+              duration: 2000
+            });
+            return
+        }
+        if($this.bankName.length<1){
+          Toast({
+              message: '请先选择银行卡',
+              position: "bottom",
+              duration: 2000
+            });
+            return
+        }
+        if($this.cardNumber.length<1){
+          Toast({
+              message: '请输入卡号',
+              position: "bottom",
+              duration: 2000
+            });
+            return
+        }
         var accountName = this.accountName;
         var bankName = this.bankName;
         var cardNumber = this.cardNumber;
@@ -60,12 +88,44 @@ export default {
             dataType: "JSON",
             data : myform,
             success : function(result) {
-                $this.$router.push({name:"cztx"})
+               if(result.code==501){
+                  Toast({
+                    message: '最多保存4张卡',
+                    position: "bottom",
+                    duration: 2000
+                  });
+                  return
+                }else{
+                  $this.$router.push({name:"cztx"})
+                }
+                
             },
             error : function(e){
             }
         });
-     }
+     },
+     //查询所有支持的银行卡
+     selectMhHelpBank(){
+        var $this =this
+        $.ajax({
+          type : "GET",
+          contentType: false,
+          processData: false,
+          cache: false,
+          async: false, 
+          url : "/api/user/get-support-bank",
+          dataType: "JSON",
+          success : function(result) {
+              if(result.data.length>0){
+                for(let item of result.data){
+                  $this.bankNameList.push(item.bank_name)
+                }
+              }
+          },
+          error : function(e){
+          }
+        });
+    }  
     
   },
   

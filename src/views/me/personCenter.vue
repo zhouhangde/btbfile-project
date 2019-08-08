@@ -172,7 +172,7 @@ export default {
       dataTwo.append("access_token", $this.accessToken);
       dataTwo.append("nickname", $this.userInfo.nickname);
       $.ajax({
-          url: "http://btbfire.com/api/member/info-update",
+          url: "http://91bilong.com/api/member/info-update",
           data: dataTwo,
           beforeSend: function(request) {
           },
@@ -197,7 +197,7 @@ export default {
       var dataTwo = new FormData();
       dataTwo.append("image", file);
       $.ajax({
-          url: "http://btbfire.com/api/certification/upload-image",
+          url: "http://91bilong.com/api/certification/upload-image",
           data: dataTwo,
           beforeSend: function(request) {
           },

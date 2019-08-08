@@ -14,7 +14,7 @@
     </div> -->
     <div class="headInfo">
       <!-- <div class="head-img" ></div> -->
-      <img :src="userInfo.head_portrait" style="width: 48px;height:48px"
+      <img :src="userInfo.head_portrait" style="width: 48px;height:48px;border-radius: 100%;"
       @click="goCenter"/>
       <div class="head-profile">
         <p class="user-id">{{userInfo.nickname}}</p>

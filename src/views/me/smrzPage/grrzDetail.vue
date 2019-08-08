@@ -56,68 +56,65 @@
             完成
         </div>
 
-        <div class="mask-order">
-      <div class="mask-order-content">
-        <a href="javascript:;" class="iconfont order-cancel">&#xe62a;</a>
-        <span class="order-title">汇款订单</span>
-        <div class="order-text one">1.请按提示信息向该卖家汇款</div>
-        <div class="order-wrap">
-          <div class="order-inner">
-            <table>
-              <tr>
-                <td class="order-block-title">收款方户名</td>
-                <td class="order-block-value">王钰霄</td>
-              </tr>
-              <tr>
-                <td class="order-block-title">收款方开户行</td>
-                <td class="order-block-value">中国银行武汉支行</td>
-              </tr>
-              <tr>
-                <td class="order-block-title">收款方账户</td>
-                <td class="order-block-value">654231543246532165421</td>
-              </tr>
-              <tr>
-                <td class="order-block-title">转账金额</td>
-                <td class="order-block-value">
-                  <span class="color-red">545.00</span>
-                </td>
-              </tr>
-              <tr>
-                <td class="order-block-title">汇款时备注内容</td>
-                <td class="order-block-value">
-                  <span class="color-red">21546</span>(请务必填写)
-                </td>
-              </tr>
-              <tr>
-                <td class="order-block-title">状态</td>
-                <td class="order-block-value">
-                  <span>待支付</span>
-                  <button class="order-btn">我已付款</button>
-                </td>
-              </tr>
-            </table>
+      <!-- <div class="mask-order" style="padding:10px">
+        <div class="mask-order-content">
+          <span class="order-title">汇款订单</span>
+          <div class="order-text one" style="padding: 10px 0;">1.请按提示信息向该卖家汇款</div>
+          <div class="order-wrap">
+            <div class="order-inner">
+              <table border="1" cellpadding="0" cellspacing="0" class="mytable">
+                <tr>
+                  <td class="order-block-title">收款方户名</td>
+                  <td class="order-block-value">王钰霄</td>
+                </tr>
+                <tr>
+                  <td class="order-block-title">收款方开户行</td>
+                  <td class="order-block-value">中国银行武汉支行</td>
+                </tr>
+                <tr>
+                  <td class="order-block-title">收款方账户</td>
+                  <td class="order-block-value">654231543246532165421</td>
+                </tr>
+                <tr>
+                  <td class="order-block-title">转账金额</td>
+                  <td class="order-block-value">
+                    <span class="color-red">545.00</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="order-block-title">汇款时备注内容</td>
+                  <td class="order-block-value">
+                    <span class="color-red">21546</span>(请务必填写)
+                  </td>
+                </tr>
+                <tr>
+                  <td class="order-block-title">状态</td>
+                  <td class="order-block-value">
+                    <span>待支付</span>
+                    <button class="order-btn">我已付款</button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="order-text two">
+            2.汇款时请一定要填写备注信息，付款完成后，请点击我已付款按钮；
+          </div>
+          <div class="order-text">
+            3.卖家确认收到款后，自动充值CNY。如超过24小时未收到币，请向客服反馈解决；
+          </div>
+          <div class="order-text color-red">
+            4.请务必使用本人绑定的银行卡通过手机银行或网银进行汇款；
+          </div>
+          <div class="order-text color-red">
+            5.禁止使用微信、支付宝、他人代付、ATM及柜台转账等第三方转账。
+          </div>
+          <div class="order-line"></div>
+          <div class="order-warning">
+            温馨提示：如有任何疑问请联系在线客服查看帮助中心。
           </div>
         </div>
-        <div class="order-text two">
-          2.汇款时请一定要填写备注信息，付款完成后，请点击我已付款按钮；
-        </div>
-        <br />
-        <div class="order-text">
-          3.卖家确认收到款后，自动充值CNY。如超过24小时未收到币，请向客服反馈解决；
-        </div>
-        <br />
-        <div class="order-text color-red">
-          4.请务必使用本人绑定的银行卡通过手机银行或网银进行汇款；
-        </div>
-        <div class="order-text color-red">
-          5.禁止使用微信、支付宝、他人代付、ATM及柜台转账等第三方转账。
-        </div>
-        <div class="order-line"></div>
-        <div class="order-warning">
-          温馨提示：如有任何疑问请联系在线客服查看帮助中心。
-        </div>
-      </div>
-    </div>
+    </div> -->
 
     
 
@@ -228,7 +225,7 @@ export default {
       dataTwo.append("image", file);
 
       $.ajax({
-          url: "http://btbfire.com/api/certification/upload-image",
+          url: "http://91bilong.com/api/certification/upload-image",
           data: dataTwo,
           beforeSend: function(request) {
           },
@@ -319,6 +316,15 @@ export default {
     background-color: #40a1e2;
     color: #fff;
 }
+.mytable{
+   width: 100%;
+}
 
-
+.mytable td{
+  border: 1px solid #d3c4c4;
+  padding:5px
+}
+.order-text{
+  padding: 10px 0px;
+}
 </style>

@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 import Header from "../../../components/Header";
 import { Actionsheet,Popup,Toast } from 'mint-ui';
 export default {
@@ -99,11 +100,44 @@ export default {
       console.log('proceeds_type',proceeds_type)
       if(proceeds_type == 'alipay'){
         this.$router.push({name:'zfbMethod',params:{id:id}})
-      }else if(proceeds_type == 'alipay'){
+      }else if(proceeds_type == 'wxpay'){
         this.$router.push({name:'wxMethod',params:{id:id}}) 
       }else if(proceeds_type == 'bank'){
         this.$router.push({name:'yhkMethod',params:{item:item}}) 
       }
+    },
+    selectSkMethordList(){
+      var $this = this
+      var dataTwo = new FormData();
+      dataTwo.append("access_token",'fJmsZgoBIfdMvmiAc3AwfhS2-Y7GScc9_1563504284');
+
+      $.ajax({
+          url: "http://91bilong.com/api/gathering/get-list",
+          data: dataTwo,
+          beforeSend: function(request) {
+          },
+          dataType: "JSON",
+          processData: false,
+          contentType: false,
+          cache: false,
+          async: false, //请求是否异步，默认为异步
+          type: "POST",
+          success: function(list) {
+            if(list.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+               console.log('收款方式列表',list)
+               $this.mySkList = list.data
+            }else{
+              $this.$toast({
+                  message: list.message,
+                  position: "bottom",
+                  duration: 2000
+                });
+                return;
+            }
+          },
+          error: function() {}
+      });
     },
     selectSkMethord(){
        var $this = this

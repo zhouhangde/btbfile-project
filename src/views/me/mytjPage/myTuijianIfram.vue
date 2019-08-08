@@ -1,9 +1,9 @@
 <template>
   <div class="myTuijianIfram">
     <Header :isLeft="true" :title="title"/>
-    <iframe id="tuijian" name="tuijian" src="" scrolling="no" height="960px" width="100%">
+    <iframe id="tuijian" name="tuijian" :src="tjsrc" scrolling="no" height="960px" width="100%">
 
-	</iframe>　
+	  </iframe>　
   </div>
 </template>
 
@@ -21,7 +21,7 @@ export default {
   created(){
     let access_token = localStorage.getItem('access_token')
     this.accessToken = access_token
-    this.tjsrc = 'http://btbfire.com/wap/invite_friends?access_token='+this.accessToken+'&os=ios&language=zh_cn HTTP/1.1'
+    this.tjsrc = 'http://91bilong.com/wap/invite_friends?access_token='+this.accessToken+'&os=ios&language=zh_cn HTTP/1.1'
   },
   mounted() {
   },

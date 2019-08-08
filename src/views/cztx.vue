@@ -14,7 +14,7 @@
         </div>
         <div class="tabItem">
           <span style="color: #9e9696;">参考单价</span>
-          <span style="color: #de3636;">6.88元</span>
+          <span style="color: #de3636;">{{price}}元</span>
         </div>
         <div class="tabItem">
           <span style="color: #9e9696;">购买数量:</span>
@@ -36,7 +36,7 @@
         </div>
         <div class="tabItem">
           <span style="color: #9e9696;">参考单价</span>
-          <span style="color: rgb(58, 181, 161);">6.88元</span>
+          <span style="color: rgb(58, 181, 161);">{{price}}元</span>
         </div>
         <div class="tabItem">
           <span style="color: #9e9696;">提现数量:</span>
@@ -50,7 +50,7 @@
         <div>
           <ul >
             <li style="border-bottom: 1px solid #e8dcdc;" v-for="(item,index) in myBankDataList" :key="index">
-              <div class="the-cell"> 
+              <div class="the-cell"  @click="toggleSelectBank(index,item.id)"  :class="activeItem == index ? 'showBorder' : ''"> 
                 <p class="the-index">
                   <span style="color:blue">银行:</span>
                   <span>{{item.bank_name}}</span>
@@ -62,9 +62,6 @@
                 <p class="the-index">
                   <span style="color:blue">卡号:</span>
                   <span>{{item.card_number}}</span>
-                </p>
-                <p style="text-align: center;">
-                  <button style="color: #fff;background-color: #a62424;padding: 3px 10px;" @click="deleteBankById(item.id)">删除</button>
                 </p>
               </div>
             </li>
@@ -80,9 +77,9 @@
         <ul v-if="myDhDataList.length>0">
          <li v-for="(item,index) in myDhDataList" :key="index" style="border-bottom: 1px solid #e8dcdc;">
            <div class="the-cell"> 
-             <p class="the-index">
+             <p class="the-index" @click="$router.push({name:'fkDetail',params:{fkDetail:item,myAccoutName:myAccoutName,myBankName:myBankName,myCardNumber:myCardNumber}})">
                <span style="color:blue">{{item.created_at | formatDate}}</span>
-               <span>进入付款信息<i class="fa fa-angle-right"></i></span>
+               <span style="font-size: 15px;">进入付款信息<i class="fa fa-angle-right"></i></span>
              </p>
              <div style="color:#001" class="the-index">
                <p style="text-align:center;" class="table-item">
@@ -97,7 +94,7 @@
                <p style="text-align:center;" class="table-item"> 
                   <span style="color:#ccc;">单价(元)
                   </span>
-                  <span>6.88</span>
+                  <span>{{price}}</span>
                </p>
                <p style="text-align:center;" class="table-item">
                   <span style="color:#999;">总价(元)</span>
@@ -125,17 +122,17 @@
       </div>
       <!-- 第三个tab结束 -->
       <!-- 第四个tab -->
-      <div v-else-if="current == 3" style="display: flex;flex-direction: column;align-items: center;padding: 15px 0;">
-        <div @click="$router.push({name:'addBank'})">
+      <div v-else-if="current == 3" style="display: flex;flex-direction: column;padding: 15px 0;">
+        <div @click="$router.push({name:'addBank'})" style="text-align: center;">
             <img src="../assets/image/bank.svg" style="width: 68px;height: 68px;"/>
             <p style="padding: 10px 0;">添加银行卡</p>
         </div>
-        <p style="padding: 15px 0;">
+        <p style="padding: 15px 0;text-align: center;">
           <span>----</span>
           <span>每个账户仅绑定四张银行卡</span>
           <span>----</span>
         </p>
-        <ul >
+        <ul style="">
          <li style="border-bottom: 1px solid #e8dcdc;" v-for="(item,index) in myBankDataList" :key="index">
            <div class="the-cell"> 
              <p class="the-index">
@@ -190,7 +187,14 @@ export default {
       myDhDataList:[],   //存储我的兑换记录列表数据
       myBankDataList:[],    //存储我的新增的银行卡
       czNumber:'', //存储充值金额
-      txNumber:'' //存储提现金额
+      txNumber:'', //存储提现金额
+      activeItem:0,  //存储选择的银行,默认第一个
+      currentBankId:0,  //存储选择的银行id
+      myAviable:0,  //存储我的课提现余额
+      myAccoutName:'',  //详情中的账户名称
+      myBankName:'',  //详情中的开户支行
+      myCardNumber:'', //详情中的收款方账户
+      price:''  //详情中的单价
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -203,18 +207,24 @@ export default {
     }
   },
   methods: {
+    toggleSelectBank(index,id){
+      //将点击的元素的索引赋值给变量
+      this.activeItem = index
+      this.currentBankId = id
+    },
     getData(){
        this.getBankData() //重新查询我的银行卡
+       this.selectDetail()  // 查询兑换详情中的公共数据
     },
     // 点击导航切换
     handleChange (item, index) {
       this.octJiData = []
       if(index == '0'){
          this.current = 0
-         this.getChonZhiData();
        }else if(index == '1'){
          this.current = 1
-         this.getTiXianData();
+         this.selectAviableMoney()  //查询可提现余额
+        //  this.getTiXianData();
        }else if(index == '2'){
          this.current = 2
          this.getDhData();
@@ -222,6 +232,31 @@ export default {
          this.current = 3
          this.getBankData();
        }
+    },
+    // 查询兑换详情中的公共数据
+    selectDetail(){
+        var $this = this
+        var accessToken = localStorage.getItem('access_token');
+        var myform = new FormData();
+        myform.append("access_token", 'usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222');
+        $.ajax({
+          type : "POST",
+          contentType: false,
+          processData: false,
+          cache: false,
+          async: false, 
+          url : "http://91bilong.com/api/user/crc-bank-info",
+          dataType: "JSON",
+          data : myform,
+          success : function(result) {
+            $this.myAccoutName  = result.data.account_name;
+            $this.myBankName  = result.data.bank_name;
+            $this.myCardNumber  = result.data.card_number;
+            $this.price  = result.data.exchange_rate;
+          },
+          error : function(e){
+          }
+        });
     },
     // 去充值
     getChonZhiData(){
@@ -255,7 +290,7 @@ export default {
     // 去提现
     getTiXianData(){
         var outpNum = this.txNumber;
-        var bankId = theId;
+        var bankId = this.currentBankId;
         var accessToken = localStorage.getItem('access_token');
         var myform = new FormData();
         myform.append("access_token", 'usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222');
@@ -306,7 +341,9 @@ export default {
         dataType: "JSON",
         data : myform,
         success : function(result) {
-          $this.myDhDataList = result.data
+          if(result.data && result.data.length>0){
+             $this.myDhDataList = result.data
+          }
         },
         error : function(e){
           // console.log(e.status);
@@ -331,6 +368,9 @@ export default {
         data : myform,
         success : function(result) {
           $this.myBankDataList = result.data
+          if(result.data && result.data.length>0){
+            $this.currentBankId = result.data[0].id
+          }
         },
         error : function(e){
           // console.log(e.status);
@@ -365,6 +405,33 @@ export default {
           error : function(e){
           }
         });
+    },
+    //查询我的课提现余额
+    selectAviableMoney(){
+      var $this = this
+      var accessToken = localStorage.getItem('access_token');
+      var myform = new FormData();
+      myform.append("access_token", 'usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222');
+      myform.append("os", "web");
+      $.ajax({
+        type : "POST",
+        contentType: false,
+        processData: false,
+        cache: false,
+        async: false, 
+        url : "http://91bilong.com/api//bargain/balance",
+        dataType: "JSON",
+        data : myform,
+        success : function(result) {
+          result.data.list.forEach(function(item,index){
+            if(item.name=='USDT'){
+              $this.myAviable = item.available;
+            }
+          })
+        },
+        error : function(e){
+        }
+      });
     }
   },
   mounted() {
@@ -445,5 +512,8 @@ export default {
   display: flex;
   flex-direction: column;
   text-align: center;
+}
+.showBorder{
+  border: 1px solid red
 }
 </style>

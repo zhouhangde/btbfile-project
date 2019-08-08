@@ -148,7 +148,7 @@ export default {
         .then(res => {
           if(res.data.code == '200'){
                me.showGgOrmess = true
-              me.zxorusDataNew = res.data.data
+               me.zxorusDataNew = res.data.data
           }else{
             me.showGgOrmess = false
              Toast({

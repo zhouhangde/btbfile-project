@@ -8,7 +8,7 @@
         </div>
         <p style="padding: 17px;text-align:center">邀请码:<span>{{mytuijianData.code}}</span></p>
         <div style="display: flex;justify-content: space-between;">
-           <button class="theButton" v-clipboard:copy="'http://btbfire.com/wap/share_register?os=ios&code=ohAs7v'"
+           <button class="theButton" v-clipboard:copy="'http://91bilong.com/wap/share_register?os=ios&code=ohAs7v'"
               v-clipboard:success="onCopy"
               v-clipboard:error="onError"
            >复制链接</button>
@@ -121,7 +121,7 @@ export default {
           return
         }
         me.$router.push({name:'myTuijianIfram'})
-      // window.location.href = 'http://btbfire.com/wap/invite_friends?access_token='+this.accessToken+'&os=ios&language=zh_cn HTTP/1.1'
+      // window.location.href = 'http://91bilong.com/wap/invite_friends?access_token='+this.accessToken+'&os=ios&language=zh_cn HTTP/1.1'
     }
   },
   components: {

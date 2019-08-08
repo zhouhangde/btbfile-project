@@ -44,8 +44,9 @@ export default {
   name: "cjHistory",
   data() {
     return {
-        title:'CSCCT/USDT成交记录',
-        cjHistory:[]
+        title:'BTC/CNY成交记录',
+        cjHistory:[],
+        currentBizhong:''  //存储当前的币种
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -59,7 +60,12 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
-
+      let titleBefore = this.$route.params.titleBefore
+      if(titleBefore !='' && titleBefore !=null && titleBefore !=undefined){
+        this.currentBizhong = this.$route.params.titleBefore + this.$route.params.titleAfter
+        this.title = this.$route.params.titleBefore + '/CNY成交记录'
+      }   
+         
       let access_token = localStorage.getItem('access_token')
       if(access_token ==null || access_token ==undefined || access_token ==''){
         this.$toast({
@@ -79,7 +85,7 @@ export default {
       window.revieceData30 = function(res) {
         // 历史委托(对应即为成交记录的数据)
         if(res.result && res.result.status == 'success') {
-            http.sendData({"id":32,"method":"order.history","params":["CSCCTUSDT",0,0,0,10,0]})
+            http.sendData({"id":32,"method":"order.history","params":[$this.currentBizhong,0,0,0,10,0]})
         }
       } 
 

@@ -6,23 +6,15 @@
     :bizhStaus="bizhStaus"
     :biao="biao" :aside="aside" 
     @condit="condit"
+    @gomyhomeKxEarchatNew="gomyhomeKxEarchatNew"
     @addOrDeleteSj="addOrDeleteSj"
     @showAction="showactionSheet"/>
     <div class="center-contain">
       <div class="center-contain-left">
         <!-- 导航买入卖出 -->
-        <!-- <div>
-            <button :class="{activetab:true}">买入</button>
-            <button>卖出</button>
-        </div> -->
         <JiaoyiTab :filterData="jiaoyiTabData" @update="update"/>
         <div style="text-align:left;padding:10px 0;color:#999">限单价></div>
         <AddOrIncreas :dataNumberr="theDj" class="jishukone"/>
-        <!-- <div class="jishukone">
-          <span style="padding: 0 3px;" @click="increace">-</span>
-          <span>{{x}}</span>
-          <span style="padding: 0 3px;" @click="add">+</span>
-        </div> -->
         <div style="text-align:left;padding:10px 0;color:#999">估值 :
           <span><i class="fa fa-yen (alias)" style="margin-right:5px"></i>{{guzhi}}</span>
         </div>
@@ -30,7 +22,6 @@
           <span style="padding: 0 3px;" @click="godecreaseCount">-</span>
           <!-- 数量 -->
           <input type="text" v-model="themount" style="text-align: center;width: 66%;"/>
-          <!-- <span>{{themount}}</span> -->
           <span style="padding: 0 3px;" @click="goincreaseCount">+</span>
         </div>
         <div style="margin-top:10px">
@@ -70,10 +61,9 @@
       <div class="inputPrice-center">
         <div class="inputPrice">
             <span>可用
-              <em v-if="inputru">{{buyAvailable}}USDT</em>
-              <em v-else>{{sellerAvailable}}CSCCT</em>
+              <em v-if="inputru">{{buyAvailable}}CNY</em>
+              <em v-else>{{sellerAvailable}}{{currentBizh}}</em>
             </span>
-            <!-- <button class="toinput" @click="toinput">充值</button> -->
         </div>
       </div>
     </div>
@@ -99,7 +89,7 @@ export default {
   name: "jiaoyi",
   data() {
     return {
-      title:'CSCCT/USDT',
+      title:'BTC/CNY',
       xial:true, 
       xin:true,
       biao:true,
@@ -141,7 +131,7 @@ export default {
        bizhStaus:{
          staus:false
        },  //收藏状态
-       currentBizh:'CSCCT',  //存储当前的bizhong
+       currentBizh:'BTC',  //存储当前的bizhong
        accessToken:''
     };
   },
@@ -161,27 +151,12 @@ export default {
     }else{
        next(vm => vm.getData());
     }
-    // next(vm => vm.getData());
-    // next();
   },
   beforeRouteLeave(to, from, next) {
     // 离开页面关闭定时器
     this.timer = null
     next()
   },
-  // beforeRouteUpdate (to, from, next) {
-  //   // 同一页面，刷新不同数据时调用，
-  // },
-  // keep-alive时只会执行一次
-  // created() {
-    
-  //   // 获取最高最低和成交量
-  //   setInterval(function(){
-  //      http.sendData({"id":1,"method":"today.query","params":["CSCCTUSDT"]})
-  //      http.sendData({"id":61,"method":"deals.subscribe","params":["CSCCTUSDT"]})
-  //   },1000)
-  //   this.getData();
-  // },
   created() {
       
   },
@@ -197,15 +172,6 @@ export default {
       if(data != undefined && data != null && data != ''){
          $this.title = data.title   //切换title
          switch(data.slectBz) {
-            case 'CSCCTUSDT':
-                //  默认在app.vue中已经有发送
-                http.sendData({"id":1,"method":"depth.subscribe","params":["CSCCTUSDT",10,"0"]})
-                http.sendData({"id":31,"method":"today.query","params":["CSCCTUSDT"]})
-                http.sendData({"id":32,"method":"deals.subscribe","params":["CSCCTUSDT"]})
-                $this.currentBizh = 'CSCCT'
-                $this.getBalance('CSCCT|USDT');  //获取买和卖的交易对的可用余额
-                $this.getXinStaus('CSCCTUSDT');   //获取是否收藏为自选
-                break;
             case 'BTCUSDT':
                 http.sendData({"id":1,"method":"depth.subscribe","params":["BTCUSDT",10,"0"]})
                 http.sendData({"id":31,"method":"today.query","params":["BTCUSDT"]})
@@ -246,21 +212,21 @@ export default {
                 $this.getBalance('LTC|USDT');  //获取买和卖的交易对的可用余额
                 $this.getXinStaus('LTCUSDT');   //获取是否收藏为自选
                 break;
-            case 'BHBUSDT':
-                http.sendData({"id":1,"method":"depth.subscribe","params":["BHBUSDT",10,"0"]})
-                http.sendData({"id":31,"method":"today.query","params":["BHBUSDT"]})
-                http.sendData({"id":32,"method":"deals.subscribe","params":["BHBUSDT"]})
-                $this.currentBizh = 'BHB'
-                $this.getBalance('BHB|USDT');  //获取买和卖的交易对的可用余额
-                $this.getXinStaus('BHBUSDT');   //获取是否收藏为自选
+            case 'WTCUSDT':
+                http.sendData({"id":1,"method":"depth.subscribe","params":["WTCUSDT",10,"0"]})
+                http.sendData({"id":31,"method":"today.query","params":["WTCUSDT"]})
+                http.sendData({"id":32,"method":"deals.subscribe","params":["WTCUSDT"]})
+                $this.currentBizh = 'WTC'
+                $this.getBalance('WTC|USDT');  //获取买和卖的交易对的可用余额
+                $this.getXinStaus('WTCUSDT');   //获取是否收藏为自选
                 break;                    
          } 
       }else{
-         http.sendData({"id":1,"method":"depth.subscribe","params":["CSCCTUSDT",10,"0"]})
-         http.sendData({"id":31,"method":"today.query","params":["CSCCTUSDT"]})
-         http.sendData({"id":32,"method":"deals.subscribe","params":["CSCCTUSDT"]})
-         this.getBalance('CSCCT|USDT');  //获取买和卖的交易对的可用余额
-         this.getXinStaus('CSCCTUSDT');   //获取是否收藏为自选
+         http.sendData({"id":1,"method":"depth.subscribe","params":["BTCUSDT",10,"0"]})
+         http.sendData({"id":31,"method":"today.query","params":["BTCUSDT"]})
+         http.sendData({"id":32,"method":"deals.subscribe","params":["BTCUSDT"]})
+         this.getBalance('BTC|USDT');  //获取买和卖的交易对的可用余额
+         this.getXinStaus('BTCUSDT');   //获取是否收藏为自选
       }
 
       // 获取右侧交易挂单的数据cscct/usdt
@@ -314,7 +280,7 @@ export default {
     // 成交记录
     cjHistory(){
 
-       this.$router.push({name:'cjHistory'});   
+       this.$router.push({name:'cjHistory',params:{titleBefore:this.currentBizh,titleAfter:'USDT'}});   
     },
     showactionSheet(){
     	// 打开action sheet
@@ -429,7 +395,7 @@ export default {
       }
         this.$axios
         .post("api/bargain/order-limit", {
-          'market': 'CSCCTUSDT',
+          'market': $this.currentBizh+'USDT',
           'side': '2',
           'pride': $this.theDj.x + '',
           'amount': $this.themount,
@@ -579,7 +545,7 @@ export default {
        }
         this.$axios
         .post("api/bargain/order-limit", {
-          'market': 'CSCCTUSDT',
+          'market': $this.currentBizh+'USDT',
           'side': '1',
           'pride': $this.theDj.x + '',
           'amount': $this.themount,
@@ -612,6 +578,10 @@ export default {
               });
               return;
         });
+    },
+    // 进入k线页面
+    gomyhomeKxEarchatNew(){
+        this.$router.push({name:'homeKxEarchatNew',params:{titleBefore:this.currentBizh,titleAfter:'USDT'}})
     }
   },
   components: {

@@ -2,57 +2,50 @@
   <div class="shichan">
     <Header :isLeft="true" :title="title"/>
     <div style="text-align:center">
-        <span style="padding: 3px;color: blue;border-bottom: 1px solid blue;">USDT</span>
+        <span style="padding: 3px;color: blue;border-bottom: 1px solid blue;">CNY</span>
     </div>
     <div style="padding: 10px;">
         <ul>
             <li>
                 <div class="theChild" @click="choose(1)">
                     <p class="item-left">
-                       <span>CSCCT/USDT</span>
-                       <span style="margin-left: 25px;color: #a29494;" v-if="showStaus == 1">2.68</span>
-                    </p>
-                    <span><i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;"></i></span>
-                </div>
-                <div class="theChild" @click="choose(2)">
-                    <p class="item-left">
-                       <span>BTC/USDT</span>
-                       <span style="margin-left: 25px;color: #a29494;">11657.57</span>
+                       <span>BTC/CNY</span>
+                       <!-- <span style="margin-left: 25px;color: #a29494;">11657.57</span> -->
                     </p>
                     <span><i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;" v-if="showStaus == 2"></i></span>
                 </div>
-                <div class="theChild" @click="choose(3)">
+                <div class="theChild" @click="choose(2)">
                     <p class="item-left">
-                       <span>ETH/USDT</span>
-                       <span style="margin-left: 25px;color: #a29494;">273.08</span>
+                       <span>ETH/CNY</span>
+                       <!-- <span style="margin-left: 25px;color: #a29494;">273.08</span> -->
                     </p>
                     <span><i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;" v-if="showStaus == 3"></i></span>
                 </div>
-                <div class="theChild" @click="choose(4)">
+                <div class="theChild" @click="choose(3)">
                     <p class="item-left">
-                       <span>XRP/USDT</span>
-                       <span style="margin-left: 25px;color: #a29494;">11657.57</span>
+                       <span>XRP/CNY</span>
+                       <!-- <span style="margin-left: 25px;color: #a29494;">11657.57</span> -->
                     </p>
                     <span><i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;" v-if="showStaus == 4"></i></span>
                 </div>
-                <div class="theChild" @click="choose(5)">
+                <div class="theChild" @click="choose(4)">
                     <p class="item-left">
-                       <span>EOS/USDT</span>
-                       <span style="margin-left: 25px;color: #a29494;">11657.57</span>
+                       <span>EOS/CNY</span>
+                       <!-- <span style="margin-left: 25px;color: #a29494;">11657.57</span> -->
                     </p>
                     <span><i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;" v-if="showStaus == 5"></i></span>
                 </div>
-                <div class="theChild" @click="choose(6)">
+                <div class="theChild" @click="choose(5)">
                     <p class="item-left">
-                       <span>LTC/USDT</span>
-                       <span style="margin-left: 25px;color: #a29494;">11657.57</span>
+                       <span>LTC/CNY</span>
+                       <!-- <span style="margin-left: 25px;color: #a29494;">11657.57</span> -->
                     </p>
                     <span><i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;" v-if="showStaus == 6"></i></span>
                 </div>
-                <div class="theChild" @click="choose(7)">
+                <div class="theChild" @click="choose(6)">
                     <p class="item-left">
-                       <span>BHB/USDT</span>
-                       <span style="margin-left: 25px;color: #a29494;">11657.57</span>
+                       <span>WTC/CNY</span>
+                       <!-- <span style="margin-left: 25px;color: #a29494;">11657.57</span> -->
                     </p>
                     <span><i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;" v-if="showStaus == 7"></i></span>
                 </div>
@@ -83,28 +76,25 @@ export default {
     choose(conditon){
       switch(conditon) {
           case 1:
-              this.$router.push({name:'jiaoyi',params: {slectBz: 'CSCCTUSDT',title:'CSCCT/USDT'}})
-              break;
-          case 2:
               this.$router.push({name:'jiaoyi',params: {slectBz: 'BTCUSDT',title:'BTC/USDT'}})
               break;
-          case 3:
+          case 2:
               this.$router.push({name:'jiaoyi',params: {slectBz: 'ETHUSDT',title:'ETH/USDT'}})
               break;
-          case 4:
+          case 3:
               this.$router.push({name:'jiaoyi',params: {slectBz: 'XRPUSDT',title:'XRP/USDT'}})
               break;
-          case 5:
+          case 4:
               this.$router.push({name:'jiaoyi',params: {slectBz: 'EOSUSDT',title:'EOS/USDT'}})
               break;
-          case 6:
+          case 5:
               this.$router.push({name:'jiaoyi',params: {slectBz: 'LTCUSDT',title:'LTC/USDT'}})
               break;
-          case 7:
-              this.$router.push({name:'jiaoyi',params: {slectBz: 'BHBUSDT',title:'BHB/USDT'}})
+          case 6:
+              this.$router.push({name:'jiaoyi',params: {slectBz: 'BHBUSDT',title:'WTC/USDT'}})
               break;                    
           default:
-              this.$router.push({name:'jiaoyi',params: {slectBz: 'CSCCTUSDT',title:'CSCCT/USDT'}})
+              this.$router.push({name:'jiaoyi',params: {slectBz: 'CSCCTUSDT',title:'BTC/USDT'}})
       } 
     }
   },

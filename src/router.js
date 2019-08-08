@@ -116,6 +116,12 @@ const router = new Router({
       name: 'myMessage',
       component: () => import('./views/me/myMessage.vue')
     },
+    // 查看我的公告详情
+    {
+      path: '/myMessageDetail',
+      name: 'myMessageDetail',
+      component: () => import('./views/me/myMessageDetail.vue')
+    },
     // 进入个人中心
     {
       path: '/personCenter',
@@ -307,6 +313,12 @@ const router = new Router({
       path: '/addBank',
       name: 'addBank',
       component: () => import('./views/cztx/addBank.vue')
+    },
+    // 进入汇款订单详情
+    {
+      path: '/fkDetail',
+      name: 'fkDetail',
+      component: () => import('./views/cztx/fkDetail.vue')
     },
     // 进入设置
     {

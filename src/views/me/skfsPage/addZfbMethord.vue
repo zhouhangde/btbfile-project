@@ -92,7 +92,7 @@ export default {
       dataTwo.append("proceeds_type", 'alipay');
       dataTwo.append("account", '15527944464');
       $.ajax({
-          url: "http://btbfire.com/api/gathering/add-proceed",
+          url: "http://91bilong.com/api/gathering/add-proceed",
           data: dataTwo,
           beforeSend: function(request) {
           },

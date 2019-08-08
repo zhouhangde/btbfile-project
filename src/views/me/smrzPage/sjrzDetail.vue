@@ -145,7 +145,7 @@ export default {
       dataTwo.append("access_token", $this.selectDatafor.access_token);
       dataTwo.append("image", file);
       $.ajax({
-          url: "http://btbfire.com/api/merchants/image",
+          url: "http://91bilong.com/api/merchants/image",
           data: dataTwo,
           beforeSend: function(request) {
           },
@@ -178,7 +178,7 @@ export default {
       dataTwo.append("params", $this.selectDatafor.access_token);
       dataTwo.append("video", file);
       $.ajax({
-          url: "http://btbfire.com/api/merchants/video",
+          url: "http://91bilong.com/api/merchants/video",
           data: dataTwo,
           beforeSend: function(request) {
           },

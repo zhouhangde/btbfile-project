@@ -9,7 +9,7 @@
     </div> -->
     <div v-for="(item,index) in zorjdata" :key="index">
         <div style="text-align: center;">{{item.append | formatDateMd}}</div>
-        <div class="centeritem" @click="seeDetail(item.url)">
+        <div class="centeritem" @click="goMessageDetail(item.url)">
           <span style="margin-left:30px;padding: 9px 15px;">{{item.append | formatDate}}</span>
           <span style="margin-left:30px;padding: 9px 15px;">{{item.title}}</span>
         </div>
@@ -26,11 +26,14 @@ export default {
     zorjdata: Array
   },
   created(){
-    // console.log(this.zorjdata)
+    // console.log('我的消息数据',this.zorjdata)
   },
   methods:{
     seeDetail(url){
       window.location.href = url
+    },
+    goMessageDetail(url){
+      this.$router.push({name:'myMessageDetail',params:{gzUrl:url}})  
     }
   },
   filters: {

@@ -1,5 +1,5 @@
 <template>
-  <div class="HomeOne" @click="$router.push({name:'homeKxEarchatNew'})" v-if="hackReset">
+  <div class="HomeOne"  v-if="hackReset">
      <!-- <table>
          <tr v-for="(item,index) in data" :key="index">
              <td>{{item.title}}</td>
@@ -9,18 +9,17 @@
          </tr>
      <table> -->
      <ul>
-       <li v-for="(item,index) in data" :key="index">
+       <li v-for="(item,index) in data" :key="index" @click="$router.push({name:'homeKxEarchatNew',params:{titleBefore:item.titleBefore,titleAfter:item.titleAfter}})">
          <!-- <span style="font-size: 12px;">{{item.title}}</span>
          <span style="color:#65b974; margin-top: 10px;">{{item.one}}</span>
          <span style="font-size: 8px;">{{item.two}}</span>
          <span style="font-size: 11px;color: #8a8383;">{{item.three}}</span> -->
-         <span style="font-size: 12px;" v-if="index == '0'">CSCCT/CNY</span>
-         <span style="font-size: 12px;" v-else-if="index == '1'">BTC/CNY</span>
-         <span style="font-size: 12px;" v-else-if="index == '2'">ETH/CNY</span>
-         <span style="font-size: 12px;" v-else-if="index == '3'">XRP/CNY</span>
-         <span style="font-size: 12px;" v-else-if="index == '4'">EOS/CNY</span>
-         <span style="font-size: 12px;" v-else-if="index == '5'">LTC/CNY</span>
-         <span style="font-size: 12px;" v-else-if="index == '6'">BHB/CNY</span>
+         <span style="font-size: 12px;" v-if="index == '0'">BTC/CNY</span>
+         <span style="font-size: 12px;" v-else-if="index == '1'">ETH/CNY</span>
+         <span style="font-size: 12px;" v-else-if="index == '2'">XRP/CNY</span>
+         <span style="font-size: 12px;" v-else-if="index == '3'">EOS/CNY</span>
+         <span style="font-size: 12px;" v-else-if="index == '4'">LTC/CNY</span>
+         <span style="font-size: 12px;" v-else-if="index == '5'">WTC/CNY</span>
          
          <!-- 最终价 -->
          <span style="color:#65b974; margin-top: 10px;">{{item.result.last}}</span>
