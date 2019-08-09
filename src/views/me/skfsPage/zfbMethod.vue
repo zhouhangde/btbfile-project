@@ -7,7 +7,7 @@
     <div>
       <!-- 从相册中选择 -->
       <input type="file" accept="image/*" multiple  id="fromXc" style="display:none"/>  
-      <p style="text-align: center;margin-top: 22vh;">请上传支付宝照片</p>
+      <p style="text-align: center;margin-top: 22vh;">点击图片可重新上传支付宝照片</p>
       <div style="text-align: center;margin-top: 5vh;" @click="selectPhoto">
         <img  style="width:50vw;height:auto" :src="zfbDetailData.qrcode" />
       </div>
@@ -114,21 +114,13 @@ export default {
     },
     goComplte(){
       
-       var $this = this
-       if($this.currentFile.length<1){
-        $this.$toast({
-            message: '请上传图片',
-            position: "bottom",
-            duration: 2000
-          });
-          return
-      }
+      var $this = this
       var dataTwo = new FormData();
-      dataTwo.append("id", '406');
+      dataTwo.append("id", $this.selectInfo.id);
       dataTwo.append("access_token", $this.selectInfo.access_token);
       dataTwo.append("qrcode", $this.currentFile);
       dataTwo.append("proceeds_type", 'alipay');
-      dataTwo.append("account", '15527944464');
+      dataTwo.append("account", $this.zfbDetailData.account);
       $.ajax({
           url: "http://91bilong.com/api/gathering/up-proceed",
           data: dataTwo,

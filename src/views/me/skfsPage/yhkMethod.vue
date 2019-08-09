@@ -26,7 +26,7 @@ export default {
   name: "yhkMethod",
   data() {
     return {
-      title:'新增收款信息(银行卡)',
+      title:'修改收款信息(银行卡)',
       // theBank:'银行卡开户行',
       selectInfo:{
         access_token:'',
@@ -102,11 +102,11 @@ export default {
       this.$axios
         .post("/api/gathering/up-proceed", {
           access_token: $this.selectInfo.access_token,
-          id:'409',
-          name:'中国农业银行',
+          id:$this.zfbDetailData.id,
+          name:$this.zfbDetailData.name,
           proceeds_type:'bank',
-          username:'zq',
-          account:'6228480058491995278'    //银行卡
+          username:$this.zfbDetailData.username,
+          account:$this.zfbDetailData.account    //银行卡
         })
         .then(res => {
           if(res.data.code == '200'){

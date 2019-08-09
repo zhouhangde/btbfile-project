@@ -14,13 +14,13 @@
       <p style="text-align: center;margin-top: 20px;">等待审核中</p>
     </div>
     <div v-else-if="sjRzStaue == '0'">
-      <!-- <div style="padding: 10px 30px 20px;background-color: #fff;">
+      <div style="padding: 10px 30px 20px;background-color: #fff;">
          <div class="theItem">
             <p>
               <input type="text" placeholder="请输入描述" v-model="selectDatafor.describe"/>  
             </p>
           </div>
-      </div> -->
+      </div>
       <div>
           <div class="theTitle">
             <p style="padding-left: 30px;">
@@ -211,6 +211,7 @@ export default {
                 position: "bottom",
                 duration: 2000
               });
+             return; 
         }else{
           Toast({
               message: res.data.message,

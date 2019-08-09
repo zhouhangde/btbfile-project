@@ -125,7 +125,7 @@ export default {
        this.$axios
         .post("/api/register/mobile-varcode", {
           mobile_phone:me.placholderValue,
-          type:1
+          type:2
         })
         .then(res => {
           if(res.data.code == '200'){
@@ -216,16 +216,21 @@ export default {
         }
 
        this.$axios
-        .post("/api/register/mobile-varcode", {
+        .post("/api/register/forget-password", {
           mobile_phone:me.placholderValue,
-          varcode:'873714',
+          varcode:me.updataData.varcode,
           password:me.updataData.password,
           repassword:me.updataData.repassword,
-          code:''
+          os:'android',
+          // code:''
         })
         .then(res => {
           if(res.data.code == '200'){
-              console.log('res',res)
+              Toast({
+                message: '修改成功',
+                position: "bottom",
+                duration: 2000
+              });
           }else{
              Toast({
                 message: res.data.message,

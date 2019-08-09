@@ -62,6 +62,12 @@ const router = new Router({
       name: 'demo-camera',
       component: () => import('./views/demo/demo-camera.vue')
     },
+    //我的详情页面
+    {
+      path: '/detail',
+      name: 'detail',
+      component: () => import('./views/demo/detail.vue')
+    },
     // 首页点击列表进入k线图展示页面，之前的
     {
       path: '/homeKxEarchat',

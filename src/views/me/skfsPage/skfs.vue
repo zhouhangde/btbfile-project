@@ -72,6 +72,7 @@ export default {
       let access_token = localStorage.getItem('access_token')
       this.accessToken = access_token
       if(access_token != '' && access_token != undefined && access_token != null){
+         this.mySkList = []
          this.selectSkMethord()  //查询收款方式  
       }else{
         this.$toast({

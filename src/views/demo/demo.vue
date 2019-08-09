@@ -1,6 +1,17 @@
 <template>
   <div class="demo">
-    
+    <div style="padding:15px">
+       <input type="text" placeholder="请输入搜索"/>
+       <button @click="queren">确认</button>
+    </div>
+    <div>
+      <ul class="phoneList">
+        <li v-for="(item,index) in myPhonelist" :key="index" style="padding: 15px;" @click="$router.push({name:'detail',params:{id:item.id}})">
+          <span>{{item.mobile_phone}}</span>
+          <input type="hidden" :value="item.id"/>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -11,8 +22,50 @@ export default {
   name: "demo",
   data() {
     return {
-      
+      myPhonelist:[]
     };
+  },
+  methods: {
+    queren(){
+      var $this = this
+      $.ajax({
+          url: "http://91bilong.com/api/user/code-to-user?code="+'e3YvQl',
+          beforeSend: function(request) {
+          },
+          dataType: "JSON",
+          processData: false,
+          contentType: false,
+          cache: false,
+          async: false, //请求是否异步，默认为异步
+          type: "get",
+          success: function(list) {
+             console.log('list',list)
+             $this.myPhonelist = list.data
+          },
+          error: function() {}
+      });
+    },
+    querent(){
+      var $this = this
+      var dataTwo = new FormData();
+      dataTwo.append("code", 'e3YvQl');
+      $.ajax({
+          url: "http://91bilong.com/api/user/code-to-user?code="+'e3YvQl',
+          data: dataTwo,
+          beforeSend: function(request) {
+          },
+          dataType: "JSON",
+          processData: false,
+          contentType: false,
+          cache: false,
+          async: false, //请求是否异步，默认为异步
+          type: "get",
+          success: function(list) {
+             console.log('list',list)
+          },
+          error: function() {}
+      });
+    }
   },
   mounted() {
   },

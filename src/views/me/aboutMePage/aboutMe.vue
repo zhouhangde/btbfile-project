@@ -56,7 +56,7 @@
       pop-transition="popup-fade"
       :modal="true"
       position="center" class="popup-content">
-      <div style="height: 129px;">
+      <div style="height: 116px;">
         <img style="width: 100%;" src="../../../../public/image/myheader.png"/>
         <!-- <img style="width: 100%;" src="../../../../public/image/update.png"/> -->
       </div>
@@ -149,7 +149,8 @@ export default {
 .themodel-content{
   display: flex;
   flex-direction: column;
-      padding: 10px 15px 60px 15px;
+  padding: 10px 15px 60px 15px;
+  background-color: #fff;
 }
 .footer-butts{
   width: 100%;
@@ -167,5 +168,8 @@ export default {
   width: 50%;
   border-top: 1px solid #d0c8c8;
   color: blue;
+}
+.mint-popup{
+  background: none
 }
 </style>

@@ -57,7 +57,7 @@ export default {
     updatePassword(){
 
        var me = this
-       if(me.updateData.access_token == '' || me.updateData.access_token == undefined || me.updateData.access_token != null){
+       if(me.updateData.access_token == '' || me.updateData.access_token == undefined || me.updateData.access_token == null){
           me.$toast({
             message: '请先登录，方可修改密码',
             position: "bottom",
@@ -71,7 +71,7 @@ export default {
         .then(res => {
           if(res.data.code == '200'){
               Toast({
-                message: res.data.message,
+                message: '修改成功',
                 position: "bottom",
                 duration: 2000
               });

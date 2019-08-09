@@ -38,13 +38,13 @@
           <i class="fa fa-angle-right"></i>
         </div>
       </div> -->
-      <div class="address-cell" @click="$router.push({name:'skfs'})">
+      <!-- <div class="address-cell" @click="$router.push({name:'skfs'})">
         <i class="fa fa-jpy"></i>
         <div class="address-index">
           <span>收款方式</span>
           <i class="fa fa-angle-right"></i>
         </div>
-      </div>
+      </div> -->
       <div class="address-cell" @click="$router.push({name:'aqzx'})">
         <i class="fa fa-shield"></i>
         <div class="address-index">
@@ -59,13 +59,13 @@
           <i class="fa fa-angle-right"></i>
         </div>
       </div>
-      <div class="address-cell" style="margin-top: 2.666667vw; border-top: 1px solid #ddd;" @click="$router.push({name:'otcJi'})">
+      <!-- <div class="address-cell" style="margin-top: 2.666667vw; border-top: 1px solid #ddd;" @click="$router.push({name:'otcJi'})">
         <i class="fa fa-yen (alias)"></i>
         <div class="address-index">
           <span>OTC交易平台</span>
           <i class="fa fa-angle-right"></i>
         </div>
-      </div>
+      </div> -->
       <div class="address-cell"  @click="$router.push({name:'myzc'})">
         <i class="fa fa-dollar (alias)"></i>
         <div class="address-index">

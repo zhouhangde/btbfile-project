@@ -7,7 +7,7 @@
     <div>
       <!-- 从相册中选择 -->
       <input type="file" accept="image/*" multiple  id="fromXc" style="display:none"/>  
-      <p style="text-align: center;margin-top: 22vh;">请上传微信照片</p>
+      <p style="text-align: center;margin-top: 22vh;">点击图片可重新上传微信照片</p>
       <div style="text-align: center;margin-top: 5vh;" @click="selectPhoto"> 
         <img  style="width:50vw;height:auto" :src="zfbDetailData.qrcode"/>
       </div>
@@ -124,11 +124,11 @@ export default {
           return
       }
       var dataTwo = new FormData();
-      dataTwo.append("id", '415');
+      dataTwo.append("id", $this.selectInfo.id);
       dataTwo.append("access_token", $this.selectInfo.access_token);
       dataTwo.append("qrcode", $this.currentFile);
       dataTwo.append("proceeds_type", 'wxpay');
-      dataTwo.append("account", '15527944464');
+      dataTwo.append("account", $this.zfbDetailData.account);
       $.ajax({
           url: "http://91bilong.com/api/gathering/up-proceed",
           data: dataTwo,
@@ -142,7 +142,7 @@ export default {
           type: "POST",
           success: function(list) {
               $this.$toast({
-                message: list.message,
+                message: '修改成功',
                 position: "bottom",
                 duration: 1000
               });

@@ -8,7 +8,7 @@
         </div>
         <p style="padding: 17px;text-align:center">邀请码:<span>{{mytuijianData.code}}</span></p>
         <div style="display: flex;justify-content: space-between;">
-           <button class="theButton" v-clipboard:copy="'http://91bilong.com/wap/share_register?os=ios&code=ohAs7v'"
+           <button class="theButton" v-clipboard:copy="mytuijianData.url"
               v-clipboard:success="onCopy"
               v-clipboard:error="onError"
            >复制链接</button>

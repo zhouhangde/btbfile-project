@@ -11,7 +11,7 @@ module.exports = {
   productionSourceMap:true,  // 生产环境下css 分离文件
   devServer: {
     open: true,
-    host: '169.254.136.40',  //注意当变成localhost的时候，不知什么原因ifram的k线图不能正常显示样式
+    host: '192.168.0.136',  //注意当变成localhost的时候，不知什么原因ifram的k线图不能正常显示样式
     port: 8083,
     https: false,
     hotOnly: false,

@@ -13,18 +13,25 @@
       <div class="center-contain-left">
         <!-- 导航买入卖出 -->
         <JiaoyiTab :filterData="jiaoyiTabData" @update="update"/>
-        <div style="text-align:left;padding:10px 0;color:#999">限单价></div>
-        <AddOrIncreas :dataNumberr="theDj" class="jishukone"/>
-        <div style="text-align:left;padding:10px 0;color:#999">估值 :
-          <span><i class="fa fa-yen (alias)" style="margin-right:5px"></i>{{guzhi}}</span>
+        <div>
+          <div style="text-align:left;padding:10px 0;color:#999">限单价></div>
+          <AddOrIncreas :dataNumberr="theDj" class="jishukone"/>
         </div>
-        <div class="jishuktwo">
-          <span style="padding: 0 3px;" @click="godecreaseCount">-</span>
-          <!-- 数量 -->
-          <input type="text" v-model="themount" style="text-align: center;width: 66%;"/>
-          <span style="padding: 0 3px;" @click="goincreaseCount">+</span>
+
+        <div>
+           <div style="text-align:left;padding:10px 0;color:#999">估值 :
+              <span><i class="fa fa-yen (alias)" style="margin-right:5px"></i>{{guzhi}}</span>
+          </div>
+          <div class="jishuktwo">
+            <span style="padding: 0 3px;" @click="godecreaseCount">-</span>
+            <!-- 数量 -->
+            <input type="text" v-model="themount" style="text-align: center;width: 66%;"/>
+            <span style="padding: 0 3px;" @click="goincreaseCount">+</span>
+          </div>
         </div>
+        
         <div style="margin-top:10px">
+          <div style="color: rgb(153, 153, 153);padding: 10px 0px;">合计:</div>
           <!-- 总额：单价*数量 -->
           <button style="width:100%;padding:5px 0px;text-align:center;border: 1px solid #e0e0e6;">{{theTotal}}</button>
         </div>
@@ -40,7 +47,7 @@
                <span style="color:#999;">价格</span>
                <span style="color:#999;">数量</span>
              </div>
-             <div class="itemShop itemShopzf" @click="sendPrice($event)" v-for="(item,index) in pkData.asks" :key="index">
+             <div class="itemShop itemShopzf" @click="sendPrice($event)" v-for="(item,index) in pkData.asks.slice(0,5)" :key="index">
                <span class="itemprice">{{item[0]}}</span>
                <span>{{item[1]}}</span>
              </div>
@@ -49,7 +56,7 @@
          <div class="pjprice">1/￥6.88</div>
          <ul style="padding-top:10px">
            <li id="num">
-             <div class="itemShop itemShopdf" @click="sendPrice($event)" v-for="(item,index) in pkData.bids" :key="index"> 
+             <div class="itemShop itemShopdf" @click="sendPrice($event)" v-for="(item,index) in pkData.bids.slice(0,5)" :key="index"> 
                <span>{{item[0]}}</span>
                <span>{{item[1]}}</span>
              </div>
@@ -67,8 +74,59 @@
         </div>
       </div>
     </div>
-    <div class="myfoot">
-      <div style="padding:5px">24h最高</div>
+    <div class="myfoot"  style="padding-bottom: 45px;">
+      <div style="padding: 11px;font-size: 16px;font-weight: bolder;">当前委托</div>
+
+      <div style="display: flex;padding: 10px;align-items: center;justify-content: space-between;border-bottom: 1px solid #ded3d3;">
+        <div class="goSeller"> 
+          卖
+        </div>
+        <div>
+          <p class="theItem">
+            <span style="color: rgb(153, 153, 153);">数量:<small>0.0/0.1</small></span>
+          </p>
+          <p class="theItem">
+            <span style="color: rgb(153, 153, 153);">价格:<small>11891.2</small></span>
+          </p>
+          <p class="theItem">
+            <span style="color: rgb(153, 153, 153);">总价:<small style="font-size: 18px;font-weight: bolder;color: #000;">1189.12</small></span>
+          </p>
+        </div>
+        <div>
+          <p>
+            <span style="color: rgb(153, 153, 153);">2019-08-09 11:46:29</span>
+          </p>
+          <p style="text-align: center;margin-top: 15px;">
+            <button style="padding: 7px 15px;border: 1px solid #0d9ce2;border-radius: 15px;color: #0d9ce2;">撤销</button>
+          </p>
+        </div>
+      </div>
+
+      <div style="display: flex;padding: 10px;align-items: center;justify-content: space-between;border-bottom: 1px solid #ded3d3;">
+        <div class="goBuy">
+          买
+        </div>
+        <div>
+          <p class="theItem">
+            <span style="color: rgb(153, 153, 153);">数量:<small>0.0/0.1</small></span>
+          </p>
+          <p class="theItem">
+            <span style="color: rgb(153, 153, 153);">价格:<small>11891.2</small></span>
+          </p>
+          <p class="theItem">
+            <span style="color: rgb(153, 153, 153);">总价:<small style="font-size: 18px;font-weight: bolder;color: #000;">1189.12</small></span>
+          </p>
+        </div>
+        <div>
+          <p>
+            <span style="color: rgb(153, 153, 153);">2019-08-09 11:46:29</span>
+          </p>
+          <p style="text-align: center;margin-top: 15px;">
+            <button style="padding: 7px 15px;border: 1px solid #0d9ce2;border-radius: 15px;color: #0d9ce2;">撤销</button>
+          </p>
+        </div>
+      </div> 
+
     </div>
     <mt-actionsheet
       :actions="actions"
@@ -132,7 +190,8 @@ export default {
          staus:false
        },  //收藏状态
        currentBizh:'BTC',  //存储当前的bizhong
-       accessToken:''
+       accessToken:'',
+       myCurrentData:[]   //当前委托的数据
     };
   },
   computed:{
@@ -174,48 +233,54 @@ export default {
          switch(data.slectBz) {
             case 'BTCUSDT':
                 http.sendData({"id":1,"method":"depth.subscribe","params":["BTCUSDT",10,"0"]})
-                http.sendData({"id":31,"method":"today.query","params":["BTCUSDT"]})
+                // http.sendData({"id":31,"method":"today.query","params":["BTCUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["BTCUSDT"]})
+                http.sendData({"id":31,"method":"order.query","params":["BTCUSDT",0,50]})  //当前的委托
                 $this.currentBizh = 'BTC'
                 $this.getBalance('BTC|USDT');  //获取买和卖的交易对的可用余额
                 $this.getXinStaus('BTCUSDT');   //获取是否收藏为自选
                 break;
             case 'ETHUSDT':
                 http.sendData({"id":1,"method":"depth.subscribe","params":["ETHUSDT",10,"0"]})
-                  http.sendData({"id":31,"method":"today.query","params":["ETHUSDT"]})
+                  // http.sendData({"id":31,"method":"today.query","params":["ETHUSDT"]})
                   http.sendData({"id":32,"method":"deals.subscribe","params":["ETHUSDT"]})
+                  http.sendData({"id":31,"method":"order.query","params":["ETHUSDT",0,50]})  //当前的委托
                   $this.currentBizh = 'ETH'
                   $this.getBalance('ETH|USDT');  //获取买和卖的交易对的可用余额
                   $this.getXinStaus('ETHUSDT');   //获取是否收藏为自选
                 break;
             case 'XRPUSDT':
                 http.sendData({"id":1,"method":"depth.subscribe","params":["XRPUSDT",10,"0"]})
-                http.sendData({"id":31,"method":"today.query","params":["XRPUSDT"]})
+                // http.sendData({"id":31,"method":"today.query","params":["XRPUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["XRPUSDT"]})
+                http.sendData({"id":31,"method":"order.query","params":["XRPUSDT",0,50]})  //当前的委托
                 $this.currentBizh = 'XRP'
                 $this.getBalance('XRP|USDT');  //获取买和卖的交易对的可用余额
                 $this.getXinStaus('XRPUSDT');   //获取是否收藏为自选
                 break;
             case 'EOSUSDT':
                 http.sendData({"id":1,"method":"depth.subscribe","params":["EOSUSDT",10,"0"]})
-                http.sendData({"id":31,"method":"today.query","params":["EOSUSDT"]})
+                // http.sendData({"id":31,"method":"today.query","params":["EOSUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["EOSUSDT"]})
+                http.sendData({"id":31,"method":"order.query","params":["EOSUSDT",0,50]})  //当前的委托
                 $this.currentBizh = 'EOS'
                 $this.getBalance('EOS|USDT');  //获取买和卖的交易对的可用余额
                 $this.getXinStaus('EOSUSDT');   //获取是否收藏为自选
                 break;
             case 'LTCUSDT':
                 http.sendData({"id":1,"method":"depth.subscribe","params":["LTCUSDT",10,"0"]})
-                http.sendData({"id":31,"method":"today.query","params":["LTCUSDT"]})
+                // http.sendData({"id":31,"method":"today.query","params":["LTCUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["LTCUSDT"]})
+                http.sendData({"id":31,"method":"order.query","params":["LTCUSDT",0,50]})  //当前的委托
                 $this.currentBizh = 'LTC'
                 $this.getBalance('LTC|USDT');  //获取买和卖的交易对的可用余额
                 $this.getXinStaus('LTCUSDT');   //获取是否收藏为自选
                 break;
             case 'WTCUSDT':
                 http.sendData({"id":1,"method":"depth.subscribe","params":["WTCUSDT",10,"0"]})
-                http.sendData({"id":31,"method":"today.query","params":["WTCUSDT"]})
+                // http.sendData({"id":31,"method":"today.query","params":["WTCUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["WTCUSDT"]})
+                http.sendData({"id":31,"method":"order.query","params":["WTCUSDT",0,50]})  //当前的委托
                 $this.currentBizh = 'WTC'
                 $this.getBalance('WTC|USDT');  //获取买和卖的交易对的可用余额
                 $this.getXinStaus('WTCUSDT');   //获取是否收藏为自选
@@ -223,8 +288,9 @@ export default {
          } 
       }else{
          http.sendData({"id":1,"method":"depth.subscribe","params":["BTCUSDT",10,"0"]})
-         http.sendData({"id":31,"method":"today.query","params":["BTCUSDT"]})
+        //  http.sendData({"id":31,"method":"today.query","params":["BTCUSDT"]})
          http.sendData({"id":32,"method":"deals.subscribe","params":["BTCUSDT"]})
+         http.sendData({"id":31,"method":"order.query","params":["BTCUSDT",0,50]})  //当前的委托
          this.getBalance('BTC|USDT');  //获取买和卖的交易对的可用余额
          this.getXinStaus('BTCUSDT');   //获取是否收藏为自选
       }
@@ -235,6 +301,13 @@ export default {
             if(res.params[0]){
                 return $this.storePkData(res)
             }
+      };
+
+      // 获取当前委托的数据
+      window.revieceData31 = function(res) {
+        console.log('res',res)
+            // 只需要交易挂单返回成功的数据（也对应为我要买和我要卖的数据）
+            return $this.storeCurrentData(res)
       };
       
       this.openWatite();   //开启提示等待
@@ -302,6 +375,11 @@ export default {
           bids:data.params[1].bids
       }
       // 关闭动画
+    },
+    storeCurrentData(data){
+        console.log('data',data)
+        this.myCurrentData = data.result.records
+        console.log('this.myCurrentData',this.myCurrentData)
     },
     getBalance(asset_type){
        var me = this
@@ -600,11 +678,11 @@ export default {
     justify-content: space-between
   }
   .center-contain-left{
-    padding: 5px;
+    padding: 5px 5px 21px 5px;
     width: 50%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
   }
   .center-contain-right{
     padding: 5px;
@@ -691,5 +769,26 @@ export default {
   #sun span:nth-child(2){
     color:#999;
   }
-  
+  .theItem{
+    padding: 5px 0;
+  }
+  .goSeller{
+    width: 40px;
+    background-color: #d12d2d;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 100%;
+    color: #fff;
+  }
+  .goBuy{
+    width: 40px;
+    background-color: #51c861;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 100%;
+    color: #fff;
+  }
+
 </style>
