@@ -15,8 +15,11 @@
      <div id="container">
       <!-- 轮播 -->
       <mt-swipe :auto="4000" class="swiper" :show-indicators="false">
-        <mt-swipe-item v-for="(item,index) in swipeImgs" :key="index">
+        <!-- <mt-swipe-item v-for="(item,index) in swipeImgs" :key="index">
           <img :src="item.img" alt>
+        </mt-swipe-item> -->
+        <mt-swipe-item>
+          <img src="../assets/image/banner.png" alt>
         </mt-swipe-item>
       </mt-swipe>
     </div>

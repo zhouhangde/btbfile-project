@@ -53,7 +53,7 @@
              </div>
            </li>
          </ul>
-         <div class="pjprice">1/￥6.88</div>
+         <div class="pjprice">{{currentLast}}</div>
          <ul style="padding-top:10px">
            <li id="num">
              <div class="itemShop itemShopdf" @click="sendPrice($event)" v-for="(item,index) in pkData.bids.slice(0,5)" :key="index"> 
@@ -195,7 +195,8 @@ export default {
        },  //收藏状态
        currentBizh:'BTC',  //存储当前的bizhong
        accessToken:'',
-       myCurrentData:[]   //当前委托的数据
+       myCurrentData:[],   //当前委托的数据
+       currentLast:''  //当前的最后价格
     };
   },
   computed:{
@@ -242,6 +243,8 @@ export default {
          $this.title = data.title   //切换title
          switch(data.slectBz) {
             case 'BTCUSDT':
+                
+                http.sendData({"id":6,"method":"today.query","params":["BTCUSDT"]})
                 http.sendData({"id":1,"method":"depth.subscribe","params":["BTCUSDT",10,"0"]})
                 // http.sendData({"id":31,"method":"today.query","params":["BTCUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["BTCUSDT"]})
@@ -251,7 +254,8 @@ export default {
                 $this.getXinStaus('BTCUSDT');   //获取是否收藏为自选
                 break;
             case 'ETHUSDT':
-                http.sendData({"id":1,"method":"depth.subscribe","params":["ETHUSDT",10,"0"]})
+                  http.sendData({"id":6,"method":"today.query","params":["ETHUSDT"]})
+                  http.sendData({"id":1,"method":"depth.subscribe","params":["ETHUSDT",10,"0"]})
                   // http.sendData({"id":31,"method":"today.query","params":["ETHUSDT"]})
                   http.sendData({"id":32,"method":"deals.subscribe","params":["ETHUSDT"]})
                   http.sendData({"id":31,"method":"order.query","params":["ETHUSDT",0,50]})  //当前的委托
@@ -260,6 +264,7 @@ export default {
                   $this.getXinStaus('ETHUSDT');   //获取是否收藏为自选
                 break;
             case 'XRPUSDT':
+                http.sendData({"id":6,"method":"today.query","params":["XRPUSDT"]})
                 http.sendData({"id":1,"method":"depth.subscribe","params":["XRPUSDT",10,"0"]})
                 // http.sendData({"id":31,"method":"today.query","params":["XRPUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["XRPUSDT"]})
@@ -269,6 +274,7 @@ export default {
                 $this.getXinStaus('XRPUSDT');   //获取是否收藏为自选
                 break;
             case 'EOSUSDT':
+                http.sendData({"id":6,"method":"today.query","params":["EOSUSDT"]})
                 http.sendData({"id":1,"method":"depth.subscribe","params":["EOSUSDT",10,"0"]})
                 // http.sendData({"id":31,"method":"today.query","params":["EOSUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["EOSUSDT"]})
@@ -278,6 +284,7 @@ export default {
                 $this.getXinStaus('EOSUSDT');   //获取是否收藏为自选
                 break;
             case 'LTCUSDT':
+                http.sendData({"id":6,"method":"today.query","params":["LTCUSDT"]})
                 http.sendData({"id":1,"method":"depth.subscribe","params":["LTCUSDT",10,"0"]})
                 // http.sendData({"id":31,"method":"today.query","params":["LTCUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["LTCUSDT"]})
@@ -287,6 +294,7 @@ export default {
                 $this.getXinStaus('LTCUSDT');   //获取是否收藏为自选
                 break;
             case 'WTCUSDT':
+                http.sendData({"id":6,"method":"today.query","params":["WTCUSDT"]})
                 http.sendData({"id":1,"method":"depth.subscribe","params":["WTCUSDT",10,"0"]})
                 // http.sendData({"id":31,"method":"today.query","params":["WTCUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["WTCUSDT"]})
@@ -297,6 +305,7 @@ export default {
                 break;                    
          } 
       }else{
+         http.sendData({"id":6,"method":"today.query","params":["BTCUSDT"]})
          http.sendData({"id":1,"method":"depth.subscribe","params":["BTCUSDT",10,"0"]})
         //  http.sendData({"id":31,"method":"today.query","params":["BTCUSDT"]})
          http.sendData({"id":32,"method":"deals.subscribe","params":["BTCUSDT"]})
@@ -304,6 +313,11 @@ export default {
          this.getBalance('BTC|USDT');  //获取买和卖的交易对的可用余额
          this.getXinStaus('BTCUSDT');   //获取是否收藏为自选
       }
+
+      window.revieceData6= function(res) {
+        // usdt最高最低数据
+         return $this.storeCurrentLastData(res)
+       }
 
       // 获取右侧交易挂单的数据cscct/usdt
       window.revieceData17 = function(res) {
@@ -430,6 +444,9 @@ export default {
     },
     storeCurrentData(data){
         this.myCurrentData = data.result.records
+    },
+    storeCurrentLastData(data){
+        this.currentLast = data.result.last 
     },
     getBalance(asset_type){
        var me = this

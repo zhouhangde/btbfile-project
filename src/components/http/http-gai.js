@@ -145,6 +145,9 @@
 	         		break;
 	         		case 5:
 	         		window.revieceData5 && window.revieceData5(senData);
+					break;
+					case 6:
+	         		window.revieceData6 && window.revieceData6(senData);
 	         		break;
 	         		case 30:
 	         		window.revieceData30 && window.revieceData30(senData);
