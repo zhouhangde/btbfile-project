@@ -77,7 +77,7 @@
     <div class="myfoot"  style="padding-bottom: 45px;">
       <div style="padding: 11px;font-size: 16px;font-weight: bolder;">当前委托</div>
 
-      <div style="display: flex;padding: 10px;align-items: center;justify-content: space-between;border-bottom: 1px solid #ded3d3;">
+      <!-- <div style="display: flex;padding: 10px;align-items: center;justify-content: space-between;border-bottom: 1px solid #ded3d3;">
         <div class="goSeller"> 
           卖
         </div>
@@ -100,26 +100,29 @@
             <button style="padding: 7px 15px;border: 1px solid #0d9ce2;border-radius: 15px;color: #0d9ce2;">撤销</button>
           </p>
         </div>
-      </div>
+      </div> -->
 
-      <div style="display: flex;padding: 10px;align-items: center;justify-content: space-between;border-bottom: 1px solid #ded3d3;">
-        <div class="goBuy">
-          买
+      <div style="display: flex;padding: 10px;align-items: center;justify-content: space-between;border-bottom: 1px solid #ded3d3;" 
+        v-for="(item,index) in myCurrentData" :key="index"
+        >
+        <div :class="{'goBuy':item.side == 2,'goSeller':item.side == 1}">
+          {{item.side == 1?'卖':'买'}}
         </div>
         <div>
           <p class="theItem">
-            <span style="color: rgb(153, 153, 153);">数量:<small>0.0/0.1</small></span>
+            <!-- item.market  ---交易对 -->
+            <span style="color: rgb(153, 153, 153);">数量:<small>{{item.amount}}</small></span>
           </p>
           <p class="theItem">
-            <span style="color: rgb(153, 153, 153);">价格:<small>11891.2</small></span>
+            <span style="color: rgb(153, 153, 153);">价格:<small>{{item.price}}</small></span>
           </p>
           <p class="theItem">
-            <span style="color: rgb(153, 153, 153);">总价:<small style="font-size: 18px;font-weight: bolder;color: #000;">1189.12</small></span>
+            <span style="color: rgb(153, 153, 153);">总价:<small style="font-size: 18px;font-weight: bolder;color: #000;">{{(item.amount * item.price).toFixed(2)}}</small></span>
           </p>
         </div>
         <div>
           <p>
-            <span style="color: rgb(153, 153, 153);">2019-08-09 11:46:29</span>
+            <span style="color: rgb(153, 153, 153);">{{item.ctime | formatDate}}</span>
           </p>
           <p style="text-align: center;margin-top: 15px;">
             <button style="padding: 7px 15px;border: 1px solid #0d9ce2;border-radius: 15px;color: #0d9ce2;">撤销</button>
@@ -143,6 +146,7 @@ import { Toast } from "mint-ui";
 import Header from "../components/Header";
 import JiaoyiTab from "../components/jiaoyi/JiaoyiTab";
 import AddOrIncreas from "../components/jiaoyi/AddOrIncreas";
+import moment from 'moment'  //时间转化工具
 export default {
   name: "jiaoyi",
   data() {
@@ -200,6 +204,12 @@ export default {
     },
     theTotal:function (){
       return (this.theDj.x * this.themount).toFixed(4);
+    }
+  },
+  filters: {
+    formatDate: function (value) {
+      value = parseInt(value)*1000
+      return moment(value).format('YYYY-MM-DD HH:MM:SS')
     }
   },
   // beforeRouteEnter是每次进入都会执行
@@ -302,10 +312,16 @@ export default {
                 return $this.storePkData(res)
             }
       };
+          
+      window.revieceData30 = function(res) {
+        if(res.result && res.result.status == 'success') {
+              //历史挂单，注意需要时"id":30发送成功后才发送有数据
+              http.sendData({"id":31,"method":"order.query","params":[$this.currentBizh+"USDT",0,50]})   //此为当前委托的数据
+        }
+      }
 
       // 获取当前委托的数据
       window.revieceData31 = function(res) {
-        console.log('res',res)
             // 只需要交易挂单返回成功的数据（也对应为我要买和我要卖的数据）
             return $this.storeCurrentData(res)
       };
