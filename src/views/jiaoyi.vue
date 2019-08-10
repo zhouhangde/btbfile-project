@@ -125,7 +125,7 @@
             <span style="color: rgb(153, 153, 153);">{{item.ctime | formatDate}}</span>
           </p>
           <p style="text-align: center;margin-top: 15px;">
-            <button style="padding: 7px 15px;border: 1px solid #0d9ce2;border-radius: 15px;color: #0d9ce2;">撤销</button>
+            <button style="padding: 7px 15px;border: 1px solid #0d9ce2;border-radius: 15px;color: #0d9ce2;" @click="cancelOrder(item)">撤销</button>
           </p>
         </div>
       </div> 
@@ -346,6 +346,42 @@ export default {
         }
       }
     },
+    cancelOrder(detail){
+        let order_id =  detail.id
+        let market = detail.market
+        let access_token = this.accessToken
+        var me = this
+       this.$axios
+        .post("/api/bargain/cancel-order", {
+          order_id: order_id,
+          access_token: access_token,  //无token时获取的买与卖的可用余额都为0
+          market: market
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              Toast({
+                message: '撤销成功',
+                position: "bottom",
+                duration: 2000
+              });
+          }else{
+             Toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            Toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        }); 
+    },
     // 减少
     godecreaseCount(){
        if(this.themount<='0.1'){
@@ -393,9 +429,7 @@ export default {
       // 关闭动画
     },
     storeCurrentData(data){
-        console.log('data',data)
         this.myCurrentData = data.result.records
-        console.log('this.myCurrentData',this.myCurrentData)
     },
     getBalance(asset_type){
        var me = this
