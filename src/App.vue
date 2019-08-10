@@ -23,17 +23,21 @@ export default {
      initWebsocket(){
        var $this = this
        http.createWebSocket();
+
+      //  获取当前登录人的信息
+      let access_token = localStorage.getItem('access_token')
+      let Params = access_token + '|web'
 		
 	     window.openSend = function(r){
 			   function send1(){
                 // 获取最高最低和成交量
-                http.sendData({"id":1,"method":"today.query","params":["BTCTUSDT"]})
+                http.sendData({"id":1,"method":"today.query","params":["BTCUSDT"]})
                 //暂时不知
                 http.sendData({"id":20,"method":"server.ping","params":[]})
                 //暂时不知
-                http.sendData({"id":17,"method":"depth.subscribe","params":["CSCCTUSDT",10,"0"]})
+                http.sendData({"id":17,"method":"depth.subscribe","params":["BTCUSDT",10,"0"]})
                 //交易挂单中的数据
-                http.sendData({"id":30,"method":"server.auth","params":["usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222|web","web"]})
+                http.sendData({"id":30,"method":"server.auth","params":[Params,"web"]})
                 http.sendData({"id":61,"method":"deals.subscribe","params":["BTCTUSDT"]})
                 $this.sendHistory()
                 $this.sendHightOrLow()  
@@ -49,8 +53,8 @@ export default {
           window.revieceData30 = function(res) {
             if(res.result && res.result.status == 'success') {
                  //历史挂单，注意需要时"id":30发送成功后才发送有数据
-                  http.sendData({"id":31,"method":"order.query","params":["BTCTUSDT",0,50]})   //此为当前委托的数据
-                  http.sendData({"id":32,"method":"order.history","params":["BTCTUSDT",0,0,0,10,0]})  //此为历史委托的数据，即成交记录数据
+                  http.sendData({"id":31,"method":"order.query","params":["BTCUSDT",0,50]})   //此为当前委托的数据
+                  http.sendData({"id":32,"method":"order.history","params":["BTCUSDT",0,0,0,10,0]})  //此为历史委托的数据，即成交记录数据
             }
          }
      },
