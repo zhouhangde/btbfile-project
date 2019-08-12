@@ -193,18 +193,19 @@ export default {
   methods: {
     getData() {
       var $this = this
-      // this.selectAllMarket()   //查询所有的币种
+      this.selectAllMarket()   //查询所有的币种
 
       // 查询所有币种的数据
-      // for(let item of $this.allMarketName){
-      //     http.sendData({"id":2,"method":"today.query","params":[item.name]})
-      // }
-      http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
-      http.sendData({"id":2,"method":"today.query","params":["ETHUSDT"]})
-      http.sendData({"id":2,"method":"today.query","params":["XRPUSDT"]})
-      http.sendData({"id":2,"method":"today.query","params":["EOSUSDT"]})
-      http.sendData({"id":2,"method":"today.query","params":["LTCUSDT"]})
-      http.sendData({"id":2,"method":"today.query","params":["WTCUSDT"]})
+      for(let item of $this.allMarketName){
+          http.sendData({"id":2,"method":"today.query","params":[item.name]})
+      }
+      
+      // http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
+      // http.sendData({"id":2,"method":"today.query","params":["ETHUSDT"]})
+      // http.sendData({"id":2,"method":"today.query","params":["XRPUSDT"]})
+      // http.sendData({"id":2,"method":"today.query","params":["EOSUSDT"]})
+      // http.sendData({"id":2,"method":"today.query","params":["LTCUSDT"]})
+      // http.sendData({"id":2,"method":"today.query","params":["WTCUSDT"]})
 
       let access_token = localStorage.getItem('access_token')
       this.accessToken = access_token
