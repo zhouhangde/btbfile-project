@@ -10,7 +10,7 @@
       <!-- 第一个tab -->
       <div v-if="current == 0">
         <div class="tabItem">
-          <span style="font-weight: bolder;font-size: 16px;">一键充值CNY</span>
+          <span style="font-weight: bolder;font-size: 16px;">一键充值USDT</span>
         </div>
         <div class="tabItem">
           <span style="color: #9e9696;">参考单价</span>
@@ -32,7 +32,7 @@
       <!-- 第二个tab -->
       <div v-else-if="current == 1">
         <div class="tabItem">
-          <span style="font-weight: bolder;font-size: 16px;">一键提现CNY</span>
+          <span style="font-weight: bolder;font-size: 16px;">一键提现USDT</span>
         </div>
         <div class="tabItem">
           <span style="color: #9e9696;">参考单价</span>

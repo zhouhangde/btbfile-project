@@ -14,12 +14,12 @@
          <span style="color:#65b974; margin-top: 10px;">{{item.one}}</span>
          <span style="font-size: 8px;">{{item.two}}</span>
          <span style="font-size: 11px;color: #8a8383;">{{item.three}}</span> -->
-         <span style="font-size: 12px;" v-if="index == '0'">BTC/CNY</span>
-         <span style="font-size: 12px;" v-else-if="index == '1'">ETH/CNY</span>
-         <span style="font-size: 12px;" v-else-if="index == '2'">XRP/CNY</span>
-         <span style="font-size: 12px;" v-else-if="index == '3'">EOS/CNY</span>
-         <span style="font-size: 12px;" v-else-if="index == '4'">LTC/CNY</span>
-         <span style="font-size: 12px;" v-else-if="index == '5'">WTC/CNY</span>
+         <span style="font-size: 12px;" v-if="index == '0'">BTC/USDT</span>
+         <span style="font-size: 12px;" v-else-if="index == '1'">ETH/USDT</span>
+         <span style="font-size: 12px;" v-else-if="index == '2'">XRP/USDT</span>
+         <span style="font-size: 12px;" v-else-if="index == '3'">EOS/USDT</span>
+         <span style="font-size: 12px;" v-else-if="index == '4'">LTC/USDT</span>
+         <span style="font-size: 12px;" v-else-if="index == '5'">WTC/USDT</span>
          
          <!-- 最终价 -->
          <span style="color:#65b974; margin-top: 10px;">{{item.result.last}}</span>

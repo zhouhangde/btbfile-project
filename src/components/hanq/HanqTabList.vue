@@ -10,7 +10,7 @@
         
     </div> -->
     <div v-for="(item,index) in zorjdata" :key="index" class="itemzord"  @click="$router.push({name:'homeKxEarchatNew',params:{titleBefore:item.titleBefore,titleAfter:item.titleAfter}})">
-        <div>{{item.titleBefore}}<small style="font-size: 7px;color: #b9acac;">{{item.titleAfter=='USDT'?'/CNY':''}}</small></div>
+        <div>{{item.titleBefore}}<small style="font-size: 7px;color: #b9acac;">{{item.titleAfter=='USDT'?'/USDT':''}}</small></div>
         <div class="centeritem">
           <span style="margin-left:30px;">{{item.result.last}}</span>
           <span style="margin-top:10px;margin-left:30px;color:#999;"><i data-v-61dd7a3d="" class="fa fa-yen (alias)"></i>{{item.result.open}}</span>

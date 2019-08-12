@@ -39,7 +39,7 @@
                   <span>936.0</span>
                </p>
                <p style="text-align:right;"> 
-                  <span style="color:#ccc;">折合(CNY)
+                  <span style="color:#ccc;">折合(USDT)
                   </span>
                   <span> 6168.47920000</span>
                </p>
@@ -62,7 +62,7 @@
                   <span>{{item.oct_freeze}}</span>
                </p>
                <p style="text-align:right;"> 
-                  <span style="color:#ccc;">折合(CNY)
+                  <span style="color:#ccc;">折合(USDT)
                   </span>
                   <span>{{item.money}}</span>
                </p>

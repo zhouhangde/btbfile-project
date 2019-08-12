@@ -132,7 +132,7 @@ export default {
 
       // this.homeOneDataNew = this.zfData;
       // if(this.data){
-      //   if(this.data.condition== "cny"){
+      //   if(this.data.condition== "usdt"){
       //     // 加载usdt的数据
       //     console.log("加载跌幅的数据");
       //     this.homeOneDataNew = this.zfData;

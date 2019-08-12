@@ -44,7 +44,7 @@ export default {
   name: "cjHistory",
   data() {
     return {
-        title:'BTC/CNY成交记录',
+        title:'BTC/USDT成交记录',
         cjHistory:[],
         currentBizhong:''  //存储当前的币种
     };
@@ -63,7 +63,7 @@ export default {
       let titleBefore = this.$route.params.titleBefore
       if(titleBefore !='' && titleBefore !=null && titleBefore !=undefined){
         this.currentBizhong = this.$route.params.titleBefore + this.$route.params.titleAfter
-        this.title = this.$route.params.titleBefore + '/CNY成交记录'
+        this.title = this.$route.params.titleBefore + '/USDT成交记录'
       }   
          
       let access_token = localStorage.getItem('access_token')

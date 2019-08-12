@@ -4,7 +4,7 @@
     <div>
       <div>
         <div style="text-align: center;margin-top: 26px;">
-          <img  style="width:20vw;height:20vw" src="../../../assets/image/abountLogo.png"/>
+          <img  style="width:20vw;height:13vw" src="../../../assets/image/image_p3fFiDdpZz.png"/>
         </div>
         <p style="text-align: center;margin: 20px 0;">版本号:1.1.5</p>
       </div>

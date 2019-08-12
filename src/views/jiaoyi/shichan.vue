@@ -2,49 +2,49 @@
   <div class="shichan">
     <Header :isLeft="true" :title="title"/>
     <div style="text-align:center">
-        <span style="padding: 3px;color: blue;border-bottom: 1px solid blue;">CNY</span>
+        <span style="padding: 3px;color: blue;border-bottom: 1px solid blue;">USDT</span>
     </div>
     <div style="padding: 10px;">
         <ul>
             <li>
                 <div class="theChild" @click="choose(1)">
                     <p class="item-left">
-                       <span>BTC/CNY</span>
+                       <span>BTC/USDT</span>
                        <!-- <span style="margin-left: 25px;color: #a29494;">11657.57</span> -->
                     </p>
                     <span><i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;" v-if="showStaus == 2"></i></span>
                 </div>
                 <div class="theChild" @click="choose(2)">
                     <p class="item-left">
-                       <span>ETH/CNY</span>
+                       <span>ETH/USDT</span>
                        <!-- <span style="margin-left: 25px;color: #a29494;">273.08</span> -->
                     </p>
                     <span><i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;" v-if="showStaus == 3"></i></span>
                 </div>
                 <div class="theChild" @click="choose(3)">
                     <p class="item-left">
-                       <span>XRP/CNY</span>
+                       <span>XRP/USDT</span>
                        <!-- <span style="margin-left: 25px;color: #a29494;">11657.57</span> -->
                     </p>
                     <span><i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;" v-if="showStaus == 4"></i></span>
                 </div>
                 <div class="theChild" @click="choose(4)">
                     <p class="item-left">
-                       <span>EOS/CNY</span>
+                       <span>EOS/USDT</span>
                        <!-- <span style="margin-left: 25px;color: #a29494;">11657.57</span> -->
                     </p>
                     <span><i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;" v-if="showStaus == 5"></i></span>
                 </div>
                 <div class="theChild" @click="choose(5)">
                     <p class="item-left">
-                       <span>LTC/CNY</span>
+                       <span>LTC/USDT</span>
                        <!-- <span style="margin-left: 25px;color: #a29494;">11657.57</span> -->
                     </p>
                     <span><i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;" v-if="showStaus == 6"></i></span>
                 </div>
                 <div class="theChild" @click="choose(6)">
                     <p class="item-left">
-                       <span>WTC/CNY</span>
+                       <span>WTC/USDT</span>
                        <!-- <span style="margin-left: 25px;color: #a29494;">11657.57</span> -->
                     </p>
                     <span><i class="fa fa-check" style="margin-right:5px;color:#ffb907a3;" v-if="showStaus == 7"></i></span>

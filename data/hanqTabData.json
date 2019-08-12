@@ -1,8 +1,8 @@
 {
     "navTab": [
         {
-            "name": "CNY",
-            "condition":"cny"
+            "name": "USDT",
+            "condition":"usdt"
         }
     ]
 }

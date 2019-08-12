@@ -130,7 +130,7 @@ export default {
        let titleBefore = this.$route.params.titleBefore
        if(titleBefore !='' && titleBefore !=null && titleBefore !=undefined){
          this.currentBizhong = this.$route.params.titleBefore + this.$route.params.titleAfter
-         this.title = this.$route.params.titleBefore + '/'+ 'CNY'
+         this.title = this.$route.params.titleBefore + '/'+ 'USDT'
          // 获取最高最低和成交量
          http.sendData({"id":1,"method":"today.query","params":[this.currentBizhong]})
          http.sendData({"id":17,"method":"depth.subscribe","params":[this.currentBizhong,10,"0"]})

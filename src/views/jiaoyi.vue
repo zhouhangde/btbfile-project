@@ -68,7 +68,7 @@
       <div class="inputPrice-center">
         <div class="inputPrice">
             <span>可用
-              <em v-if="inputru">{{buyAvailable}}CNY</em>
+              <em v-if="inputru">{{buyAvailable}}USDT</em>
               <em v-else>{{sellerAvailable}}{{currentBizh}}</em>
             </span>
         </div>
@@ -151,7 +151,7 @@ export default {
   name: "jiaoyi",
   data() {
     return {
-      title:'BTC/CNY',
+      title:'BTC/USDT',
       xial:true, 
       xin:true,
       biao:true,
