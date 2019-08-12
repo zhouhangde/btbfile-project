@@ -336,8 +336,10 @@ export default {
 
       // 获取当前委托的数据
       window.revieceData31 = function(res) {
-            // 只需要交易挂单返回成功的数据（也对应为我要买和我要卖的数据）
-            return $this.storeCurrentData(res)
+            if(res.result!=null && res.result!=undefined && res.result!=''){
+                // 只需要交易挂单返回成功的数据（也对应为我要买和我要卖的数据）
+                return $this.storeCurrentData(res) 
+            } 
       };
       
       this.openWatite();   //开启提示等待

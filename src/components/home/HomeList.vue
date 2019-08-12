@@ -31,7 +31,6 @@ export default {
     zorjdata: Array
   },
   created(){
-    console.log('this.zorjdata',this.zorjdata)
   }
 };
 </script>

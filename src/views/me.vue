@@ -14,13 +14,19 @@
     </div> -->
     <div class="headInfo">
       <!-- <div class="head-img" ></div> -->
-      <img :src="userInfo.head_portrait" style="width: 48px;height:48px;border-radius: 100%;"
+      <img v-if="userInfo.head_portrait.length>0" :src="userInfo.head_portrait" style="width: 48px;height:48px;border-radius: 100%;"
       @click="goCenter"/>
-      <div class="head-profile">
+      <img v-else src="../../public/image/tuxiang.png" style="width: 48px;height:48px;border-radius: 100%;"/>
+      
+      <div class="head-profile" v-if="userInfo.head_portrait.length>0">
         <p class="user-id">{{userInfo.nickname}}</p>
         <p class="user-phone">
           <span>UID:</span>{{userInfo.id}}
         </p>
+      </div>
+
+      <div class="head-profile" v-else>
+        暂未登录，请登录
       </div>
     </div>
     <div>
@@ -143,7 +149,11 @@ export default {
   name: "me",
   data() {
     return {
-      userInfo: "",
+      userInfo: {
+        head_portrait:'',
+        nickname:'',
+        id:''
+      },
       accessToken:''
     };
   },
@@ -161,6 +171,11 @@ export default {
       if(access_token != '' && access_token != undefined && access_token != null){
          this.getUserInfo()   //获取用户个人信息
       }else{
+        this.userInfo = {
+          head_portrait:'',
+          nickname:'',
+          id:''
+        }
         this.$toast({
           message: '暂未登录，无法获取用户信息',
           position: "bottom",

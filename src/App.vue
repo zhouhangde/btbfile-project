@@ -51,11 +51,13 @@ export default {
      },
      sendHistory(){
           window.revieceData30 = function(res) {
-            if(res.result && res.result.status == 'success') {
-                 //历史挂单，注意需要时"id":30发送成功后才发送有数据
-                  http.sendData({"id":31,"method":"order.query","params":["BTCUSDT",0,50]})   //此为当前委托的数据
-                  http.sendData({"id":32,"method":"order.history","params":["BTCUSDT",0,0,0,10,0]})  //此为历史委托的数据，即成交记录数据
-            }
+            // if(res.result && res.result.status == 'success') {
+            //      //历史挂单，注意需要时"id":30发送成功后才发送有数据
+            //       http.sendData({"id":31,"method":"order.query","params":["BTCUSDT",0,50]})   //此为当前委托的数据
+            //       http.sendData({"id":32,"method":"order.history","params":["BTCUSDT",0,0,0,10,0]})  //此为历史委托的数据，即成交记录数据
+            // }
+            http.sendData({"id":31,"method":"order.query","params":["BTCUSDT",0,50]})   //此为当前委托的数据
+            http.sendData({"id":32,"method":"order.history","params":["BTCUSDT",0,0,0,10,0]})  //此为历史委托的数据，即成交记录数据
          }
      },
      sendHightOrLow(){

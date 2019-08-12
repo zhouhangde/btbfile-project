@@ -9,7 +9,7 @@
       <div v-if="hasLogin">
         <!-- <span style="color: rgb(114, 114, 224);margin-right:15px" @click="$router.push({name:'homeKxEarchatNew'})">socket</span> -->
         <span style="color: rgb(114, 114, 224);" @click="$router.push({name:'phoneRigst'})">注册</span>
-        <span style="color: rgb(114, 114, 224);margin-left:15px" @click="$router.push({name:'phoneLogin'})">登陆</span>
+        <span style="color: rgb(114, 114, 224);margin-left:15px" @click="$router.push({name:'phoneLogin'})">登录</span>
       </div>
     </div>
      <div id="container">
@@ -101,36 +101,33 @@ export default {
       allLoaded: false,   //是否已经加载完毕，无加载数据的开关
       bottomPullText: "上拉加载更多",   //底部的加载显示字样
       data: null,  //tab切换条件
-      // hasLogin:true   //是否登陆（默认为未登录）
+      hasLogin:true,   //是否登陆（默认为未登录）
       zfData:[],   //存储websocket涨幅数据
       dfData:[],    //存储websocket跌幅数据
       cateData:[],   //公告数据
       animate:false,  //公告轮播状态
       timer:null,  //定时器
-      accessToken:''
+      accessToken:'',
+      allMarket:'',   //所有的币种包括USDT和其他
+      allMarketName:[],   //所有的USDT下的币种
+      currentMarket:''  //数组的第一个币种
     };
   },
   computed: {
     address() {
       // return this.$store.getters.address;
-    },
-    hasLogin(){
-      let access_token = localStorage.getItem('access_token')
-      let vux_access_token = this.$store.getters.access_token   //必须有？？？
-      if(access_token!=null && access_token !='' && access_token!=undefined){
-          return false
-      }else{
-          return true
-      }
     }
+    // hasLogin(){
+    //   let access_token = localStorage.getItem('access_token')
+    //   let vux_access_token = this.$store.getters.access_token   //必须有？？？
+    //   if(access_token!=null && access_token !='' && access_token!=undefined){
+    //       return false
+    //   }else{
+    //       return true
+    //   }
+    // }
   },
   beforeRouteEnter(to, from, next) {
-    http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
-    http.sendData({"id":2,"method":"today.query","params":["ETHUSDT"]})
-    http.sendData({"id":2,"method":"today.query","params":["XRPUSDT"]})
-    http.sendData({"id":2,"method":"today.query","params":["EOSUSDT"]})
-    http.sendData({"id":2,"method":"today.query","params":["LTCUSDT"]})
-    http.sendData({"id":2,"method":"today.query","params":["WTCUSDT"]})
     next(vm => vm.getData());
   },
   beforeRouteLeave(to, from, next) {
@@ -195,11 +192,29 @@ export default {
   },
   methods: {
     getData() {
+      var $this = this
+      // this.selectAllMarket()   //查询所有的币种
+
+      // 查询所有币种的数据
+      // for(let item of $this.allMarketName){
+      //     http.sendData({"id":2,"method":"today.query","params":[item.name]})
+      // }
+      http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
+      http.sendData({"id":2,"method":"today.query","params":["ETHUSDT"]})
+      http.sendData({"id":2,"method":"today.query","params":["XRPUSDT"]})
+      http.sendData({"id":2,"method":"today.query","params":["EOSUSDT"]})
+      http.sendData({"id":2,"method":"today.query","params":["LTCUSDT"]})
+      http.sendData({"id":2,"method":"today.query","params":["WTCUSDT"]})
+
       let access_token = localStorage.getItem('access_token')
       this.accessToken = access_token
 
       // 获取轮播信息
-      var $this = this
+      
+
+      // 判断是否登陆
+      this.checkLogin();
+
       // this.swipeImgs = shoppingData.swipeImgs;   //轮播图片
       this.getBanner();
 
@@ -212,6 +227,36 @@ export default {
       this.homeTwoData = myHomeTwoData;   //导航标题
       this.loadData();
     },
+    //查询所有的币种
+     selectAllMarket(){
+      var $this = this
+      this.$axios
+        .post("api/exchange/market", {
+        })
+        .then(res => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+               $this.allMarket = res.data.data
+               $this.allMarketName = res.data.data[0].list
+               $this.currentMarket = res.data.data[0].list[0].name
+          }else{
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
+        .catch(err => {
+            $this.$toast({
+                message: '网络错误',
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+        }); 
+     },
     checkLogin(){
       let access_token = localStorage.getItem('access_token')
       let vux_access_token = this.$store.getters.access_token
@@ -230,12 +275,10 @@ export default {
       if(this.data){
         if(this.data.condition== "zf"){
           // 加载涨幅数据
-          // console.log("加载涨幅数据");
           // this.zorjDataJson = myzfDataOne;
           this.zorjDataJsonNew = this.zfData;
         }else{
           // 加载降幅的数据
-          // console.log("加载跌幅的数据");
           // this.zorjDataJson = mydfDataOne;
           this.zorjDataJsonNew = this.dfData;
         }
@@ -300,7 +343,6 @@ export default {
     },
      //tab切换，根据点击tab的条件加载数据
     update(condation) {  
-      // console.log(condation);
       this.data = condation;
       this.loadData();
     },
@@ -355,7 +397,6 @@ export default {
         .then(res => {
           if(res.data.code == '200'){
               // 检验成功 设置登录状态并且跳转到/
-              //  console.log('res',res)
                $this.cateData = res.data.data
           }else{
             $this.$toast({
