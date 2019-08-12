@@ -1,19 +1,19 @@
 <template>
   <div class="home">
+
+    <!-- 头部 -->
     <div class="header">
       <div style="display:flex;align-items: center;">
         <img src="../assets/image/image_p3fFiDdpZz.png" style="width: 68px;height: 20px;"/>
-        <!-- <i class="fa fa-address-book" style="color:#7272e0"></i> -->
-        <!-- <span class="header_title">bilongwang</span> -->
       </div>
       <div v-if="hasLogin">
-        <!-- <span style="color: rgb(114, 114, 224);margin-right:15px" @click="$router.push({name:'homeKxEarchatNew'})">socket</span> -->
         <span style="color: rgb(114, 114, 224);" @click="$router.push({name:'phoneRigst'})">注册</span>
         <span style="color: rgb(114, 114, 224);margin-left:15px" @click="$router.push({name:'phoneLogin'})">登录</span>
       </div>
     </div>
-     <div id="container">
-      <!-- 轮播 -->
+
+    <!-- 轮播 -->
+    <div id="container">=
       <mt-swipe :auto="4000" class="swiper" :show-indicators="false">
         <!-- <mt-swipe-item v-for="(item,index) in swipeImgs" :key="index">
           <img :src="item.img" alt>
@@ -23,15 +23,16 @@
         </mt-swipe-item>
       </mt-swipe>
     </div>
-     <!-- 列表 -->
-    <!-- <HomeOne :data="homeOneData"/> -->
+
+     <!-- 轮播下的列表，前三条数据 -->
     <HomeOne :data="homeOneDataNew.slice('0','3')"/>
+
+    <!-- 公告 -->
     <div class="zh_gonggao">
       <div class="gonggao" style="display: flex;">
         <i class="fa fa-volume-up" style="font-size: 17px;"></i>
         <span style="margin-left: 7px;display: flex;align-items: center;">
           <em style="color:#989292">公告:</em>
-          <!-- <em style="margin-left: 5px;">交易所bilongwang即将开盘交易</em></span> -->
           <div class="scroll" style="height: 14px; overflow: hidden;margin-left: 7px">
               <ul id="scrollDiv"  ref="rollul" :class="{anim:animate==true}">
                   <li v-for="(item,index) in cateData" :key="index"><span>{{item.title}}</span></li>
@@ -42,36 +43,27 @@
     </div>
 
 
-     <!-- 导航 -->
+     <!-- 涨幅榜和跌幅榜tab导航 -->
      <HomeTwo :filterData="homeTwoData"  @update="update"/>
 
-     <!-- 涨幅跌幅信息 ，bottom-all-loaded上拉加载是否完成-->
-    <!-- auto-fill若为真，loadmore 会自动检测并撑满其容器 -->
-    <!-- <mt-loadmore
-      :top-method="loadTop"
-      :bottom-method="loadMore"   
+
+     <!-- 涨幅榜和跌幅榜对应导航的列表数据 -->
+     <mt-loadmore
       :bottom-all-loaded="allLoaded"
       :auto-fill="false"   
       :bottomPullText="bottomPullText"
       ref="loadmore"
-    > -->
-    <mt-loadmore
-      :bottom-all-loaded="allLoaded"
-      :auto-fill="false"   
-      :bottomPullText="bottomPullText"
-      ref="loadmore"
-    >
+     >
       <div class="Datalist">
         <!-- <HomeList v-for="(item,index) in zorjDataJson" :key="index" :zorjdata="item.myData"/> -->
         <HomeList :zorjdata="zorjDataJsonNew"/>
       </div>
     </mt-loadmore>
+
   </div>
 </template>
 
 <script>
-const shoppingData = require('../../data/shopping.json');
-const myHomeOneData = require('../../data/home-one.json');
 const myHomeTwoData = require('../../data/home-two.json');
 const myzfDataOne = require('../../data/zfDataOne.json');
 const myzfDataTwo = require('../../data/zfDataTwo.json');
@@ -83,9 +75,10 @@ import HomeTwo from "../components/home/HomeTwo";
 import HomeList from "../components/home/HomeList";
 // import FilterView from "../components/FilterView";
 import {
-    findhomeOneData   //分页查询
+    getCate   //分页查询
 } from '../../src/api/home/home'
 import { Indicator } from 'mint-ui';
+import { setInterval } from 'timers';
 export default {
   name: "home",
   data() {
@@ -110,43 +103,30 @@ export default {
       accessToken:'',
       allMarket:'',   //所有的币种包括USDT和其他
       allMarketName:[],   //所有的USDT下的币种
-      currentMarket:''  //数组的第一个币种
+      currentMarket:'',  //数组的第一个币种
+      selectCate:{
+          id: '9',
+          limit_begin:'0',
+          limit_num:'10',
+          access_token:'7LrIQJl05TYRmKR3YREtzowVAcAPqGUG_1565401426',   //可没有
+          chain_network:'chain_network',
+          os:'web',
+          os_ver:'1.0.0',
+          soft_ver:'1.0.0',
+          language:'zh_cn'
+        }
     };
-  },
-  computed: {
-    address() {
-      // return this.$store.getters.address;
-    }
-    // hasLogin(){
-    //   let access_token = localStorage.getItem('access_token')
-    //   let vux_access_token = this.$store.getters.access_token   //必须有？？？
-    //   if(access_token!=null && access_token !='' && access_token!=undefined){
-    //       return false
-    //   }else{
-    //       return true
-    //   }
-    // }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => vm.getData());
   },
-  beforeRouteLeave(to, from, next) {
-    // 离开页面关闭定时器
-    this.timer = null
-    next()
-  },
-  created() {
-    // this.getData();
-    // this.initsetInterval();  //定时刷新页面
-    // this.checkLogin();   //检查是否登陆
-  },
   mounted () {
-    setInterval(this.scroll,2000)  //开启公告
+    setInterval(this.scroll,2000)  //开启公告轮询动画
   },
   watch: {
+      //为市场的币种数据添加标题，和对应涨幅和跌幅的增长率样式
       homeOneDataNew(val) {
         this.homeOneDataNew = val;
-        // this.$set(this.homeOneDataNew,this.theIndex, val);
         if(this.homeOneDataNew.length == 6){
             var $this = this
             this.homeOneDataNew.filter(function(item, index, arr){
@@ -177,11 +157,11 @@ export default {
                         break;                    
                 } 
                if(item.result.last>item.result.open){
-                    // 涨幅的数据
+                    // 涨幅的数据，显示按钮颜色
                     item.color = "rgb(77,169,144)"
                     $this.zfData.push(item)
                }else{  
-                    //跌幅的数据
+                    //跌幅的数据,显示按钮颜色
                     item.color = "#e27373"
                     $this.dfData.push(item)
                }
@@ -193,39 +173,42 @@ export default {
   methods: {
     getData() {
       var $this = this
-      this.selectAllMarket()   //查询所有的币种
 
-      // 查询所有币种的数据
-      for(let item of $this.allMarketName){
-          http.sendData({"id":2,"method":"today.query","params":[item.name]})
-      }
+      //查询所有的币种
+      this.selectAllMarket()   
       
-      // http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
-      // http.sendData({"id":2,"method":"today.query","params":["ETHUSDT"]})
-      // http.sendData({"id":2,"method":"today.query","params":["XRPUSDT"]})
-      // http.sendData({"id":2,"method":"today.query","params":["EOSUSDT"]})
-      // http.sendData({"id":2,"method":"today.query","params":["LTCUSDT"]})
-      // http.sendData({"id":2,"method":"today.query","params":["WTCUSDT"]})
+      // 发送数据，查询所有币种的数据
+      this.sendMarketData()
 
-      let access_token = localStorage.getItem('access_token')
-      this.accessToken = access_token
-
-      // 获取轮播信息
-      
-
-      // 判断是否登陆
+      // 判断是否登陆,并存储当前的token信息
       this.checkLogin();
 
-      // this.swipeImgs = shoppingData.swipeImgs;   //轮播图片
+      //获取轮播图片
       this.getBanner();
-
-      this.homeOneData = myHomeOneData.mydata;   //轮播下面的列表数据
+      
+      //监听获取轮播下的列表websocket数据
       window.revieceData2 = function(res) {
          return $this.storeData(res)
-       }
+      }
        
-      this.getCate();   //获取公告内容 
-      this.homeTwoData = myHomeTwoData;   //导航标题
+      //获取公告内容  
+      this.getCate();   
+      // getCate(JSON.stringify(this.selectCate)).then((res) => {
+                
+      //     if(res.code == "200"){
+      //          console.log(res) 
+      //     }else{
+                 
+      //      }
+      //   }).catch(function (response) {
+          
+      // });
+
+
+      // 涨幅榜和跌幅榜tab导航标题
+      this.homeTwoData = myHomeTwoData;
+
+      //初始化涨幅榜tab初始加载数据，和判断进行过tab切换
       this.loadData();
     },
     //查询所有的币种
@@ -258,101 +241,51 @@ export default {
               return;
         }); 
      },
+    // 发送数据，查询所有币种的数据
+    sendMarketData(){
+      for(let item of this.allMarketName){
+          http.sendData({"id":2,"method":"today.query","params":[item.name]})
+          // http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
+      }
+    },
+    // 判断是否登陆,并存储当前的token信息
     checkLogin(){
       let access_token = localStorage.getItem('access_token')
       let vux_access_token = this.$store.getters.access_token
       if(access_token!=null && access_token !='' && access_token!=undefined){
+          let access_token = localStorage.getItem('access_token')
+          this.accessToken = access_token
           this.hasLogin = false
       }else{
           this.hasLogin = true
       }
     },
-     //初始加载数据
+     //tab初始加载数据
     loadData() {
-      // 拉取商家信息，默认是综合排序的第一页涨幅的数据
-      // this.zorjDataJson = myzfDataOne;
+      // 默认显示涨幅榜的数据
       this.zorjDataJsonNew = this.zfData;
-      // 判断是否有点击tab，初始状态this.data为null
+      // 判断是否有点击过tab，初始状态this.data为null
       if(this.data){
         if(this.data.condition== "zf"){
           // 加载涨幅数据
-          // this.zorjDataJson = myzfDataOne;
           this.zorjDataJsonNew = this.zfData;
         }else{
           // 加载降幅的数据
-          // this.zorjDataJson = mydfDataOne;
           this.zorjDataJsonNew = this.dfData;
         }
-      }
-      
-    },
-    // 下拉刷新，top-method
-    loadTop() {
-      this.page = 1;
-      // resurantsOneData为什么数据也会变？？？
-      this.allLoaded = false;  //开启上拉加载，未加载完数据
-      this.bottomPullText = "上拉加载更多";    //此处必须这样写，原因不明
-      // this.$nextTick(() => {
-      //   this.bottomPullText = "上拉加载更多21412";    //此处必须这样写，原因不明
-      // })
-      // this.bottomPullText = "上拉加载更多";    //此处必须这样写，原因不明
-      // 拉取商家信息
-       this.$refs.loadmore.onTopLoaded();    //停止下拉刷新
-       this.zorjDataJson =  myzorjDataOneData.splice(0,3);
-       
-    },
-    // 上拉加载，bottom-method
-    loadMore() {
-      // 如果没有加载完毕下
-      if (!this.allLoaded) {
-        this.page++;
-            //  下拉加载下一页完之后重新渲染
-            if(this.page == "2"){
-             
-              this.$refs.loadmore.onBottomLoaded();   //onBottomLoaded为数据获取完毕
-              myzorjDataTwoData.forEach(item => {
-                  this.zorjDataJson.push(item);
-              });
-           }else if(this.page == "3"){
-             this.$refs.loadmore.onBottomLoaded();
-              myzorjDataThreeData.forEach(item => {
-                  this.zorjDataJson.push(item);
-              });
-              
-          }else{
-             const zorjDataFourData = [];
-             if (zorjDataFourData.length > 0) {
-                zorjDataFourData.forEach(item => {
-                  this.zorjDataJson.push(item);
-                });
-                // 如果最后一页的数据小于5，也表示已经加载完成
-                if (zorjDataJson < this.size) {
-                  // allLoaded：为false时，说明你还没有加载完，可以继续加载；为true时，说明你已经加载完了，不能再继续加载
-                  // :auto-fill=”false” 意思是当你还没有滑到底部时（其实是与底部距离不超过最大:max-distance=”150”），不加载
-                  this.allLoaded = true;
-                  this.$refs.loadmore.onBottomLoaded();
-                  this.bottomPullText = "没有更多了哦";
-                }
-              } else {
-               // 数据为空
-               this.allLoaded = true;
-               this.$refs.loadmore.onBottomLoaded();
-               this.bottomPullText = "没有更多了哦";
-            }
-          }
       }
     },
      //tab切换，根据点击tab的条件加载数据
     update(condation) {  
+      //获取子组件的tab切换条件
       this.data = condation;
       this.loadData();
     },
-    loginOrRigist(){
-      
-    },
+    //监听获取轮播下的列表websocket数据，存储到data
     storeData(data){
       this.homeOneDataNew.push(data)
     },
+    //获取轮播图片
     getBanner(){
       var $this = this
       this.$axios
@@ -381,6 +314,7 @@ export default {
               return;
         });
     },
+    //获取公告内容  
     getCate(){
       var $this = this
         this.$axios
@@ -417,19 +351,7 @@ export default {
               return;
         });
     },
-    initsetInterval(){
-      var $this = this
-      $this.timer = setInterval(function(){
-        // 加载动画
-        Indicator.open({
-          text: '加载中...',
-          spinnerType: 'fading-circle'
-        });
-        
-        location.reload();
-        Indicator.close();
-     },60000)   
-    },
+    //开启公告轮询动画
     scroll(){
        this.animate = true         
        var that = this;      
@@ -438,13 +360,12 @@ export default {
            that.cateData.shift();      
            that.animate=false; 
         },3000)
-     }
-          
+     }  
   },
   components: {
-    HomeOne,
-    HomeTwo,
-    HomeList
+    HomeOne, //轮播下的列表
+    HomeTwo, //涨幅榜和跌幅榜tab导航
+    HomeList  // 涨幅榜和跌幅榜对应导航的列表数据
   }
 };
 

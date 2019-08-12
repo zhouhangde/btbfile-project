@@ -39,5 +39,6 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "proxy":"http://91bilong.com/"
 }
