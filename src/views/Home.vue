@@ -13,7 +13,7 @@
     </div>
 
     <!-- 轮播 -->
-    <div id="container">=
+    <div id="container">
       <mt-swipe :auto="4000" class="swiper" :show-indicators="false">
         <!-- <mt-swipe-item v-for="(item,index) in swipeImgs" :key="index">
           <img :src="item.img" alt>
@@ -55,7 +55,6 @@
       ref="loadmore"
      >
       <div class="Datalist">
-        <!-- <HomeList v-for="(item,index) in zorjDataJson" :key="index" :zorjdata="item.myData"/> -->
         <HomeList :zorjdata="zorjDataJsonNew"/>
       </div>
     </mt-loadmore>
@@ -65,32 +64,26 @@
 
 <script>
 const myHomeTwoData = require('../../data/home-two.json');
-const myzfDataOne = require('../../data/zfDataOne.json');
-const myzfDataTwo = require('../../data/zfDataTwo.json');
-const myzfDataThree = require('../../data/zfDataThree.json');
-const mydfDataOne = require('../../data/dfDataOne.json');
 import { Swipe, SwipeItem, Loadmore} from "mint-ui";
 import HomeOne from "../components/home/HomeOne";
 import HomeTwo from "../components/home/HomeTwo";
 import HomeList from "../components/home/HomeList";
-// import FilterView from "../components/FilterView";
 import {
-    getCate   //分页查询
+    getCate,   //查询公告
+    selectAllMarket,   //查询所有币种数据
+    getBanner  //获取轮播图片
 } from '../../src/api/home/home'
 import { Indicator } from 'mint-ui';
+//引入公告轮询插件
 import { setInterval } from 'timers';
 export default {
   name: "home",
   data() {
     return {
       swipeImgs: [],   //轮播条件
-      homeOneData:[],  //轮播下的列表数据
       homeOneDataNew:[],  //轮播下的列表websocket数据
       homeTwoData:{},  //公共下的导航数据
-      zorjDataJson:[],  //tab切换下的列表数据
       zorjDataJsonNew:[],  //tab切换下的列表websocket数据
-      page: 1,   //当前页数
-      size: 5,   //分页数
       allLoaded: false,   //是否已经加载完毕，无加载数据的开关
       bottomPullText: "上拉加载更多",   //底部的加载显示字样
       data: null,  //tab切换条件
@@ -99,16 +92,14 @@ export default {
       dfData:[],    //存储websocket跌幅数据
       cateData:[],   //公告数据
       animate:false,  //公告轮播状态
-      timer:null,  //定时器
-      accessToken:'',
       allMarket:'',   //所有的币种包括USDT和其他
       allMarketName:[],   //所有的USDT下的币种
       currentMarket:'',  //数组的第一个币种
-      selectCate:{
+      selectCate:{  //公告的查询条件
           id: '9',
           limit_begin:'0',
           limit_num:'10',
-          access_token:'7LrIQJl05TYRmKR3YREtzowVAcAPqGUG_1565401426',   //可没有
+          access_token:'',   //可没有
           chain_network:'chain_network',
           os:'web',
           os_ver:'1.0.0',
@@ -183,28 +174,19 @@ export default {
       // 判断是否登陆,并存储当前的token信息
       this.checkLogin();
 
-      //获取轮播图片
-      this.getBanner();
+      //获取轮播图片(目前为死的)
+      // this.getBanner();
       
       //监听获取轮播下的列表websocket数据
       window.revieceData2 = function(res) {
-         return $this.storeData(res)
+        if(res.result != null && res.result !='' && res.result != undefined){
+           return $this.storeData(res)
+        }
       }
+      
+      //获取公告内容 
+      this.getCate()
        
-      //获取公告内容  
-      this.getCate();   
-      // getCate(JSON.stringify(this.selectCate)).then((res) => {
-                
-      //     if(res.code == "200"){
-      //          console.log(res) 
-      //     }else{
-                 
-      //      }
-      //   }).catch(function (response) {
-          
-      // });
-
-
       // 涨幅榜和跌幅榜tab导航标题
       this.homeTwoData = myHomeTwoData;
 
@@ -214,10 +196,7 @@ export default {
     //查询所有的币种
      selectAllMarket(){
       var $this = this
-      this.$axios
-        .post("api/exchange/market", {
-        })
-        .then(res => {
+      selectAllMarket({}).then((res) => {
           if(res.data.code == '200'){
               // 检验成功 设置登录状态并且跳转到/
                $this.allMarket = res.data.data
@@ -231,14 +210,6 @@ export default {
               });
               return;
           }
-        })
-        .catch(err => {
-            $this.$toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
         }); 
      },
     // 发送数据，查询所有币种的数据
@@ -248,13 +219,30 @@ export default {
           // http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
       }
     },
+    //获取公告内容
+    getCate(){
+      var $this = this
+      getCate(this.selectCate).then((res) => {
+          if(res.data.code == '200'){
+              // 检验成功 设置登录状态并且跳转到/
+               $this.cateData = res.data.data
+          }else{
+            $this.$toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        });
+    },
     // 判断是否登陆,并存储当前的token信息
     checkLogin(){
       let access_token = localStorage.getItem('access_token')
       let vux_access_token = this.$store.getters.access_token
       if(access_token!=null && access_token !='' && access_token!=undefined){
           let access_token = localStorage.getItem('access_token')
-          this.accessToken = access_token
+          this.selectCate.access_token = access_token
           this.hasLogin = false
       }else{
           this.hasLogin = true
@@ -288,11 +276,7 @@ export default {
     //获取轮播图片
     getBanner(){
       var $this = this
-      this.$axios
-        .post("api/start/start-page", {
-          type: '1'
-        })
-        .then(res => {
+      getBanner({type: '1'}).then((res) => {
           if(res.data.code == '200'){
               // 检验成功 设置登录状态并且跳转到/
                $this.swipeImgs = res.data.data
@@ -304,51 +288,6 @@ export default {
               });
               return;
           }
-        })
-        .catch(err => {
-            $this.$toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        });
-    },
-    //获取公告内容  
-    getCate(){
-      var $this = this
-        this.$axios
-        .post("api/start/cate", {
-          id: '9',
-          limit_begin:'0',
-          limit_num:'10',
-          access_token:$this.accessToken,   //可没有
-          chain_network:'chain_network',
-          os:'web',
-          os_ver:'1.0.0',
-          soft_ver:'1.0.0',
-          language:'zh_cn'
-        })
-        .then(res => {
-          if(res.data.code == '200'){
-              // 检验成功 设置登录状态并且跳转到/
-               $this.cateData = res.data.data
-          }else{
-            $this.$toast({
-                message: res.data.message,
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-          }
-        })
-        .catch(err => {
-            $this.$toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
         });
     },
     //开启公告轮询动画
@@ -421,7 +360,4 @@ mt-loadmore{
   height: calc(100% - 95px);
   overflow: auto;
 }
-
-
-
 </style>

@@ -55,9 +55,9 @@
 <script>
 import Header from "../../components/Header";
 import { Toast } from "mint-ui";
-import {
-    phoneRigst   //分页查询
-} from '../../../src/api/indexPage/phoneControl'
+// import {
+//     phoneRigst   //分页查询
+// } from '../../../src/api/indexPage/phoneControl'
 import { setInterval } from 'timers';
 export default {
   name: "phoneRigst",

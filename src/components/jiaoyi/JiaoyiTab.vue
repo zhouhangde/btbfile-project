@@ -20,7 +20,6 @@ export default {
     filterData: Object
   },
   created(){
-    console.log("当前的tab数据",this.filterData);
   },
    methods: {
     // 点击4个tab进行切换筛选内容

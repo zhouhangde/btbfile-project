@@ -19,7 +19,7 @@
         <!-- 涨跌比率 -->
         <!-- <span><small style="margin-left: 7px;font-size: 10px;color: #fff;" v-if="myrevieceGaoOrLow.last.length>0" -->
         <span><small style="margin-left: 7px;font-size: 10px;color: #fff;"
-        >{{((myrevieceGaoOrLow.last - myrevieceGaoOrLow.open) / myrevieceGaoOrLow.open).toFixed(2)}}</small>
+        >{{myrevieceGaoOrLow.last == undefined?'':((myrevieceGaoOrLow.last - myrevieceGaoOrLow.open) / myrevieceGaoOrLow.open).toFixed(2)}}</small>
         </span>
         <span>24h最低<small style="margin-left: 7px;">{{myrevieceGaoOrLow.low}}</small></span>
       </p>
@@ -145,8 +145,10 @@ export default {
        var $this = this
        this.hanqTabData = myhanqTabData
        window.revieceData1 = function(res) {
-        // usdt最高最低数据
-         return $this.storeData(res)
+         if(res.result != null && res.result !='' && res.result != undefined){
+            // usdt最高最低数据
+            return $this.storeData(res)
+        }
        }
        window.revieceData17 = function(res) {
             // 只需要交易挂单返回成功的数据（目前将其作为盘口的数据）

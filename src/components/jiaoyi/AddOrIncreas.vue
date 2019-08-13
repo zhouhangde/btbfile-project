@@ -5,6 +5,7 @@
       -
     </span>
     <!-- <span class="cartcount">{{dataNumberr.x}}</span> -->
+    <!-- <input type="text" class="cartcount" :value="dataNumberr.x"/>   -->
     <span class="cartcount">{{dataNumberr.x}}</span>
     <span @click.stop="increaseCount" class="cartbutton" style="color:#999;font-size:22px;line-height:14px;padding-right:5px;">
       <!-- <i class="fa fa-plus-circle"></i> -->
@@ -30,7 +31,6 @@ export default {
     // }
   },
   created(){
-    console.log('this.dataNumberr',this.dataNumberr)
   },
   // data(){
   //     return {

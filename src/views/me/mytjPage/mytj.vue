@@ -49,6 +49,11 @@ export default {
     },
     getMytuijian(){
       var me = this
+      me.mytuijianData = {  //先置空
+        code:'',
+        img:'',
+        url:''
+      } 
       if(me.accessToken == '' || me.accessToken == undefined || me.accessToken == null){
           me.$toast({
             message: '暂未登录，无法获取推荐信息',

@@ -19,19 +19,19 @@
         <div class="item-input">
             <div class="item-right">
                 <input type="text"  placeholder="请输入验证码" v-model="updataData.varcode"/>
-                <i class="fa fa-address-book" style="font-size: 17px;"></i>
+                <!-- <i class="fa fa-address-book" style="font-size: 17px;"></i> -->
             </div>
         </div>
         <div class="item-input">
             <div class="item-right">
                 <input type="text"  placeholder="请确认您的新密码" v-model="updataData.password"/>
-                <i class="fa fa-address-book" style="font-size: 17px;"></i>
+                <!-- <i class="fa fa-address-book" style="font-size: 17px;"></i> -->
             </div>
         </div>
         <div class="item-input">
             <div class="item-right">
                 <input type="text"  placeholder="请再次输入密码" v-model="updataData.repassword"/>
-                <i class="fa fa-address-book" style="font-size: 17px;"></i>
+                <!-- <i class="fa fa-address-book" style="font-size: 17px;"></i> -->
             </div>
         </div>
         <div class="complate" @click="updatePasswordPhone" v-if="showPhone">

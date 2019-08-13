@@ -1,5 +1,6 @@
 <template>
   <div class="jiaoyi">
+    <!-- 头部导航及相关图标 -->
     <Header :title="title" 
     :xial="xial" 
     :xin="xin" 
@@ -7,17 +8,29 @@
     :biao="biao" :aside="aside" 
     @condit="condit"
     @gomyhomeKxEarchatNew="gomyhomeKxEarchatNew"
-    @addOrDeleteSj="addOrDeleteSj"
+    @addOrDeleteSj="addOrDeleteSj"  
     @showAction="showactionSheet"/>
+
+    <!-- 可用的上半部分 -->
     <div class="center-contain">
+      <!-- 左侧的内容 -->
       <div class="center-contain-left">
-        <!-- 导航买入卖出 -->
+        <!-- 导航买入卖出tab -->
         <JiaoyiTab :filterData="jiaoyiTabData" @update="update"/>
+
+        <!-- 限单价 -->
         <div>
           <div style="text-align:left;padding:10px 0;color:#999">限单价></div>
-          <AddOrIncreas :dataNumberr="theDj" class="jishukone"/>
+          <!-- <AddOrIncreas :dataNumberr="theDj" class="jishukone"/> -->
+          <div class="jishuktwo">
+            <span style="padding: 0 3px;" @click="decreaseCount">-</span>
+            <!-- 数量 -->
+            <input type="text" v-model="theDj.x" style="text-align: center;width: 66%;"/>
+            <span style="padding: 0 3px;" @click="increaseCount">+</span>
+          </div>
         </div>
 
+        <!-- 估值 -->
         <div>
            <div style="text-align:left;padding:10px 0;color:#999">估值 :
               <span><i class="fa fa-yen (alias)" style="margin-right:5px"></i>{{guzhi}}</span>
@@ -30,17 +43,25 @@
           </div>
         </div>
         
+        <!-- 合计 -->
         <div style="margin-top:10px">
           <div style="color: rgb(153, 153, 153);padding: 10px 0px;">合计:</div>
           <!-- 总额：单价*数量 -->
           <button style="width:100%;padding:5px 0px;text-align:center;border: 1px solid #e0e0e6;">{{theTotal}}</button>
         </div>
+
+        <!-- 买入和卖出tab切换显示 -->
         <div style="margin-top:5px">
            <button style="width:100%;padding:5px 0px;text-align:center;color:#fff;" :class="{'inputru':inputru}" v-if="inputru" @click="buyCoin">买入</button>
            <button style="width:100%;padding:5px 0px;text-align:center;color:#fff;" :class="{'output':output}" v-else @click="sellerCoin">卖出</button>
         </div>
+
       </div>
+      <!-- 左侧的内容结束 -->
+
+      <!-- 右侧的内容 -->
       <div class="center-contain-right">
+         <!-- 价格和数量的上半部分 -->
          <ul>
            <li id="sun">
              <div class="itemShop itemShopzf">
@@ -53,7 +74,11 @@
              </div>
            </li>
          </ul>
+         
+         <!-- 当前的最新价 -->
          <div class="pjprice">{{currentLast}}</div>
+         
+         <!-- 价格和数量的下半部分 -->
          <ul style="padding-top:10px">
            <li id="num">
              <div class="itemShop itemShopdf" @click="sendPrice($event)" v-for="(item,index) in pkData.bids.slice(0,5)" :key="index"> 
@@ -62,8 +87,13 @@
              </div>
            </li>
          </ul>
+
       </div>
+      <!-- 右侧的内容结束 -->
     </div>
+    <!-- 可用的上半部分结束 -->
+
+    <!-- 可用部分的 -->
     <div class="inputPrice-foot">
       <div class="inputPrice-center">
         <div class="inputPrice">
@@ -74,34 +104,11 @@
         </div>
       </div>
     </div>
-    <div class="myfoot"  style="padding-bottom: 45px;">
+    <!-- 可用部分的结束 -->
+
+    <!-- 当前委托的内容 -->
+    <div class="myfoot"  style="padding-bottom: 45px;" v-if="showCurrent">
       <div style="padding: 11px;font-size: 16px;font-weight: bolder;">当前委托</div>
-
-      <!-- <div style="display: flex;padding: 10px;align-items: center;justify-content: space-between;border-bottom: 1px solid #ded3d3;">
-        <div class="goSeller"> 
-          卖
-        </div>
-        <div>
-          <p class="theItem">
-            <span style="color: rgb(153, 153, 153);">数量:<small>0.0/0.1</small></span>
-          </p>
-          <p class="theItem">
-            <span style="color: rgb(153, 153, 153);">价格:<small>11891.2</small></span>
-          </p>
-          <p class="theItem">
-            <span style="color: rgb(153, 153, 153);">总价:<small style="font-size: 18px;font-weight: bolder;color: #000;">1189.12</small></span>
-          </p>
-        </div>
-        <div>
-          <p>
-            <span style="color: rgb(153, 153, 153);">2019-08-09 11:46:29</span>
-          </p>
-          <p style="text-align: center;margin-top: 15px;">
-            <button style="padding: 7px 15px;border: 1px solid #0d9ce2;border-radius: 15px;color: #0d9ce2;">撤销</button>
-          </p>
-        </div>
-      </div> -->
-
       <div style="display: flex;padding: 10px;align-items: center;justify-content: space-between;border-bottom: 1px solid #ded3d3;" 
         v-for="(item,index) in myCurrentData" :key="index"
         >
@@ -131,6 +138,9 @@
       </div> 
 
     </div>
+    <!-- 当前委托的内容结束 -->
+
+    <!-- 上拉的sheet显示开关，显示成交记录 -->
     <mt-actionsheet
       :actions="actions"
       v-model="sheetVisible">
@@ -140,6 +150,7 @@
 </template>
 
 <script>
+//交易的tab标题
 const myjiaoyiTabData = require('../../data/jiaoyiTabData.json');
 import { Actionsheet,Popup,Indicator } from 'mint-ui';
 import { Toast } from "mint-ui";
@@ -147,6 +158,16 @@ import Header from "../components/Header";
 import JiaoyiTab from "../components/jiaoyi/JiaoyiTab";
 import AddOrIncreas from "../components/jiaoyi/AddOrIncreas";
 import moment from 'moment'  //时间转化工具
+import {
+    cancelOrder,   //撤销交易委托数据
+    getBalance,    //获取买和卖的交易对的可用余额
+    getXinStaus,   // 获取收藏状态
+    buyCoin,   //买入 
+    deleteShouc,  //取消收藏
+    addShouc,   //添加收藏
+    sellerCoin   //卖出
+} from '../../src/api/jiaoyi/jiaoyi'
+import { setInterval } from 'timers';
 export default {
   name: "jiaoyi",
   data() {
@@ -156,24 +177,17 @@ export default {
       xin:true,
       biao:true,
       aside:true,
-      jiaoyiTabData:{},   //交易的tab数据
-      data:null,  //tab切换条件
+      jiaoyiTabData:{},   //交易的tab标题
+      data:null,  //买入卖出的tab切换条件
       inputru:true,  //默认显示买入样式
-      output:false,   //卖出的
-      theDj:{   //使用对象则可以父子组件都可以改变此值，传number此只会传一次
-        x:0,
-      }, //单价数
-      theDjs:{
-        y:0,  //估值
-      },
-      themount:0,  //数量
-      theBs:{
-        z:0,  //倍数
-      },
-      theBsz:{
-        m:0  //倍数总值
-      },
-      // 底部的弹出
+      output:false,   //卖出的样式
+      //单价数，//使用对象则可以父子组件都可以改变此值，传number此只会传一次
+      theDj:{x:0}, 
+      //估值
+      theDjs:{y:0},
+       //估值数量
+      themount:0, 
+      // 底部的弹出成交记录
       actions:[{
         // icon: 'icon-article', // 引入iconfont的类名作为展示的icon
         name: '成交记录', // 引入文字作为标题
@@ -181,74 +195,81 @@ export default {
       }],
       sheetVisible:false, //上拉的sheet显示开关
       changScState:false,  //收藏状态开关
-      popupVisible:true,   //显示顶部的提示
       pkData:{     //右侧的交易挂单数据
          asks:[],
          bids:[]
        },
-       buyAvailable:0,
-       sellerAvailable:0,
-       theParam:{},   //存储路由参数
-       timer:null,
+       buyAvailable:0,   //买入币的可用
+       sellerAvailable:0,  //买出币的可用
        bizhStaus:{
          staus:false
        },  //收藏状态
        currentBizh:'BTC',  //存储当前的bizhong
        accessToken:'',
        myCurrentData:[],   //当前委托的数据
-       currentLast:''  //当前的最后价格
+       currentLast:'',  //当前的最后价格
+       showCurrent:true,  //显示当前委托开关
+       timer:null
     };
   },
   computed:{
+    // 计算估值
     guzhi:function (){
       return (this.theDj.x * 6.88).toFixed(4);
     },
+    //合计
     theTotal:function (){
       return (this.theDj.x * this.themount).toFixed(4);
     }
   },
   filters: {
+    //日期转化
     formatDate: function (value) {
       value = parseInt(value)*1000
-      return moment(value).format('YYYY-MM-DD HH:MM:SS')
+      return moment(value).format('YYYY-MM-DD HH:mm:ss')
     }
   },
-  // beforeRouteEnter是每次进入都会执行
   beforeRouteEnter(to, from, next) {
-
+    // 判断是否进行下拉切换传值
     if(to.params.slectBz){
        next(vm => vm.getData(to.params));
     }else{
        next(vm => vm.getData());
     }
   },
-  beforeRouteLeave(to, from, next) {
-    // 离开页面关闭定时器
-    this.timer = null
-    next()
-  },
-  created() {
-      
-  },
+  // beforeRouteLeave(to, from, next) {
+  //   clearInterval(this.timer);    
+  //   this.timer = null    
+  //   next()
+  // },
   methods: {
-    // 获取用户信息
     getData(data) {
       let access_token = localStorage.getItem('access_token')
       this.accessToken = access_token
 
       var $this = this
-      this.jiaoyiTabData = myjiaoyiTabData   //切换tab导航
+      //获取tab导航标题
+      this.jiaoyiTabData = myjiaoyiTabData   
+
+      //接收我的委托数据，必须先发送30
+      http.sendData({"id":30,"method":"server.auth","params":[access_token+"|web","web"]})     
+      
+      
+      // $this.timer =setInterval(() =>{    
+      //     // 某些定时器操作 
+      //    http.sendData({"id":30,"method":"server.auth","params":[access_token+"|web","web"]})            
+      // }, 3000); 
+
       // 根据路由参数，进行相应币种的websocket数据发送
       if(data != undefined && data != null && data != ''){
          $this.title = data.title   //切换title
          switch(data.slectBz) {
             case 'BTCUSDT':
-                
                 http.sendData({"id":6,"method":"today.query","params":["BTCUSDT"]})
                 http.sendData({"id":1,"method":"depth.subscribe","params":["BTCUSDT",10,"0"]})
                 // http.sendData({"id":31,"method":"today.query","params":["BTCUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["BTCUSDT"]})
-                http.sendData({"id":31,"method":"order.query","params":["BTCUSDT",0,50]})  //当前的委托
+                // http.sendData({"id":31,"method":"order.query","params":["BTCUSDT",0,50]})  //当前的委托
                 $this.currentBizh = 'BTC'
                 $this.getBalance('BTC|USDT');  //获取买和卖的交易对的可用余额
                 $this.getXinStaus('BTCUSDT');   //获取是否收藏为自选
@@ -256,9 +277,7 @@ export default {
             case 'ETHUSDT':
                   http.sendData({"id":6,"method":"today.query","params":["ETHUSDT"]})
                   http.sendData({"id":1,"method":"depth.subscribe","params":["ETHUSDT",10,"0"]})
-                  // http.sendData({"id":31,"method":"today.query","params":["ETHUSDT"]})
                   http.sendData({"id":32,"method":"deals.subscribe","params":["ETHUSDT"]})
-                  http.sendData({"id":31,"method":"order.query","params":["ETHUSDT",0,50]})  //当前的委托
                   $this.currentBizh = 'ETH'
                   $this.getBalance('ETH|USDT');  //获取买和卖的交易对的可用余额
                   $this.getXinStaus('ETHUSDT');   //获取是否收藏为自选
@@ -266,9 +285,7 @@ export default {
             case 'XRPUSDT':
                 http.sendData({"id":6,"method":"today.query","params":["XRPUSDT"]})
                 http.sendData({"id":1,"method":"depth.subscribe","params":["XRPUSDT",10,"0"]})
-                // http.sendData({"id":31,"method":"today.query","params":["XRPUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["XRPUSDT"]})
-                http.sendData({"id":31,"method":"order.query","params":["XRPUSDT",0,50]})  //当前的委托
                 $this.currentBizh = 'XRP'
                 $this.getBalance('XRP|USDT');  //获取买和卖的交易对的可用余额
                 $this.getXinStaus('XRPUSDT');   //获取是否收藏为自选
@@ -276,9 +293,7 @@ export default {
             case 'EOSUSDT':
                 http.sendData({"id":6,"method":"today.query","params":["EOSUSDT"]})
                 http.sendData({"id":1,"method":"depth.subscribe","params":["EOSUSDT",10,"0"]})
-                // http.sendData({"id":31,"method":"today.query","params":["EOSUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["EOSUSDT"]})
-                http.sendData({"id":31,"method":"order.query","params":["EOSUSDT",0,50]})  //当前的委托
                 $this.currentBizh = 'EOS'
                 $this.getBalance('EOS|USDT');  //获取买和卖的交易对的可用余额
                 $this.getXinStaus('EOSUSDT');   //获取是否收藏为自选
@@ -286,9 +301,7 @@ export default {
             case 'LTCUSDT':
                 http.sendData({"id":6,"method":"today.query","params":["LTCUSDT"]})
                 http.sendData({"id":1,"method":"depth.subscribe","params":["LTCUSDT",10,"0"]})
-                // http.sendData({"id":31,"method":"today.query","params":["LTCUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["LTCUSDT"]})
-                http.sendData({"id":31,"method":"order.query","params":["LTCUSDT",0,50]})  //当前的委托
                 $this.currentBizh = 'LTC'
                 $this.getBalance('LTC|USDT');  //获取买和卖的交易对的可用余额
                 $this.getXinStaus('LTCUSDT');   //获取是否收藏为自选
@@ -296,9 +309,7 @@ export default {
             case 'WTCUSDT':
                 http.sendData({"id":6,"method":"today.query","params":["WTCUSDT"]})
                 http.sendData({"id":1,"method":"depth.subscribe","params":["WTCUSDT",10,"0"]})
-                // http.sendData({"id":31,"method":"today.query","params":["WTCUSDT"]})
                 http.sendData({"id":32,"method":"deals.subscribe","params":["WTCUSDT"]})
-                http.sendData({"id":31,"method":"order.query","params":["WTCUSDT",0,50]})  //当前的委托
                 $this.currentBizh = 'WTC'
                 $this.getBalance('WTC|USDT');  //获取买和卖的交易对的可用余额
                 $this.getXinStaus('WTCUSDT');   //获取是否收藏为自选
@@ -307,16 +318,16 @@ export default {
       }else{
          http.sendData({"id":6,"method":"today.query","params":["BTCUSDT"]})
          http.sendData({"id":1,"method":"depth.subscribe","params":["BTCUSDT",10,"0"]})
-        //  http.sendData({"id":31,"method":"today.query","params":["BTCUSDT"]})
          http.sendData({"id":32,"method":"deals.subscribe","params":["BTCUSDT"]})
-         http.sendData({"id":31,"method":"order.query","params":["BTCUSDT",0,50]})  //当前的委托
          this.getBalance('BTC|USDT');  //获取买和卖的交易对的可用余额
          this.getXinStaus('BTCUSDT');   //获取是否收藏为自选
       }
 
+      // 存储usdt最高最低数据 
       window.revieceData6= function(res) {
-        // usdt最高最低数据
-         return $this.storeCurrentLastData(res)
+        if(res.result != null && res.result !='' && res.result != undefined){
+           return $this.storeCurrentLastData(res)
+        } 
        }
 
       // 获取右侧交易挂单的数据cscct/usdt
@@ -326,11 +337,14 @@ export default {
                 return $this.storePkData(res)
             }
       };
-          
+      
+      //获取当前委托的数据之前的判断
       window.revieceData30 = function(res) {
         if(res.result && res.result.status == 'success') {
               //历史挂单，注意需要时"id":30发送成功后才发送有数据
               http.sendData({"id":31,"method":"order.query","params":[$this.currentBizh+"USDT",0,50]})   //此为当前委托的数据
+        }else{
+          $this.myCurrentData = []  //清空当前的交易委托数据
         }
       }
 
@@ -343,43 +357,41 @@ export default {
       };
       
       this.openWatite();   //开启提示等待
-      this.loadData();
+      this.loadData();   //买入卖出tab切换，加载
     },
      //初始加载数据
     loadData() {
       // 判断是否有点击tab，初始状态this.data为null
       if(this.data){
         if(this.data.condition== "mairu"){
-          // 加载涨幅数据
+          // 加载买数据
           this.output = false;
           this.inputru = true;
-
         }else{
-          // 加载降幅的数据
+          // 加载卖的数据
           this.inputru = false;
           this.output = true;
-          
         }
       }
     },
+    //撤销交易委托数据
     cancelOrder(detail){
+        var me = this
         let order_id =  detail.id
         let market = detail.market
         let access_token = this.accessToken
-        var me = this
-       this.$axios
-        .post("/api/bargain/cancel-order", {
+        cancelOrder({
           order_id: order_id,
           access_token: access_token,  //无token时获取的买与卖的可用余额都为0
           market: market
-        })
-        .then(res => {
+        }).then((res) => {
           if(res.data.code == '200'){
               Toast({
                 message: '撤销成功',
                 position: "bottom",
                 duration: 2000
               });
+              http.sendData({"id":30,"method":"server.auth","params":[me.accessToken+"|web","web"]})    //为了获取当前委托
           }else{
              Toast({
                 message: res.data.message,
@@ -388,24 +400,27 @@ export default {
               });
               return;
           }
-        })
-        .catch(err => {
-            Toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        }); 
+        });
     },
-    // 减少
+    // 单价减少
+    decreaseCount(){
+       if(this.theDj<='0.1'){
+        return
+      }
+      this.theDj.x =Number(this.theDj.x).sub(0.00000001).toFixed(8)
+    },
+    // 单价增加
+    increaseCount(){
+       this.theDj.x = Number(this.theDj.x).add(0.00000001).toFixed(8);
+    },
+    // 估值减少
     godecreaseCount(){
        if(this.themount<='0.1'){
         return
       }
        this.themount = Number(this.themount).sub(0.0001).toFixed(4);
     },
-    // 增加
+    // 估值增加
     goincreaseCount(){
        this.themount = Number(this.themount).add(0.0001).toFixed(4);
     },
@@ -414,22 +429,24 @@ export default {
       this.data = condation;
       this.loadData();
     },
-    // 充值
+    // 进入充值
     toinput(){
       this.$router.push({name:'chongz'});
     },
-    // 成交记录
+    // 进入成交记录
     cjHistory(){
-
        this.$router.push({name:'cjHistory',params:{titleBefore:this.currentBizh,titleAfter:'USDT'}});   
     },
+    //显示成交记录上拉的操作菜单
     showactionSheet(){
     	// 打开action sheet
       this.sheetVisible = true;
     },
+    //点击title显示下拉的市场
     condit(condit){
       this.$router.push({name:'shichan'});
     },
+    // 点击挂单的单条数据,获取其当前价格和数量
     sendPrice(dom){
        // target表示当前点击的元素非父元素
        let selectPrice = dom.currentTarget.childNodes.item(0).innerText;
@@ -437,28 +454,29 @@ export default {
        this.theDj.x =new Number(selectPrice)
        this.themount = selectMount
     },
+    //存储交易挂单的数据
     storePkData(data){
       this.pkData = {
           asks:data.params[1].asks,
           bids:data.params[1].bids
       }
-      // 关闭动画
     },
+    //存储当前委托的数据
     storeCurrentData(data){
         this.myCurrentData = data.result.records
     },
+    //存储当前币种最终的数据
     storeCurrentLastData(data){
         this.currentLast = data.result.last 
     },
+    //获取买和卖的交易对的可用余额
     getBalance(asset_type){
        var me = this
-       this.$axios
-        .post("/api/bargain/balance", {
+       getBalance({
           asset_type: asset_type,
           access_token: me.accessToken,  //无token时获取的买与卖的可用余额都为0
           chain_network: 'main_network'
-        })
-        .then(res => {
+        }).then((res) => {
           if(res.data.code == '200'){
               let theData = res.data.data.list
               // 此处暂时将数组的第一个作为买入的数据
@@ -472,16 +490,7 @@ export default {
               });
               return;
           }
-        })
-        .catch(err => {
-            Toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        }); 
-
+        });  
     },
     openWatite(){
         // 加载动画
@@ -493,16 +502,14 @@ export default {
     // 获取收藏状态
     getXinStaus(bizh){
        var $this = this
-        this.$axios
-        .post("/api/exchange/market", {
+       getXinStaus({
           'access_token': $this.accessToken,   //无access_token时获取的收藏状态都为0，即未收藏状态
           'chain_network': 'main_network',
           'os': 'web',
           'os_ver': '1.0.0',
           'soft_ver': '1.0.0',
           'language': 'zh_cn'
-        })
-        .then(res => {
+        }).then(res => {
           if(res.data.code == '200'){
               let bizhList = res.data.data[0].list
               let currentBz = bizhList.filter((item, index, arr) => item.name  == bizh)
@@ -520,14 +527,6 @@ export default {
               return;
           }
         })
-        .catch(err => {
-            $this.$toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        });
     },
     // 买入
     buyCoin(){
@@ -540,16 +539,14 @@ export default {
             });
           return;   
       }
-        this.$axios
-        .post("api/bargain/order-limit", {
+      buyCoin({
           'market': $this.currentBizh+'USDT',
           'side': '2',
           'pride': $this.theDj.x + '',
           'amount': $this.themount,
           'access_token': $this.accessToken,
           'chain_network': 'main_network'
-        })
-        .then(res => {
+        }).then(res => {
           if(res.data.code == '200'){
               // 检验成功 设置登录状态并且跳转到/
                $this.$toast({
@@ -558,6 +555,7 @@ export default {
                 duration: 2000
                });
                $this.getBalance();
+               http.sendData({"id":30,"method":"server.auth","params":[$this.accessToken+"|web","web"]})    //为了获取当前委托
           }else{
             $this.$toast({
                 message: res.data.message,
@@ -567,14 +565,6 @@ export default {
               return;
           }
         })
-        .catch(err => {
-            $this.$toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        });
     },
     // 收藏或取消收藏
     addOrDeleteSj(condition){
@@ -584,6 +574,7 @@ export default {
            this.deleteShouc(this.currentBizh)
         }
     },
+    //取消收藏
     deleteShouc(currentBizh){
       var $this = this
        if($this.accessToken ==null || $this.accessToken ==undefined || $this.accessToken ==''){
@@ -594,9 +585,7 @@ export default {
             });
           return;   
        }
-       
-        this.$axios
-        .post("/api/trade/trade-delete", {
+       deleteShouc({
           'os_ver':'',
           'access_token':$this.accessToken,
           'stock':currentBizh,
@@ -605,8 +594,7 @@ export default {
           'soft_ver':'2.0.0',
           'chain_network':'main_network',
           'os':'android'
-        })
-        .then(res => {
+        }).then(res => {
           if(res.data.code == '200'){
               // 检验成功 设置登录状态并且跳转到/
                $this.$toast({
@@ -623,15 +611,8 @@ export default {
               return;
           }
         })
-        .catch(err => {
-            $this.$toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        });
     },
+    //添加收藏
     addShouc(currentBizh){
        var $this = this
        if($this.accessToken ==null || $this.accessToken ==undefined || $this.accessToken ==''){
@@ -642,8 +623,7 @@ export default {
             });
           return;   
        }
-        this.$axios
-        .post("/api/trade/trade-add", {
+       addShouc({
           'os_ver':'',
           'access_token':$this.accessToken,
           'stock':currentBizh,
@@ -652,8 +632,7 @@ export default {
           'soft_ver':'2.0.0',
           'chain_network':'main_network',
           'os':'android'
-        })
-        .then(res => {
+        }).then(res => {
           if(res.data.code == '200'){
               // 检验成功 设置登录状态并且跳转到/
                $this.$toast({
@@ -670,14 +649,6 @@ export default {
               return;
           }
         })
-        .catch(err => {
-            $this.$toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        });
     },
     // 卖出
     sellerCoin(){
@@ -690,16 +661,14 @@ export default {
             });
           return;   
        }
-        this.$axios
-        .post("api/bargain/order-limit", {
+       sellerCoin({
           'market': $this.currentBizh+'USDT',
           'side': '1',
           'pride': $this.theDj.x + '',
           'amount': $this.themount,
           'access_token': $this.accessToken,
           'chain_network': 'main_network'
-        })
-        .then(res => {
+        }).then(res => {
           if(res.data.code == '200'){
               // 检验成功 设置登录状态并且跳转到/
                $this.$toast({
@@ -708,6 +677,7 @@ export default {
                 duration: 2000
                });
                $this.getBalance();
+               http.sendData({"id":30,"method":"server.auth","params":[$this.accessToken+"|web","web"]})  //为了获取当前委托
           }else{
             $this.$toast({
                 message: res.data.message,
@@ -717,14 +687,6 @@ export default {
               return;
           }
         })
-        .catch(err => {
-            $this.$toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        });
     },
     // 进入k线页面
     gomyhomeKxEarchatNew(){
@@ -764,13 +726,6 @@ export default {
     justify-content: space-between;
     padding: 4px;
   }
-   /* .center-contain-left button{
-    padding: 5px 6vw;
-    width: 50%;
-  } */
-  /* .activetab{
-    background-color: #8ba98b;
-  } */
   .jishukone{
     display: flex;
     flex-direction: row;

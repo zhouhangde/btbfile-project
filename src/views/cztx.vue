@@ -1,11 +1,13 @@
 <template>
   <div class="cztx">
+    <!-- tab滑动切换导航 -->
     <ly-tab
       v-model="selectedId"
       :items="items"
       :options="options"
       @change="handleChange">
     </ly-tab>
+
     <div class="theContent">
       <!-- 第一个tab -->
       <div v-if="current == 0">
@@ -161,9 +163,17 @@
 
 <script>
 import moment from 'moment'  //时间转化工具
-import $ from 'jquery'
 import LyTab from '../components/ly-tab/src/index.vue'
 import { Toast } from "mint-ui";
+import {
+    getChonZhiData,   //去充值
+    selectDetail, // 查询兑换详情中的公共数据
+    getTiXianData,   // 去提现
+    getDhData,  //查询兑换记录
+    getBankData,  //查询我新增的银行
+    deleteBankById,   //删除银行卡
+    selectAviableMoney  //查询我的提现余额
+} from '../../src/api/cztx/cztx'
 export default {
   name: "cztx",
   data() {
@@ -189,7 +199,7 @@ export default {
       czNumber:'', //存储充值金额
       txNumber:'', //存储提现金额
       activeItem:0,  //存储选择的银行,默认第一个
-      currentBankId:0,  //存储选择的银行id
+      currentBankId:'',  //存储选择的银行id
       myAviable:0,  //存储我的课提现余额
       myAccoutName:'',  //详情中的账户名称
       myBankName:'',  //详情中的开户支行
@@ -203,7 +213,7 @@ export default {
   filters: {
     formatDate: function (value) {
       value = parseInt(value)*1000
-      return moment(value).format('YYYY-MM-DD HH:MM:SS')
+      return moment(value).format('YYYY-MM-DD HH:mm:ss')  //注意mm:ss都应该为小写
     }
   },
   methods: {
@@ -224,7 +234,7 @@ export default {
        }else if(index == '1'){
          this.current = 1
          this.selectAviableMoney()  //查询可提现余额
-        //  this.getTiXianData();
+         this.getBankData()  //查询我新增的银行
        }else if(index == '2'){
          this.current = 2
          this.getDhData();
@@ -237,76 +247,53 @@ export default {
     selectDetail(){
         var $this = this
         var accessToken = localStorage.getItem('access_token');
-        var myform = new FormData();
-        myform.append("access_token", 'usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222');
-        $.ajax({
-          type : "POST",
-          contentType: false,
-          processData: false,
-          cache: false,
-          async: false, 
-          url : "http://91bilong.com/api/user/crc-bank-info",
-          dataType: "JSON",
-          data : myform,
-          success : function(result) {
-            $this.myAccoutName  = result.data.account_name;
-            $this.myBankName  = result.data.bank_name;
-            $this.myCardNumber  = result.data.card_number;
-            $this.price  = result.data.exchange_rate;
-          },
-          error : function(e){
-          }
-        });
+        selectDetail({
+          access_token:accessToken  //usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222
+        }).then((res) => {
+          if(res.data.code == 200){
+              $this.myAccoutName  = res.data.data.account_name;
+              $this.myBankName  = res.data.data.bank_name;
+              $this.myCardNumber  = res.data.data.card_number;
+              $this.price  = res.data.data.exchange_rate;
+            }
+        }); 
     },
     // 去充值
     getChonZhiData(){
         var inpNum = this.czNumber;
         var accessToken = localStorage.getItem('access_token');
-        var myform = new FormData();
-        myform.append("access_token", 'usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222');
-        myform.append("num", inpNum);
-        $.ajax({
-          type : "POST",
-          contentType: false,
-          processData: false,
-          cache: false,
-          async: false, 
-          url : "/api/user/purchase",
-          dataType: "JSON",
-          data : myform,
-          success : function(result) {
-            if(result.code == 200){
+        getChonZhiData({
+          access_token:accessToken,  //usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222
+          num: inpNum
+        }).then((res) => {
+          if(res.data.code == 200){
               Toast({
                 message: '充值成功',
                 position: "bottom",
                 duration: 2000
               });
             }
-          },
-          error : function(e){
-          }
-        });
+        });  
     },
     // 去提现
     getTiXianData(){
         var outpNum = this.txNumber;
         var bankId = this.currentBankId;
         var accessToken = localStorage.getItem('access_token');
-        var myform = new FormData();
-        myform.append("access_token", 'usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222');
-        myform.append("bank_id", bankId);
-        myform.append("num", outpNum);
-        $.ajax({
-          type : "POST",
-          contentType: false,
-          processData: false,
-          cache: false,
-          async: false, 
-          url : "/api/user/sellout",
-          dataType: "JSON",
-          data : myform,
-          success : function(result) {
-            if(result.code == '501'){
+        if(bankId == '' || bankId == null || bankId == undefined){
+          Toast({
+              message: '请先添加银行卡',
+              position: "bottom",
+              duration: 2000
+            });
+          return
+        }
+        getTiXianData({
+          access_token:accessToken,  //usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222
+          bank_id: bankId,
+          num:outpNum
+        }).then((res) => {
+          if(res.data.code == '501'){
               Toast({
                 message: '余额不足',
                 position: "bottom",
@@ -319,119 +306,65 @@ export default {
                 duration: 2000
               });
             }
-            
-          },
-          error : function(e){
-          }
-        });  
+        });
     },
     //查询兑换记录
     getDhData(){
       var $this = this
       var accessToken = localStorage.getItem('access_token');
-      var myform = new FormData();
-      myform.append("access_token", 'usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222');
-      $.ajax({
-        type : "POST",
-        contentType: false,
-        processData: false,
-        cache: false,
-        async: false, 
-        url : "http://91bilong.com/api/user/get-recoed",
-        dataType: "JSON",
-        data : myform,
-        success : function(result) {
-          if(result.data && result.data.length>0){
-             $this.myDhDataList = result.data
+      getDhData({
+        access_token:accessToken
+      }).then((res) => {
+          if(res.data.data && res.data.data.length>0){
+             $this.myDhDataList = res.data.data
           }
-        },
-        error : function(e){
-          // console.log(e.status);
-          // console.log(e.responseText);
-        }
-      });
+        }); 
     },
     //查询我新增的银行
     getBankData(){
       var $this = this
       var accessToken = localStorage.getItem('access_token');
-      var myform = new FormData();
-      myform.append("access_token", 'usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222');
-      $.ajax({
-        type : "POST",
-        contentType: false,
-        processData: false,
-        cache: false,
-        async: false, 
-        url : "http://91bilong.com/api/user/get-bank",
-        dataType: "JSON",
-        data : myform,
-        success : function(result) {
-          $this.myBankDataList = result.data
-          if(result.data && result.data.length>0){
-            $this.currentBankId = result.data[0].id
+      getBankData({
+        access_token:accessToken
+      }).then((res) => {
+         $this.myBankDataList = res.data.data
+          if(res.data.data && res.data.data.length>0){
+            $this.currentBankId = res.data.data[0].id
+          }else{
+            $this.currentBankId = '' //无银行卡时 
           }
-        },
-        error : function(e){
-          // console.log(e.status);
-          // console.log(e.responseText);
-        }
-      });
+      });  
     },
     //删除银行卡
     deleteBankById(id){
         var $this = this
         var accessToken = localStorage.getItem('access_token');
-        var myform = new FormData();
-        myform.append("access_token", 'usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222');
-        myform.append("id", id);
-        $.ajax({
-          type : "POST",
-          contentType: false,
-          processData: false,
-          cache: false,
-          async: false, 
-          url : "/api/user/delete-bank",
-          dataType: "JSON",
-          data : myform,
-          success : function(result) {
-            $this.$toast({
-                message: '删除成功',
-                position: "bottom",
-                duration: 2000
-              });
-            $this.getBankData()  
-          },
-          error : function(e){
-          }
-        });
+        deleteBankById({
+          access_token:accessToken,
+          id:id
+        }).then((res) => {
+          $this.$toast({
+              message: '删除成功',
+              position: "bottom",
+              duration: 2000
+            });
+          $this.getBankData() 
+        });  
     },
-    //查询我的课提现余额
+    //查询我的提现余额
     selectAviableMoney(){
       var $this = this
       var accessToken = localStorage.getItem('access_token');
-      var myform = new FormData();
-      myform.append("access_token", 'usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222');
-      myform.append("os", "web");
-      $.ajax({
-        type : "POST",
-        contentType: false,
-        processData: false,
-        cache: false,
-        async: false, 
-        url : "http://91bilong.com/api//bargain/balance",
-        dataType: "JSON",
-        data : myform,
-        success : function(result) {
-          result.data.list.forEach(function(item,index){
+      selectAviableMoney({
+          access_token:accessToken,
+          os:"web"
+        }).then((res) => {
+          res.data.data.list.forEach(function(item,index){
             if(item.name=='USDT'){
               $this.myAviable = item.available;
             }
           })
-        },
-        error : function(e){
-        }
-      });
+        });
     }
   },
   mounted() {

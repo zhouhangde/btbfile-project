@@ -57,7 +57,7 @@ export default {
         .post("/api/register/sign", {
           mobile_phone: this.phone,
           password: this.password,
-          os:'android'
+          os:"Android"  //注意必须要为web。否则对不上数据
         })
         .then(res => {
           if(res.data.code == '200'){

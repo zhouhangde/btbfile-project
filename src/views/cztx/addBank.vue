@@ -25,9 +25,12 @@
 </template>
 
 <script>
-import $ from 'jquery'
 import Header from "../../components/Header";
 import { Toast } from "mint-ui";
+import {
+    addBank,   //添加银行卡
+    selectMhHelpBank  //查询所有支持的银行卡
+} from '../../../src/api/cztx/cztx'
 export default {
   name: "addBank",
   data() {
@@ -73,62 +76,38 @@ export default {
         var bankName = this.bankName;
         var cardNumber = this.cardNumber;
         var accessToken = localStorage.getItem('access_token');
-        var myform = new FormData();
-        myform.append("account_name", accountName);
-        myform.append("bank_name", bankName);
-        myform.append("card_number", cardNumber);
-        myform.append("access_token", 'usHckH4vXAJtXh6osFbnfF_UcyMfFWDX_1564985222');
-        $.ajax({
-            type : "POST",
-            contentType: false,
-            processData: false,
-            cache: false,
-            async: false, 
-            url : "/api/user/add-bank",
-            dataType: "JSON",
-            data : myform,
-            success : function(result) {
-               if(result.code==501){
-                  Toast({
-                    message: '最多保存4张卡',
-                    position: "bottom",
-                    duration: 2000
-                  });
-                  return
-                }else{
-                  $this.$router.push({name:"cztx"})
-                }
-                
-            },
-            error : function(e){
-            }
+
+        addBank({
+          account_name:accountName,
+          bank_name:bankName,
+          card_number:cardNumber,
+          access_token:accessToken
+        }).then((res) => {
+          if(res.data.code==501){
+            Toast({
+              message: '最多保存4张卡',
+              position: "bottom",
+              duration: 2000
+            });
+            return
+          }else{
+            $this.$router.push({name:"cztx"})
+          }
         });
      },
      //查询所有支持的银行卡
      selectMhHelpBank(){
         var $this =this
-        $.ajax({
-          type : "GET",
-          contentType: false,
-          processData: false,
-          cache: false,
-          async: false, 
-          url : "/api/user/get-support-bank",
-          dataType: "JSON",
-          success : function(result) {
-              if(result.data.length>0){
-                for(let item of result.data){
-                  $this.bankNameList.push(item.bank_name)
-                }
+        $this.bankNameList = []  //先清空
+        selectMhHelpBank().then((res) => {
+          if(res.data.data.length>0){
+              for(let item of res.data.data){
+                $this.bankNameList.push(item.bank_name)
               }
-          },
-          error : function(e){
-          }
+            }
         });
     }  
-    
   },
-  
   mounted() {
   },
   components: {

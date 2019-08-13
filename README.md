@@ -176,3 +176,7 @@ https://www.cnblogs.com/wind-wang/p/9635595.html（目前暂时都不能直接�
 
 ####type为file的详解
 https://www.haowuliaoa.com/article/info/114042.html
+
+
+####axios封装get和post请求
+https://blog.csdn.net/qq_36407748/article/details/86658638
