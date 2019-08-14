@@ -21,6 +21,7 @@
     "animate.css": "^3.7.2",
     "echarts": "^4.2.1",
     "jquery": "^3.4.1",
+    "jsonp": "^0.2.1",
     "ly-tab": "^2.1.2",
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
@@ -40,5 +41,5 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "proxy":"http://91bilong.com/"
+  "proxy": "http://91bilong.com/"
 }

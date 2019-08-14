@@ -60,22 +60,20 @@ export default {
 
 <style scoped>
 .myzctx {
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    box-sizing: border-box;
 }
 .theparent{
-      display: flex;
-    /* height: 35px; */
+    display: flex;
     margin: 10px;
     align-items: center;
     justify-content: space-between;
     background-color: #e4dfdf;
 }
 .theparent-tc{
-     display: flex;
-    /* height: 35px; */
+    display: flex;
     margin: 10px;
     align-items: center;
     justify-content: space-between;
@@ -83,7 +81,6 @@ export default {
 }
 .theparent-tyzm{
     display: flex;
-    /* height: 35px; */
     margin: 10px;
     align-items: center;
     justify-content: space-between;
@@ -91,10 +88,8 @@ export default {
 
 }
 .item-right{
-         display: flex;
+    display: flex;
     flex-direction: column;
-    /* height: 35px; */
-    /* padding: 10px; */
     align-items: center;
     background-color: #6b95bf;
     padding: 6px;
@@ -102,10 +97,8 @@ export default {
     border-radius: 8px;
 }
 .item-right-tc{
-        display: flex;
+    display: flex;
     flex-direction: column;
-    /* height: 35px; */
-    /* padding: 10px; */
     align-items: center;
     padding: 12px;
     background: #f1f1f1;

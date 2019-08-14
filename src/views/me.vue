@@ -96,6 +96,9 @@
 </template>
 
 <script>
+import {
+    getUserInfo,   //获取用户详细信息
+} from '../../src/api/me/me'
 export default {
   name: "me",
   data() {
@@ -149,12 +152,10 @@ export default {
     },
     getUserInfo(){
       var $this = this
-      this.$axios
-        .post("/api/member/info", {
+      getUserInfo({
           access_token:$this.accessToken,
           os:'web'
-        })
-        .then(res => {
+        }).then((res) => {
           if(res.data.code == '200'){
               // 检验成功 设置登录状态并且跳转到/
               if(res.data.data.otc_merchant_msg == '暂未认证,请及时认证'){
@@ -174,14 +175,6 @@ export default {
               });
               return;
           }
-        })
-        .catch(err => {
-            $this.$toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
         });
     }
   }

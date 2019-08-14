@@ -24,6 +24,9 @@
 <script>
 import Header from "../../../components/Header";
 import { Toast } from "mint-ui";
+import {
+    getMytuijian,  //获取我的推荐的二维码即跳转url
+} from '../../../../src/api/me/me'
 export default {
   name: "mytj",
   data() {
@@ -63,12 +66,10 @@ export default {
           return
         }
 
-       this.$axios
-        .post("/api/register/recommend ", {
+        getMytuijian({
           access_token:me.accessToken,
           os:'ios'
-        })
-        .then(res => {
+        }).then(res => {
           if(res.data.code == '200'){
               console.log('res',res)
               me.mytuijianData = res.data.data
@@ -81,14 +82,6 @@ export default {
               return;
           }
         })
-        .catch(err => {
-            Toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        });  
     },
     onCopy () {
       var me = this

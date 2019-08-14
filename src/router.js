@@ -56,6 +56,11 @@ const router = new Router({
       name: 'demo',
       component: () => import('./views/demo/demo.vue')
     },
+    {
+      path: '/demo-news',
+      name: 'demo-news',
+      component: () => import('./views/demo/demo-news.vue')
+    },
     // 测试的demo从手机选择相机或拍照页面
     {
       path: '/demo-camera',

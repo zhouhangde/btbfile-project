@@ -111,53 +111,28 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => vm.getData());
   },
+  beforeRouteLeave(to, from, next) {
+    window.clearInterval(window.timer); 
+    window.timer = null; 
+    next()
+  },
   mounted () {
     setInterval(this.scroll,2000)  //开启公告轮询动画
   },
   watch: {
       //为市场的币种数据添加标题，和对应涨幅和跌幅的增长率样式
       homeOneDataNew(val) {
-        this.homeOneDataNew = val;
-        if(this.homeOneDataNew.length == 6){
+        if(val.length % 6 == 0 && val.length>6){
             var $this = this
-            this.homeOneDataNew.filter(function(item, index, arr){
-               switch(index) {
-                    case 0:
-                        item.titleBefore = 'BTC'
-                        item.titleAfter = 'USDT'
-                        break;
-                    case 1:
-                        item.titleBefore = 'ETH'
-                        item.titleAfter = 'USDT'
-                        break;
-                    case 2:
-                        item.titleBefore = 'XRP'
-                        item.titleAfter = 'USDT'
-                        break;
-                    case 3:
-                        item.titleBefore = 'EOS'
-                        item.titleAfter = 'USDT'
-                        break;
-                    case 4:
-                        item.titleBefore = 'LTC'
-                        item.titleAfter = 'USDT'
-                        break;
-                    case 5:
-                        item.titleBefore = 'WTC'
-                        item.titleAfter = 'USDT'
-                        break;                    
-                } 
-               if(item.result.last>item.result.open){
-                    // 涨幅的数据，显示按钮颜色
-                    item.color = "rgb(77,169,144)"
-                    $this.zfData.push(item)
-               }else{  
-                    //跌幅的数据,显示按钮颜色
-                    item.color = "#e27373"
-                    $this.dfData.push(item)
-               }
-
-            })
+            $this.zfData = []
+            $this.dfData = []
+            //截取数组后六位
+            $this.goFilter(val)
+        }
+        //注意不要考虑<6，否则数据会有重复
+        if(val.length ==6){
+          var $this = this
+          $this.goFilter(val)
         }
       }
   },
@@ -193,6 +168,49 @@ export default {
       //初始化涨幅榜tab初始加载数据，和判断进行过tab切换
       this.loadData();
     },
+    //过滤，为市场的币种数据添加标题，和对应涨幅和跌幅的增长率样式
+    goFilter(val){
+       var $this = this
+        //截取数组后六位
+        val.slice(-6).filter(function(item, index, arr){
+            switch(index) {
+                case 0:
+                    item.titleBefore = 'BTC'
+                    item.titleAfter = 'USDT'
+                    break;
+                case 1:
+                    item.titleBefore = 'ETH'
+                    item.titleAfter = 'USDT'
+                    break;
+                case 2:
+                    item.titleBefore = 'XRP'
+                    item.titleAfter = 'USDT'
+                    break;
+                case 3:
+                    item.titleBefore = 'EOS'
+                    item.titleAfter = 'USDT'
+                    break;
+                case 4:
+                    item.titleBefore = 'LTC'
+                    item.titleAfter = 'USDT'
+                    break;
+                case 5:
+                    item.titleBefore = 'WTC'
+                    item.titleAfter = 'USDT'
+                    break;                    
+            } 
+            if(item.result.last>item.result.open){
+                // 涨幅的数据，显示按钮颜色
+                item.color = "rgb(77,169,144)"
+                $this.zfData.push(item)
+            }else{  
+                //跌幅的数据,显示按钮颜色
+                item.color = "#e27373"
+                $this.dfData.push(item)
+            }
+
+        })
+    },
     //查询所有的币种
      selectAllMarket(){
       var $this = this
@@ -212,12 +230,22 @@ export default {
           }
         }); 
      },
+     //数组去重
+     unique(arr) { // 根据唯一标识no来对数组进行过滤
+  　　 const res = new Map();  //定义常量 res,值为一个Map对象实例
+  　　 //返回arr数组过滤后的结果，结果为一个数组   过滤条件是，如果res中没有某个键，就设置这个键的值为1
+  　　 return arr.filter((arr) => !res.has(arr.titleBefore) && res.set(arr.titleBefore, 1)) 
+    },
     // 发送数据，查询所有币种的数据
     sendMarketData(){
-      for(let item of this.allMarketName){
-          http.sendData({"id":2,"method":"today.query","params":[item.name]})
-          // http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
-      }
+      let $this = this
+      window.timer =window.setInterval(function(){
+           // 某些定时器操作 
+          for(let item of $this.allMarketName){
+              http.sendData({"id":2,"method":"today.query","params":[item.name]})
+              // http.sendData({"id":2,"method":"today.query","params":["BTCUSDT"]})
+          }
+      }, 2000); 
     },
     //获取公告内容
     getCate(){
@@ -252,6 +280,7 @@ export default {
     loadData() {
       // 默认显示涨幅榜的数据
       this.zorjDataJsonNew = this.zfData;
+      
       // 判断是否有点击过tab，初始状态this.data为null
       if(this.data){
         if(this.data.condition== "zf"){

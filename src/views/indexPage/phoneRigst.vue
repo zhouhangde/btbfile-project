@@ -45,9 +45,9 @@
       <div style="text-align: center;"> 
         注册即表示同意<span style="color:blue">bilongwang用户协议</span>
       </div>
-      <div style="text-align: center;margin-top:40px;color:#999;" @click="$router.push({name:'emailRigst'})"> 
+      <!-- <div style="text-align: center;margin-top:40px;color:#999;" @click="$router.push({name:'emailRigst'})"> 
         邮箱注册
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

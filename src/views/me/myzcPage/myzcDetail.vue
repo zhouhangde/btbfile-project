@@ -15,19 +15,19 @@
         <div class="theparent">
             <div style="background-color:rgb(243, 238, 238)" class="item-child">
                 <p>场外交易冻结金额</p>
-                <p style="font-weight: 600;">{{myzcDetail.exchange_freeze}}</p>
+                <p style="font-weight: 600;overflow: hidden;">{{myzcDetail.exchange_freeze}}</p>
             </div>
             <div style="background-color:rgb(243, 238, 238)" class="item-child">
                 <p>交易所冻结金额</p>
-                <p style="font-weight: 600;">{{myzcDetail.withdraw_freeze}}</p>
+                <p style="font-weight: 600;overflow: hidden;">{{myzcDetail.withdraw_freeze}}</p>
             </div>
             <div style="background-color:rgb(243, 238, 238)" class="item-child">
                 <p>充值中金额</p>
-                <p style="font-weight: 600;">{{myzcDetail.bank_balance}}</p>
+                <p style="font-weight: 600;overflow: hidden;">{{myzcDetail.bank_balance}}</p>
             </div>
             <div style="background-color:rgb(243, 238, 238)" class="item-child">
                 <p>提现中金额</p>
-                <p style="font-weight: 600;">{{myzcDetail.bank_balance_rel}}</p>
+                <p style="font-weight: 600;overflow: hidden;">{{myzcDetail.bank_balance_rel}}</p>
             </div>
         </div>
         <!-- <div class="the-footer">
@@ -77,7 +77,6 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
-      console.log('this.$route.params.myzcDetail',this.$route.params.myzcDetail)
       if(this.$route.params.myzcDetail){
        this.myzcDetail = this.$route.params.myzcDetail
       }     

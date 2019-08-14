@@ -27,6 +27,10 @@
 <script>
 import Header from "../../../components/Header";
 import { Toast } from "mint-ui";
+import {
+    getsmUserInfo,   //获取实名认证的用户信息
+    getRzInfo  //获取认证信息
+} from '../../../../src/api/me/me'
 export default {
   name: "smrz",
   data() {
@@ -45,13 +49,10 @@ export default {
   methods: {
     // 获取用户信息
     getData() {
-
         let accessToken = localStorage.getItem('access_token')
         this.access_token = accessToken
-
-      //  let access_token = localStorage.getItem('access_token')
        if(accessToken!= undefined && accessToken!= null && accessToken!= ''){
-         this.getUserInfo(accessToken)
+         this.getsmUserInfo(accessToken)
          this.getRzInfo(accessToken)
        }else{
          this.status_msg = ''
@@ -65,15 +66,13 @@ export default {
        }
        
     },
-    getUserInfo(access_token){
+    getsmUserInfo(access_token){
       // 获取用户信息
       var _this =this;
-      this.$axios
-      .post("api/user/user-info",{
+      getsmUserInfo({
         access_token:_this.access_token,
         chain_network:'main_network'
-      })
-      .then(res => {
+      }).then(res => {
         if(res.data.code == '200'){
             // 检验成功 设置登录状态并且跳转到/
             if(res.data.data.otc_merchant_msg == "审核已通过"){
@@ -102,24 +101,14 @@ export default {
             return;
         }
       })
-      .catch(err => {
-          Toast({
-              message: '网络错误',
-              position: "bottom",
-              duration: 2000
-            });
-            return;
-      });
     },
     // 获取认证信息
     getRzInfo(access_token){
       var _this =this;
-      this.$axios
-      .post("api/user/get-info",{
+      getRzInfo({
         access_token:_this.access_token,
         chain_network:'main_network'
-      })
-      .then(res => {
+      }).then(res => {
         if(res.data.code == '200'){
             // 检验成功 设置登录状态并且跳转到/
             if(res.data.data.status_msg == "等待审核中"){
@@ -132,22 +121,8 @@ export default {
         }else{
             _this.status_msg  = '暂未认证,请及时认证'
             _this.grRzStaue = '0'
-          // Toast({
-          //     message: res.data.message,
-          //     position: "bottom",
-          //     duration: 2000
-          //   });
-          //   return;
         }
       })
-      .catch(err => {
-          Toast({
-              message: '网络错误',
-              position: "bottom",
-              duration: 2000
-            });
-            return;
-      });
     }
   },
   components: {

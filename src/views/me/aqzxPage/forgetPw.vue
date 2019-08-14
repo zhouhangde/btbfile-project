@@ -47,6 +47,12 @@
 <script>
 import Header from "../../../components/Header";
 import { Toast } from "mint-ui";
+import {
+    phoneGetYzm,   //手机号忘记密码
+    emailGetYzm,  //邮箱忘记密码，获取验证码
+    updatePasswordPhone,   //手机号忘记密码，提交修改
+    updatePasswordEmail   //邮箱忘记密码，提交修改
+} from '../../../../src/api/me/me'
 export default {
   name: "forgetPw",
   data() {
@@ -104,30 +110,13 @@ export default {
           return
         }
 
-
       // 60秒倒退
-        const TIME_COUNT = 60;
-        if (!this.timer) {
-          this.count = TIME_COUNT;
-          this.show = false;
-          this.timer = setInterval(() => {
-            if (this.count > 0 && this.count <= TIME_COUNT) {
-                this.count--;
-            } else {
-              this.show = true;
-              window.clearInterval(this.timer);
-              this.timer = null;
-            }
-          }, 1000)
-          }
+      this.timeInterval();  
        
-       
-       this.$axios
-        .post("/api/register/mobile-varcode", {
+       phoneGetYzm({
           mobile_phone:me.placholderValue,
           type:2
-        })
-        .then(res => {
+        }).then(res => {
           if(res.data.code == '200'){
               console.log('res',res)
           }else{
@@ -139,14 +128,6 @@ export default {
               return;
           }
         })
-        .catch(err => {
-            Toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        }); 
     },
     emailGetYzm(){
        var me = this
@@ -159,8 +140,54 @@ export default {
           });
           return
         }
+        
+       this.timeInterval();
+       
+       emailGetYzm({
+          email:me.placholderValue,
+          type:1
+        }).then(res => {
+          if(res.data.code == '200'){
+              console.log('res',res)
+          }else{
+             Toast({
+                message: res.data.message,
+                position: "bottom",
+                duration: 2000
+              });
+              return;
+          }
+        })
 
-      // 60秒倒退
+      //  this.$axios
+      //   .post("/api/register/mobile-varcode", {
+      //     email:me.placholderValue,
+      //     type:1
+      //   })
+      //   .then(res => {
+      //     if(res.data.code == '200'){
+      //         console.log('res',res)
+      //     }else{
+      //        Toast({
+      //           message: res.data.message,
+      //           position: "bottom",
+      //           duration: 2000
+      //         });
+      //         return;
+      //     }
+      //   })
+      //   .catch(err => {
+      //       Toast({
+      //           message: '网络错误',
+      //           position: "bottom",
+      //           duration: 2000
+      //         });
+      //         return;
+      //   }); 
+    },
+    // 秒数减少
+    timeInterval(){
+       // 60秒倒退
         const TIME_COUNT = 60;
         if (!this.timer) {
           this.count = TIME_COUNT;
@@ -175,33 +202,6 @@ export default {
             }
           }, 1000)
           }
-   
-      
-       this.$axios
-        .post("/api/register/mobile-varcode", {
-          email:me.placholderValue,
-          type:1
-        })
-        .then(res => {
-          if(res.data.code == '200'){
-              console.log('res',res)
-          }else{
-             Toast({
-                message: res.data.message,
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-          }
-        })
-        .catch(err => {
-            Toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        }); 
     },
     updatePasswordPhone(){
         var me = this
@@ -215,16 +215,14 @@ export default {
           return
         }
 
-       this.$axios
-        .post("/api/register/forget-password", {
+        updatePasswordPhone({
           mobile_phone:me.placholderValue,
           varcode:me.updataData.varcode,
           password:me.updataData.password,
           repassword:me.updataData.repassword,
           os:'android',
           // code:''
-        })
-        .then(res => {
+        }).then(res => {
           if(res.data.code == '200'){
               Toast({
                 message: '修改成功',
@@ -240,14 +238,6 @@ export default {
               return;
           }
         })
-        .catch(err => {
-            Toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        }); 
     },
     updatePasswordEmail(){
         var me = this
@@ -260,16 +250,14 @@ export default {
           });
           return
         }
-        
-       this.$axios
-        .post("/api/register/mobile-varcode", {
+
+        updatePasswordEmail({
           email:me.placholderValue,
           varcode:'873714',
           password:me.updataData.password,
           repassword:me.updataData.repassword,
           code:''
-        })
-        .then(res => {
+        }).then(res => {
           if(res.data.code == '200'){
               console.log('res',res)
           }else{
@@ -281,14 +269,35 @@ export default {
               return;
           }
         })
-        .catch(err => {
-            Toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        }); 
+        
+      //  this.$axios
+      //   .post("/api/register/mobile-varcode", {
+      //     email:me.placholderValue,
+      //     varcode:'873714',
+      //     password:me.updataData.password,
+      //     repassword:me.updataData.repassword,
+      //     code:''
+      //   })
+      //   .then(res => {
+      //     if(res.data.code == '200'){
+      //         console.log('res',res)
+      //     }else{
+      //        Toast({
+      //           message: res.data.message,
+      //           position: "bottom",
+      //           duration: 2000
+      //         });
+      //         return;
+      //     }
+      //   })
+      //   .catch(err => {
+      //       Toast({
+      //           message: '网络错误',
+      //           position: "bottom",
+      //           duration: 2000
+      //         });
+      //         return;
+      //   }); 
     }
     
   },

@@ -25,9 +25,9 @@
         <span style="color:#5b92b7;" @click="$router.push({name:'phoneRigst'})">注册账号</span>
         <span style="color:#5b92b7;" @click="$router.push({name:'phoneForget'})">忘记密码?</span>
       </div>
-      <div style="text-align: center;margin-top:40px;color:#999;" @click="$router.push({name:'emailLogin'})"> 
+      <!-- <div style="text-align: center;margin-top:40px;color:#999;" @click="$router.push({name:'emailLogin'})"> 
         邮箱登录
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

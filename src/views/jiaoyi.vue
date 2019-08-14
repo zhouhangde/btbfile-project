@@ -167,7 +167,7 @@ import {
     addShouc,   //添加收藏
     sellerCoin   //卖出
 } from '../../src/api/jiaoyi/jiaoyi'
-import { setInterval } from 'timers';
+// import { setInterval } from 'timers';
 export default {
   name: "jiaoyi",
   data() {
@@ -209,7 +209,7 @@ export default {
        myCurrentData:[],   //当前委托的数据
        currentLast:'',  //当前的最后价格
        showCurrent:true,  //显示当前委托开关
-       timer:null
+       timer:null   //定时器
     };
   },
   computed:{
@@ -237,11 +237,14 @@ export default {
        next(vm => vm.getData());
     }
   },
-  // beforeRouteLeave(to, from, next) {
-  //   clearInterval(this.timer);    
-  //   this.timer = null    
-  //   next()
-  // },
+  beforeRouteLeave(to, from, next) {
+    // window.clearInterval(window.timer); 
+    // window.timer = null; 
+
+    clearInterval(this.timer); 
+    this.timer = null;   
+    next()
+  },
   methods: {
     getData(data) {
       let access_token = localStorage.getItem('access_token')
@@ -251,14 +254,15 @@ export default {
       //获取tab导航标题
       this.jiaoyiTabData = myjiaoyiTabData   
 
-      //接收我的委托数据，必须先发送30
-      http.sendData({"id":30,"method":"server.auth","params":[access_token+"|web","web"]})     
-      
-      
-      // $this.timer =setInterval(() =>{    
-      //     // 某些定时器操作 
-      //    http.sendData({"id":30,"method":"server.auth","params":[access_token+"|web","web"]})            
-      // }, 3000); 
+      // window.timer =window.setInterval(function(){
+      //      // 某些定时器操作 
+      //     console.log('定时',+new Date())
+      // }, 1000); 
+
+      $this.timer = setInterval(function(){
+           // 接收我的委托数据，必须先发送30  
+          http.sendData({"id":30,"method":"server.auth","params":[access_token+"|web","web"]})
+      }, 1000); 
 
       // 根据路由参数，进行相应币种的websocket数据发送
       if(data != undefined && data != null && data != ''){
@@ -391,7 +395,6 @@ export default {
                 position: "bottom",
                 duration: 2000
               });
-              http.sendData({"id":30,"method":"server.auth","params":[me.accessToken+"|web","web"]})    //为了获取当前委托
           }else{
              Toast({
                 message: res.data.message,
@@ -555,7 +558,6 @@ export default {
                 duration: 2000
                });
                $this.getBalance();
-               http.sendData({"id":30,"method":"server.auth","params":[$this.accessToken+"|web","web"]})    //为了获取当前委托
           }else{
             $this.$toast({
                 message: res.data.message,

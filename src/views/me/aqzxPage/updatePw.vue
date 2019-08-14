@@ -32,6 +32,10 @@
 <script>
 import Header from "../../../components/Header";
 import { Toast } from "mint-ui";
+import {
+    updatePassword,   //修改密码
+} from '../../../../src/api/me/me'
+
 export default {
   name: "updatePw",
   data() {
@@ -65,10 +69,7 @@ export default {
             });
           return; 
        }
-      
-       this.$axios
-        .post("/api/user/password-edit", me.updateData)
-        .then(res => {
+       updatePassword(me.updateData).then(res => {
           if(res.data.code == '200'){
               Toast({
                 message: '修改成功',
@@ -85,14 +86,6 @@ export default {
               return;
           }
         })
-        .catch(err => {
-            Toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        }); 
     }
   },
   components: {
@@ -115,7 +108,6 @@ export default {
     border-bottom: 1px solid #ccc;
 }
 .item-right{
-    /* border-bottom: 1px solid #d6c2c2; */
     width: 91%;
     display: -webkit-box;
     display: -ms-flexbox;

@@ -77,6 +77,10 @@
 
 <script>
 import Header from "../../../components/Header";
+import {
+    getMyZiChang,  //获取我的资产信息
+    getAllZiChang  //资产获取所有的币种信息
+} from '../../../../src/api/me/me'
 export default {
   name: "myzc",
   data() {
@@ -117,12 +121,10 @@ export default {
           return
         }
 
-      this.$axios
-        .post("/api/user/freeze-bhb", {
+      getMyZiChang({
           access_token: $this.accessToken,
           os:'android'
-        })
-        .then(res => {
+        }).then(res => {
           if(res.data.code == '200'){
               // 检验成功 设置登录状态并且跳转到/
                console.log('收款方式列表',res)
@@ -136,14 +138,6 @@ export default {
               return;
           }
         })
-        .catch(err => {
-            $this.$toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        });
     },
     getAllZiChang(){
        var $this = this
@@ -155,11 +149,9 @@ export default {
           });
           return
         }
-       this.$axios
-        .post("/api/exchange/balance", {
+        getAllZiChang({
           access_token: $this.accessToken
-        })
-        .then(res => {
+        }).then(res => {
           if(res.data.code == '200'){
               // 检验成功 设置登录状态并且跳转到/
                console.log('收款方式列表',res)
@@ -173,14 +165,6 @@ export default {
               return;
           }
         })
-        .catch(err => {
-            $this.$toast({
-                message: '网络错误',
-                position: "bottom",
-                duration: 2000
-              });
-              return;
-        });
     }
   },
   components: {

@@ -16,14 +16,14 @@
           <i class="fa fa-lock"></i>
           <input type="text" placeholder="请输入密码" id="password" v-model="selectDatafor.password" class="theinput"/>
         </p>
-        <i class="fa fa-eye-slash" style="color:#999;"></i>
+        <!-- <i class="fa fa-eye-slash" style="color:#999;"></i> -->
       </div>
       <div class="theItem"> 
         <p>
           <i class="fa fa-lock"></i>
           <input type="text" placeholder="请再次输入密码" id="repassword" v-model="selectDatafor.repassword" class="theinput"/>
         </p>
-        <i class="fa fa-eye-slash" style="color:#999;"></i>
+        <!-- <i class="fa fa-eye-slash" style="color:#999;"></i> -->
       </div>
       <div class="theItem">
         <p>
@@ -46,7 +46,7 @@
         注册即表示同意<span style="color:blue">bilongwang用户协议</span>
       </div>
       <div style="text-align: center;margin-top:40px;color:#999;" @click="$router.push({name:'phoneRigst'})"> 
-        邮箱已注册
+        邮箱注册
       </div>
     </div>
   </div>
