@@ -11,7 +11,7 @@ module.exports = {
   productionSourceMap:true,  // 生产环境下css 分离文件
   devServer: {
     open: true,
-    host: '192.168.0.136',  //注意当变成localhost的时候，不知什么原因ifram的k线图不能正常显示样式
+    host: '0.0.0.0',  //注意当变成localhost的时候，不知什么原因ifram的k线图不能正常显示样式
     port: 8083,
     https: false,
     hotOnly: false,
@@ -27,21 +27,29 @@ module.exports = {
           '^/api': ''
         }
       },
+      '/json_svr': {
+        target: 'https://gateio.news/json_svr',//后端接口地址
+        changeOrigin: true,//是否允许跨越
+        "secure": true,//false为http访问，true为https访问
+        pathRewrite: {
+            '^/json_svr': '/',//重写,
+        },
+        "headers": {//设置请求头伪装成手机端的访问
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
+        }
+      },
       '/news': {
-        target: 'https://www.chainfor.com',//后端接口地址
-        // target: 'https://www.hxex.com/api',//后端接口地址
+        target: 'https://www.chainfor.com/news',//后端接口地址
         changeOrigin: true,//是否允许跨越
         "secure": true,//false为http访问，true为https访问
         pathRewrite: {
             '^/news': '/',//重写,
         },
-        "headers": {//设置请求头伪装成手机端的访问
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
-          "Cookie":"_ga=GA1.2.836631000.1565771885; _gid=GA1.2.1858403843.1565771885; _gat_gtag_UA_122948497_1=1; Hm_lvt_1b3d00072faa6b9490791cdd184333c3=1565771885; JSESSIONID=A150A6F03DD3BED2A7A7DD8BA39B5ED7; Hm_lpvt_1b3d00072faa6b9490791cdd184333c3=1565771889",
-          "Accept":'*/*',
-          "Host":"www.chainfor.co",
-          "Referer":"https://www.chainfor.com/lives/index.html",
-          "X-Requested-With":"XMLHttpRequest"
+        "headers": {
+          "Accept": "*/*",
+          "Accept-Encoding": "gzip, deflate,br",
+          "Accept-Language": "zh-CN,zh;q=0.9",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36"
         }
       }
     },

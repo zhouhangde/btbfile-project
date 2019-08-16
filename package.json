@@ -20,6 +20,8 @@
     "@vue/cli-service": "^3.4.0",
     "animate.css": "^3.7.2",
     "echarts": "^4.2.1",
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^0.19.1",
     "jquery": "^3.4.1",
     "jsonp": "^0.2.1",
     "ly-tab": "^2.1.2",
@@ -27,6 +29,7 @@
     "node-sass": "^4.12.0",
     "qs": "^6.7.0",
     "sass-loader": "^7.1.0",
+    "semver": "^6.3.0",
     "vue-clipboard2": "^0.3.0",
     "vue-fakin-slider": "^0.1.0",
     "vue-template-compiler": "^2.5.21"
